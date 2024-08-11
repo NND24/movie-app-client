@@ -23,7 +23,7 @@ const Header = (props: Props) => {
       <div
         className={`${
           active
-            ? "dark:bg-[#0a0c0f] bg-white fixed top-0 left-0 w-full h-[60px] z-[9999] transition duration-500 ease-linear"
+            ? "dark:bg-[#0a0c0f] bg-white fixed top-0 left-0 w-full h-[60px] z-[9999] transition duration-500 ease-in-out"
             : "w-full fixed top-0 left-0 h-[60px] z-[9999]"
         }`}
       >
@@ -35,13 +35,19 @@ const Header = (props: Props) => {
               </Link>
 
               <Link to='/' className='text-[18px] font-Poppins text-white hover:text-[#00dc5a]'>
-                For You
+                Phim Lẻ
               </Link>
               <Link to='/' className='text-[18px] font-Poppins text-white hover:text-[#00dc5a]'>
-                Drama
+                Phim Bộ
+              </Link>
+              <Link to='/' className='text-[18px] font-Poppins text-white hover:text-[#00dc5a]'>
+                Hoạt Hình
+              </Link>
+              <Link to='/' className='text-[18px] font-Poppins text-white hover:text-[#00dc5a]'>
+                TV Shows
               </Link>
               <div className='flex items-center relative cursor-pointer text-[18px] font-Poppins text-white'>
-                <span>More</span>
+                <span>Thể Loại</span>
                 <FaSortDown />
               </div>
             </div>

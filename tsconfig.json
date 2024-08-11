@@ -1,4 +1,10 @@
 {
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "baseUrl": "./src"
+  },
   "files": [],
   "references": [
     {

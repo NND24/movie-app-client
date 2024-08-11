@@ -7,6 +7,7 @@ body {
   margin: 0;
   box-sizing: border-box;
   overflow-x: hidden;
+  background-color: #111319;
 }
 
 .swiper {
@@ -28,7 +29,13 @@ body {
 .swiper-button-prev,
 .swiper-button-next {
   color: white !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 25px !important;
+  font-weight: 700 !important;
 }
 
 .swiper-horizontal > .swiper-pagination-bullets,
@@ -44,4 +51,24 @@ body {
 .swiper-pagination-bullet-active {
   background-color: white !important;
   width: 12px !important;
+}
+
+.movie-slider {
+  position: static !important;
+}
+
+.movie-slider .swiper-button-next {
+  top: 40px;
+  right: 5%;
+}
+
+.movie-slider .swiper-button-prev {
+  top: 40px;
+  left: 91%;
+}
+
+.movie-slider .swiper-button-next:after,
+.movie-slider .swiper-button-prev:after {
+  font-size: 20px !important;
+  font-weight: 700 !important;
 }
