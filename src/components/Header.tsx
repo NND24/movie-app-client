@@ -31,7 +31,7 @@ const Header = (props: Props) => {
           <div className='w-full h-[60px] flex items-center justify-between p-3 overflow-hidden'>
             <div className='flex items-center gap-[24px]'>
               <Link to='/' className={`text-[25px] font-Poppins font-[500] text-[#00dc5a]`}>
-                MOVIEAPP
+                dMOVIE
               </Link>
 
               <Link to='/' className='text-[18px] font-Poppins text-white hover:text-[#00dc5a]'>

@@ -9,13 +9,19 @@ import { FC } from "react";
 
 interface HeroProps {
   items?: {
-    _id: number;
     name: string;
-    origin_name: string;
-    poster_url: string;
     slug: string;
+    origin_name: string;
     thumb_url: string;
-    year: number;
+    poster_url: string;
+    description: string;
+    total_episodes: number;
+    current_episode: string;
+    time: string;
+    quality: string;
+    language: string;
+    director: string;
+    casts: string;
   }[];
 }
 
@@ -38,35 +44,36 @@ const Hero: FC<HeroProps> = ({ items = [] }) => {
           modules={[Autoplay, Pagination, Navigation]}
           className='mySwiper'
         >
-          {items?.map((movie) => (
-            <SwiperSlide key={movie._id}>
-              <img src={movie.thumb_url} alt='Movie Thumbnail' className='w-full h-full object-cover' />
+          {items?.map((movie, index) => (
+            <SwiperSlide key={index}>
+              <img src={movie.poster_url} alt='Movie Thumbnail' className='w-full h-full object-cover' />
 
-              <div className='absolute left-[64px] bottom-[calc(10%+24px+3.5vw)] flex flex-col items-start w-[50%]'>
+              <div className='absolute top-0 left-0 right-0 h-[60px] bg-gradient-to-b from-[#303030bb] to-transparent z-[10]' />
+              <div className='absolute bottom-0 left-0 right-0 h-[80px] bg-gradient-to-t from-[#303030bb] to-transparent z-[10]' />
+              <div className='absolute top-0 bottom-0 left-0 h-full w-[70px] bg-gradient-to-r from-[#303030bb] to-transparent z-[10]' />
+              <div className='absolute top-0 bottom-0 right-0 h-full w-[70px] bg-gradient-to-l from-[#303030bb] to-transparent z-[10]' />
+
+              <div className='absolute left-[64px] bottom-[calc(10%+24px+3.5vw)] flex flex-col items-start w-[50%] z-[20]'>
                 <h5 className='font-medium text-[35px] w-full text-left text-white'>{movie.name}</h5>
                 <div className='text-white'>
-                  <span>{movie.year}</span>
+                  <span>{movie.time}</span>
                   <span className='px-2'>|</span>
-                  {/* <span>{movie.episode_current}</span> */}
+                  <span>{movie.current_episode}</span>
                 </div>
                 <div className='flex gap-[8px] mt-[12px] flex-wrap w-full'>
-                  {/* {movie.category.map((cat) => (
+                  {movie.casts.split(",").map((name, id) => (
                     <span
-                      key={cat.id}
+                      key={id}
                       className='px-[6px] rounded-[2px] color-[#ececec] bg-[#ffffff5b] text-[14px] font-medium text-white w-max h-full shadow-[rgba(0,0,0,0.5)_0px_1px_2px]'
                     >
-                      {cat.name}
+                      {name}
                     </span>
-                  ))} */}
+                  ))}
                 </div>
-                <p className='line-clamp-2 text-left mt-[12px] text-white'>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam tempora cum autem beatae pariatur
-                  accusamus eius suscipit corporis placeat molestias error veritatis est, odio amet consequatur et nisi
-                  provident rerum!
-                </p>
+                <p className='text-left mt-[12px] text-white line-clamp-3'>{movie.description}</p>
               </div>
 
-              <div className='absolute bottom-[10%] left-[64px] flex justify-between gap-[20px]'>
+              <div className='absolute bottom-[10%] left-[64px] flex justify-between gap-[20px] z-[20]'>
                 <button className='w-[36px] h-[36px] rounded-full bg-[#1cc749] hover:bg-[#3bf56d] flex items-center justify-center'>
                   <FaPlay className='text-white' size={15} />
                 </button>

@@ -7,14 +7,29 @@ import { Navigation } from "swiper/modules";
 import MovieCard from "./MovieCard";
 
 type Props = {
-  titlePage: string;
+  title: string;
+  items?: {
+    name: string;
+    slug: string;
+    origin_name: string;
+    thumb_url: string;
+    poster_url: string;
+    description: string;
+    total_episodes: number;
+    current_episode: string;
+    time: string;
+    quality: string;
+    language: string;
+    director: string;
+    casts: string;
+  }[];
 };
 
-const MovieSlider: FC<Props> = ({ titlePage }) => {
+const MovieSlider: FC<Props> = ({ title, items = [] }) => {
   return (
     <div className='w-full relative'>
       <div className='w-[90%] m-auto pt-5'>
-        <h4 className='text-[22px] font-bold text-white pb-3'>{titlePage}</h4>
+        <h4 className='text-[22px] font-bold text-white pb-3'>{title}</h4>
         <Swiper
           navigation={true}
           modules={[Navigation]}
@@ -38,30 +53,11 @@ const MovieSlider: FC<Props> = ({ titlePage }) => {
             },
           }}
         >
-          <SwiperSlide>
-            <MovieCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <MovieCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <MovieCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <MovieCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <MovieCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <MovieCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <MovieCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <MovieCard />
-          </SwiperSlide>
+          {items?.map((movie, index) => (
+            <SwiperSlide key={index}>
+              <MovieCard movie={movie} />
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </div>
