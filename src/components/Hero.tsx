@@ -6,29 +6,16 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { FaPlay } from "react-icons/fa";
 import { FC } from "react";
+import { getEpisodeStatus, Movie, removePTags } from "../utils/functions";
 
 interface HeroProps {
-  items?: {
-    name: string;
-    slug: string;
-    origin_name: string;
-    thumb_url: string;
-    poster_url: string;
-    description: string;
-    total_episodes: number;
-    current_episode: string;
-    time: string;
-    quality: string;
-    language: string;
-    director: string;
-    casts: string;
-  }[];
+  items?: Movie[];
 }
 
 const Hero: FC<HeroProps> = ({ items = [] }) => {
   return (
     <div className='max-h-screen !h-[52vw]'>
-      <div className='relative overflow-hidden max-h-screen !h-[52vw] cursor-pointer mb-[-15.5%]'>
+      <div className='relative overflow-hidden max-h-screen !h-[52vw] mb-[-15.5%]'>
         <Swiper
           slidesPerView={1}
           spaceBetween={0}
@@ -54,23 +41,36 @@ const Hero: FC<HeroProps> = ({ items = [] }) => {
               <div className='absolute top-0 bottom-0 right-0 h-full w-[70px] bg-gradient-to-l from-[#303030bb] to-transparent z-[10]' />
 
               <div className='absolute left-[64px] bottom-[calc(10%+24px+3.5vw)] flex flex-col items-start w-[50%] z-[20]'>
-                <h5 className='font-medium text-[35px] w-full text-left text-white'>{movie.name}</h5>
-                <div className='text-white'>
-                  <span>{movie.time}</span>
-                  <span className='px-2'>|</span>
-                  <span>{movie.current_episode}</span>
+                <h1 className='font-bold text-[30px] text-[#e0e0e0] text-left drop-shadow-[1px_1px_1px_#000]'>
+                  {movie.name}
+                </h1>
+                <p className='font-bold text-[#e0e0e0] mb-1 drop-shadow-[1px_1px_1px_#000]'>{movie.original_name}</p>
+                <div className='text-[14px] text-[#e0e0e0] text-left drop-shadow-[1px_1px_1px_#000] my-1'>
+                  <span className='mr-[6px] font-medium'>{movie.created.split("-")[0]}</span>
+                  <span className='mr-[6px]'>•</span>
+                  <span className='mr-[6px] font-medium border-[#e0e0e0] border-[1px] border-solid rounded-[30px] px-[8px]'>
+                    {getEpisodeStatus(movie)}
+                  </span>
+                  <span className='mr-[6px]'>•</span>
+                  <span className='mr-[6px] font-medium'>{movie.time}</span>
+                  <span className='mr-[6px]'>•</span>
+                  <span className='mr-[6px] font-medium'>{movie.language}</span>
                 </div>
-                <div className='flex gap-[8px] mt-[12px] flex-wrap w-full'>
-                  {movie.casts.split(",").map((name, id) => (
-                    <span
-                      key={id}
-                      className='px-[6px] rounded-[2px] color-[#ececec] bg-[#ffffff5b] text-[14px] font-medium text-white w-max h-full shadow-[rgba(0,0,0,0.5)_0px_1px_2px]'
-                    >
-                      {name}
-                    </span>
-                  ))}
+                <div className='mt-[4px]'>
+                  {movie.director && movie.director.length > 0 && (
+                    <p className='text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] text-left line-clamp-1'>
+                      Đạo diễn: {movie.director}
+                    </p>
+                  )}
+                  {movie.casts && movie.casts.length > 0 && (
+                    <p className='text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] text-left line-clamp-1'>
+                      Diễn viên: {movie.casts}
+                    </p>
+                  )}
                 </div>
-                <p className='text-left mt-[12px] text-white line-clamp-3'>{movie.description}</p>
+                <p className='text-justify mt-[4px] text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] line-clamp-3 leading-[22px]'>
+                  {removePTags(movie.description)}
+                </p>
               </div>
 
               <div className='absolute bottom-[10%] left-[64px] flex justify-between gap-[20px] z-[20]'>

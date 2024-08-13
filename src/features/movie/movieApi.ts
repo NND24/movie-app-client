@@ -4,17 +4,23 @@ export const movieApi = movieApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getNewUpdatedMovie: builder.query({
       query: (page: number) => ({
-        url: `phim-moi-cap-nhat?page=${page}`,
+        url: `films/phim-moi-cap-nhat?page=${page}`,
         method: "GET",
       }),
     }),
     getMovieByCategory: builder.query({
       query: ({ category, page }: { category: string; page: number }) => ({
-        url: `danh-sach/${category}?page=${page}`,
+        url: `films/danh-sach/${category}?page=${page}`,
+        method: "GET",
+      }),
+    }),
+    getDetailMovie: builder.query({
+      query: (slug: string) => ({
+        url: `film/${slug}`,
         method: "GET",
       }),
     }),
   }),
 });
 
-export const { useGetNewUpdatedMovieQuery, useGetMovieByCategoryQuery } = movieApi;
+export const { useGetNewUpdatedMovieQuery, useGetMovieByCategoryQuery, useGetDetailMovieQuery } = movieApi;

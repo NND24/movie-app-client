@@ -56,7 +56,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const movieApiSlice = createApi({
   reducerPath: "movieApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://phim.nguonc.com/api/films/",
+    baseUrl: "https://phim.nguonc.com/api/",
   }),
   endpoints: (builder) => ({}),
 });

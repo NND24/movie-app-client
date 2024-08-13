@@ -1,23 +1,11 @@
 import { FC, useState } from "react";
 import { FaChevronRight, FaPlay } from "react-icons/fa";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
+import { getEpisodeStatus, removePTags } from "../utils/functions";
+import { Movie } from "../utils/interfaces";
 
 type Props = {
-  movie: {
-    name: string;
-    slug: string;
-    origin_name: string;
-    thumb_url: string;
-    poster_url: string;
-    description: string;
-    total_episodes: number;
-    current_episode: string;
-    time: string;
-    quality: string;
-    language: string;
-    director: string;
-    casts: string;
-  };
+  movie: Movie;
 };
 
 const MovieCard: FC<Props> = ({ movie }) => {
@@ -57,16 +45,18 @@ const MovieCard: FC<Props> = ({ movie }) => {
             </div>
           </div>
           <div className='p-2'>
-            <h5 className='text-[14px] w-full text-left text-white line-clamp-2 h-[41px] transition-all duration-300'>
+            <h5 className='text-[14px] font-bold w-full text-left text-white line-clamp-2 h-[41px] transition-all duration-300  drop-shadow-[1px_1px_1px_#000]'>
               {movie.name}
             </h5>
-            <div className='text-white text-[14px] text-left'>
-              <span>{movie.time}</span>
-              <span className='px-2'>|</span>
-              <span>{movie.current_episode}</span>
+            <div className='text-[13px] text-[#e0e0e0] text-left drop-shadow-[1px_1px_1px_#000] my-1'>
+              <span className='mr-[4px] font-medium'>{movie.created.split("-")[0]}</span>
+              <span className='mr-[4px]'>•</span>
+              <span className='mr-[4px] font-medium border-[#e0e0e0] border-[1px] border-solid rounded-[30px] px-[8px]'>
+                {getEpisodeStatus(movie)}
+              </span>
             </div>
-            <p className='line-clamp-4 text-left mt-[12px] text-white text-[12px] h-[71px] transition-all duration-300'>
-              {movie.description}
+            <p className='line-clamp-4 text-justify mt-[12px] text-white text-[12px] h-[71px] transition-all duration-300'>
+              {removePTags(movie.description)}
             </p>
             <p className='text-[#00dc5a] flex text-[12px] items-center justify-end pt-2'>
               more info <FaChevronRight />

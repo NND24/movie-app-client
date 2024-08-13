@@ -24,7 +24,7 @@ const Header = (props: Props) => {
         className={`${
           active
             ? "dark:bg-[#0a0c0f] bg-white fixed top-0 left-0 w-full h-[60px] z-[9999] transition duration-500 ease-in-out"
-            : "w-full fixed top-0 left-0 h-[60px] z-[9999]"
+            : "w-full fixed top-0 left-0 h-[60px] z-[1000]"
         }`}
       >
         <div className='w-[95%] 800px:w-[92%] m-auto h-full overflow-hidden'>

@@ -8,7 +8,7 @@ import { useGetMovieByCategoryQuery, useGetNewUpdatedMovieQuery } from "../featu
 import Loader from "../components/Loader/Loader";
 
 const Home = () => {
-  const { data: movieData, isLoading } = useGetNewUpdatedMovieQuery(1);
+  // const { data: movieData, isLoading } = useGetNewUpdatedMovieQuery(1);
   const { data: tvShowsData, isLoading: tvShowsLoading } = useGetMovieByCategoryQuery({
     category: "tv-shows",
     page: 1,
@@ -26,14 +26,14 @@ const Home = () => {
     page: 1,
   });
 
-  if (isLoading && tvShowsLoading && phimLeLoading && phimBoLoading && phimDangChieuLoading) return <Loader />;
+  if (tvShowsLoading && phimLeLoading && phimBoLoading && phimDangChieuLoading) return <Loader />;
 
   return (
     <div>
       <Heading title='dMOVIE' description='' keywords='' icon='../../public/favicon.ico' />
       <Header />
-      <Hero items={phimDangChieuData.items || []} />
-      <MovieSlider title={tvShowsData?.cat.title} items={tvShowsData.items || []} />
+      <Hero items={phimDangChieuData?.items || []} />
+      <MovieSlider title={tvShowsData?.cat.title} items={tvShowsData?.items || []} />
 
       <div className='w-full relative'>
         <ul className='w-[90%] pt-5 m-auto flex flex-wrap gap-[12px]'>
@@ -46,9 +46,9 @@ const Home = () => {
         </ul>
       </div>
 
-      <MovieSlider title={phimLeData?.cat.title} items={phimLeData.items || []} />
-      <MovieSlider title={phimBoData?.cat.title} items={phimBoData.items || []} />
-      <MovieSlider title={phimDangChieuData?.cat.title} items={phimDangChieuData.items || []} />
+      <MovieSlider title={phimLeData?.cat.title} items={phimLeData?.items || []} />
+      <MovieSlider title={phimBoData?.cat.title} items={phimBoData?.items || []} />
+      <MovieSlider title={phimDangChieuData?.cat.title} items={phimDangChieuData?.items || []} />
       <Footer />
     </div>
   );
