@@ -34,7 +34,7 @@ const Header = (props: Props) => {
                 dMOVIE
               </Link>
 
-              <Link to='/' className='text-[18px] font-Poppins text-white hover:text-[#00dc5a]'>
+              <Link to='/danh-sach/phim-le' className='text-[18px] font-Poppins text-white hover:text-[#00dc5a]'>
                 Phim Lẻ
               </Link>
               <Link to='/' className='text-[18px] font-Poppins text-white hover:text-[#00dc5a]'>

@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Heading from "../components/Heading";
-import HeroDetailMovie from "../components/HeroDetailMovie";
+import HeroDetailMovie from "../components/Hero/HeroDetailMovie";
 import Loader from "../components/Loader/Loader";
 import { useGetDetailMovieQuery, useGetMovieByCategoryQuery } from "../features/movie/movieApi";
 import Footer from "../components/Footer";
-import { EpisodeItem, Movie } from "../utils/interfaces";
+import { Episode, Movie, ServerData } from "../utils/interfaces";
 import { styles } from "../styles/style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiMessage } from "react-icons/bi";
 import MovieSlider from "../components/MovieSlider";
 
@@ -21,18 +21,18 @@ const DetailMovie = () => {
     page: 1,
   });
 
-  const movie = data?.movie as Movie;
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 
   if (isLoading && phimLeLoading) return <Loader />;
 
-  if (!movie?.episodes) {
-    return <div>No episodes available.</div>;
-  }
+  const movie = data?.movie as Movie;
 
-  const separatedData = movie.episodes.reduce<Record<string, EpisodeItem[]>>((acc, server) => {
-    acc[server.server_name] = server.items;
+  const separatedData = data.episodes.reduce((acc: Record<string, ServerData[]>, server: Episode) => {
+    acc[server.server_name] = server.server_data;
     return acc;
-  }, {});
+  }, {} as Record<string, ServerData[]>);
 
   return (
     <div>
@@ -50,7 +50,7 @@ const DetailMovie = () => {
 
               <div className='max-h-[150px] scroll-auto overflow-auto episodes-wrapper'>
                 <div className='flex gap-2 flex-wrap'>
-                  {episodes.map((episode, index) => (
+                  {episodes?.map((episode: ServerData, index: number) => (
                     <span
                       className='rounded-[4px] px-[16px] py-[2px] bg-[#0A0C0F] text-white font-semibold cursor-pointer'
                       key={index}
@@ -120,7 +120,7 @@ const DetailMovie = () => {
 
       <div className='w-[90%] mx-auto h-[1px] bg-[#26252a] my-2'></div>
 
-      <MovieSlider title={phimLeData?.cat.title} items={phimLeData?.items || []} />
+      <MovieSlider title={phimLeData?.data?.titlePage} items={phimLeData?.data?.items || []} />
 
       <Footer />
     </div>

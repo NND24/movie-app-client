@@ -2,13 +2,14 @@ import { FaRegClone } from "react-icons/fa";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Heading from "../components/Heading";
-import Hero from "../components/Hero";
+import Hero from "../components/Hero/Hero";
 import MovieSlider from "../components/MovieSlider";
 import { useGetMovieByCategoryQuery, useGetNewUpdatedMovieQuery } from "../features/movie/movieApi";
 import Loader from "../components/Loader/Loader";
+import { useEffect } from "react";
 
 const Home = () => {
-  // const { data: movieData, isLoading } = useGetNewUpdatedMovieQuery(1);
+  const { data: movieData, isLoading } = useGetNewUpdatedMovieQuery(1);
   const { data: tvShowsData, isLoading: tvShowsLoading } = useGetMovieByCategoryQuery({
     category: "tv-shows",
     page: 1,
@@ -26,14 +27,22 @@ const Home = () => {
     page: 1,
   });
 
-  if (tvShowsLoading && phimLeLoading && phimBoLoading && phimDangChieuLoading) return <Loader />;
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  if (isLoading && tvShowsLoading && phimLeLoading && phimBoLoading && phimDangChieuLoading) return <Loader />;
 
   return (
     <div>
       <Heading title='dMOVIE' description='' keywords='' icon='../../public/favicon.ico' />
       <Header />
-      <Hero items={phimDangChieuData?.items || []} />
-      <MovieSlider title={tvShowsData?.cat.title} items={tvShowsData?.items || []} />
+      <Hero items={movieData?.items || []} />
+      <MovieSlider
+        slug={tvShowsData?.data?.type_list}
+        title={tvShowsData?.data?.titlePage}
+        items={tvShowsData?.data?.items || []}
+      />
 
       <div className='w-full relative'>
         <ul className='w-[90%] pt-5 m-auto flex flex-wrap gap-[12px]'>
@@ -46,9 +55,21 @@ const Home = () => {
         </ul>
       </div>
 
-      <MovieSlider title={phimLeData?.cat.title} items={phimLeData?.items || []} />
-      <MovieSlider title={phimBoData?.cat.title} items={phimBoData?.items || []} />
-      <MovieSlider title={phimDangChieuData?.cat.title} items={phimDangChieuData?.items || []} />
+      <MovieSlider
+        slug={tvShowsData?.data?.type_list}
+        title={phimLeData?.data?.titlePage}
+        items={phimLeData?.data?.items || []}
+      />
+      <MovieSlider
+        slug={tvShowsData?.data?.type_list}
+        title={phimBoData?.data?.titlePage}
+        items={phimBoData?.data?.items || []}
+      />
+      <MovieSlider
+        slug={tvShowsData?.data?.type_list}
+        title={phimDangChieuData?.data?.titlePage}
+        items={phimDangChieuData?.data?.items || []}
+      />
       <Footer />
     </div>
   );
