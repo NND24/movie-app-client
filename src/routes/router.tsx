@@ -13,7 +13,15 @@ export const router = createBrowserRouter([
     element: <DetailMovie />,
   },
   {
-    path: "/danh-sach/:slug",
+    path: "/danh-sach/:cat",
+    element: <ListMovie />,
+  },
+  {
+    path: "/the-loai/:genre",
+    element: <ListMovie />,
+  },
+  {
+    path: "/quoc-gia/:nation",
     element: <ListMovie />,
   },
 ]);

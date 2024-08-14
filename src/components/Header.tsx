@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BiHistory, BiSearch, BiUser } from "react-icons/bi";
-import { FaSortDown } from "react-icons/fa";
+import NavItems from "./NavItems";
 
 type Props = {};
 
@@ -27,41 +27,29 @@ const Header = (props: Props) => {
             : "w-full fixed top-0 left-0 h-[60px] z-[1000]"
         }`}
       >
-        <div className='w-[95%] 800px:w-[92%] m-auto h-full overflow-hidden'>
-          <div className='w-full h-[60px] flex items-center justify-between p-3 overflow-hidden'>
-            <div className='flex items-center gap-[24px]'>
-              <Link to='/' className={`text-[25px] font-Poppins font-[500] text-[#00dc5a]`}>
-                dMOVIE
+        <div className='w-[95%] 800px:w-[92%] m-auto h-full'>
+          <div className='w-full h-[60px] flex items-center justify-between p-3'>
+            <div className='flex items-center gap-[20px]'>
+              <Link
+                to='/'
+                className={`text-[25px] font-Poppins font-bold drop-shadow-[1px_1px_1px_#000] text-[#00dc5a]`}
+              >
+                dMovie
               </Link>
 
-              <Link to='/danh-sach/phim-le' className='text-[18px] font-Poppins text-white hover:text-[#00dc5a]'>
-                Phim Lẻ
-              </Link>
-              <Link to='/' className='text-[18px] font-Poppins text-white hover:text-[#00dc5a]'>
-                Phim Bộ
-              </Link>
-              <Link to='/' className='text-[18px] font-Poppins text-white hover:text-[#00dc5a]'>
-                Hoạt Hình
-              </Link>
-              <Link to='/' className='text-[18px] font-Poppins text-white hover:text-[#00dc5a]'>
-                TV Shows
-              </Link>
-              <div className='flex items-center relative cursor-pointer text-[18px] font-Poppins text-white'>
-                <span>Thể Loại</span>
-                <FaSortDown />
-              </div>
+              <NavItems />
             </div>
 
             <div className='flex items-center'>
               <div className='w-[240px] h-[36px] relative flex rounded-[4px]'>
                 <input
                   type='search'
-                  className='w-full h-full pr-[54px] pl-[12px] rounded-[4px] bg-[#ffffff33] text-[#ffffff99] size-[14px] overflow-hidden whitespace-nowrap text-ellipsis'
+                  className='w-full h-full pr-[40px] pl-[12px] rounded-[4px] bg-[#ffffff33] text-[#ffffff99] size-[14px] overflow-hidden whitespace-nowrap text-ellipsis'
                   autoComplete='off'
                   placeholder='Search...'
                 />
                 <BiSearch
-                  className='absolute right-[11px] top-[5px] flex align-center justify-center cursor-pointer'
+                  className='absolute right-[10px] top-[8px] flex align-center justify-center cursor-pointer'
                   size={24}
                   fill='#d8d2d1'
                 />

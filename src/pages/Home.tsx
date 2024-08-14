@@ -7,6 +7,8 @@ import MovieSlider from "../components/MovieSlider";
 import { useGetMovieByCategoryQuery, useGetNewUpdatedMovieQuery } from "../features/movie/movieApi";
 import Loader from "../components/Loader/Loader";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { genreItemsData, navItemsData } from "../components/NavItems";
 
 const Home = () => {
   const { data: movieData, isLoading } = useGetNewUpdatedMovieQuery(1);
@@ -46,12 +48,28 @@ const Home = () => {
 
       <div className='w-full relative'>
         <ul className='w-[90%] pt-5 m-auto flex flex-wrap gap-[12px]'>
-          <li className='flex items-center font-[14px] h-[36px] px-[17px] bg-[#23252b] text-white rounded-[4px] gap-2 cursor-pointer'>
+          <Link
+            to={`/danh-sach/phim-moi?page=1`}
+            className='flex items-center font-[14px] h-[36px] px-[17px] bg-[#23252b] text-white rounded-[4px] gap-2 cursor-pointer'
+          >
             <FaRegClone /> <span>Tất Cả</span>
-          </li>
-          <li className='flex items-center font-[14px] h-[36px] px-[17px] bg-[#23252b] text-white rounded-[4px] gap-2'>
-            <span>Hoạt hình</span>
-          </li>
+          </Link>
+          {navItemsData.map((nav) => (
+            <Link
+              to={`/danh-sach/${nav.slug}?page=1`}
+              className='flex items-center font-[14px] h-[36px] px-[17px] bg-[#23252b] text-white rounded-[4px] gap-2'
+            >
+              {nav.name}
+            </Link>
+          ))}
+          {genreItemsData.map((genre) => (
+            <Link
+              to={`/the-loai/${genre.slug}?page=1`}
+              className='flex items-center font-[14px] h-[36px] px-[17px] bg-[#23252b] text-white rounded-[4px] gap-2'
+            >
+              {genre.name}
+            </Link>
+          ))}
         </ul>
       </div>
 

@@ -2,7 +2,11 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Heading from "../components/Heading";
 import Hero from "../components/Hero/Hero";
-import { useGetMovieByCategoryQuery } from "../features/movie/movieApi";
+import {
+  useGetMovieByCategoryQuery,
+  useGetMovieByGenreQuery,
+  useGetMovieByNationQuery,
+} from "../features/movie/movieApi";
 import Loader from "../components/Loader/Loader";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
@@ -11,21 +15,31 @@ import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const ListMovie = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const { cat, genre, nation } = useParams<{ cat: string; genre: string; nation: string }>();
   const location = useLocation();
   const navigate = useNavigate();
 
   const queryParams = new URLSearchParams(location.search);
   const currentPage = parseInt(queryParams.get("page") || "1", 10);
 
-  const category = slug ?? "";
-
-  const { data, isLoading } = useGetMovieByCategoryQuery({
-    category,
-    page: currentPage,
-  });
-
   const [page, setPage] = useState(currentPage);
+
+  const categoryQuery = useGetMovieByCategoryQuery({ category: cat || "", page: currentPage });
+  const genreQuery = useGetMovieByGenreQuery({ genre: genre || "", page: currentPage });
+  const nationQuery = useGetMovieByNationQuery({ nation: nation || "", page: currentPage });
+
+  let queryResult;
+  if (cat) {
+    queryResult = categoryQuery;
+  } else if (genre) {
+    queryResult = genreQuery;
+  } else if (nation) {
+    queryResult = nationQuery;
+  } else {
+    queryResult = categoryQuery;
+  }
+
+  const { data, isLoading } = queryResult;
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -39,7 +53,6 @@ const ListMovie = () => {
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
     navigate(`?page=${newPage}`);
-    // window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const getPageNumbers = () => {

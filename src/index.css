@@ -45,8 +45,6 @@ input::-webkit-inner-spin-button {
   text-align: center;
   font-size: 18px;
   background: #fff;
-
-  /* Center slide text vertically */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -172,4 +170,14 @@ input::-webkit-inner-spin-button {
 .movie-slider .swiper-button-prev:after {
   font-size: 20px !important;
   font-weight: 700 !important;
+}
+
+@media (max-width: 1200px) {
+  .hide-nav-item {
+    display: none;
+  }
+
+  .show-nav-item {
+    display: block;
+  }
 }

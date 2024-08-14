@@ -14,6 +14,18 @@ export const movieApi = movieApiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getMovieByGenre: builder.query({
+      query: ({ genre, page }: { genre: string; page: number }) => ({
+        url: `/v1/api/the-loai/${genre}?page=${page}`,
+        method: "GET",
+      }),
+    }),
+    getMovieByNation: builder.query({
+      query: ({ nation, page }: { nation: string; page: number }) => ({
+        url: `/v1/api/quoc-gia/${nation}?page=${page}`,
+        method: "GET",
+      }),
+    }),
     getDetailMovie: builder.query({
       query: (slug: string) => ({
         url: `phim/${slug}`,
@@ -23,4 +35,10 @@ export const movieApi = movieApiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetNewUpdatedMovieQuery, useGetMovieByCategoryQuery, useGetDetailMovieQuery } = movieApi;
+export const {
+  useGetNewUpdatedMovieQuery,
+  useGetMovieByCategoryQuery,
+  useGetMovieByGenreQuery,
+  useGetMovieByNationQuery,
+  useGetDetailMovieQuery,
+} = movieApi;
