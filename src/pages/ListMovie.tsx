@@ -13,7 +13,7 @@ import MovieCard from "../components/MovieCard";
 import { Movie } from "../utils/interfaces";
 import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight, FaStar } from "react-icons/fa";
-import { FaEye, FaPlay, FaRegCirclePlay } from "react-icons/fa6";
+import { FaPlay, FaRegCirclePlay } from "react-icons/fa6";
 
 const ListMovie = () => {
   const { cat, genre, nation } = useParams<{ cat: string; genre: string; nation: string }>();
@@ -199,15 +199,16 @@ const ListMovie = () => {
                 {phimLeData &&
                   phimLeData?.data?.items.map((movie: Movie, index: number) => (
                     <li className='relative pl-[68px] min-h-[90px] mb-4' key={movie?._id}>
-                      <Link to={`/phim/${movie?.slug}`}>
+                      <Link to={`/phim/${movie?.slug}`} className='group'>
                         <p className='text-[16px] font-bold text-white mb-[4px] z-10 hover:text-[#00DC5A] line-clamp-1'>
                           {movie?.name}
                         </p>
 
                         <span className='absolute top-0 left-0 rounded-t-[4px] rounded-b-[4px] font-bold w-[20px] h-[20px] bg-[#1cc749] text-center text-white text-[0.65rem] leading-[1.2rem] z-10'>
-                          {index}
+                          {index + 1}
                         </span>
-                        <div className='absolute top-0 left-0 w-[60px] p-[2px] rounded-[4px] bg-[#1cc749]'>
+
+                        <div className='absolute top-0 left-0 w-[60px] p-[2px] rounded-[4px] bg-[#1cc749] z-0'>
                           <div className='pt-[86px] relative overflow-hidden rounded-[4px]'>
                             <img
                               className='absolute top-0 left-0 w-full h-full object-cover object-top rounded-[4px] overflow-hidden z-10'
@@ -215,8 +216,15 @@ const ListMovie = () => {
                               alt={movie?.name}
                             />
 
-                            <div className='absolute left-0 right-0 top-0 bottom-0 w-[3rem] h-[3rem] m-auto rounded-full text-center leading-[3rem] text-2xl scale-0 duration-200 bg-[#000000b3] shadow-[inset_0_0_0_2px_#fff] z-20'>
-                              <FaPlay />
+                            <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[4px] z-20'>
+                              <div
+                                className='w-[35px] h-[35px] rounded-full flex items-center justify-center'
+                                style={{
+                                  border: "2px solid #1cc749",
+                                }}
+                              >
+                                <FaPlay className='text-white text-lg' />
+                              </div>
                             </div>
                           </div>
                         </div>
