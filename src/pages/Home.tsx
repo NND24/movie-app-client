@@ -46,45 +46,47 @@ const Home = () => {
         items={tvShowsData?.data?.items || []}
       />
 
-      <div className='w-full relative'>
-        <ul className='w-[90%] pt-5 m-auto flex flex-wrap gap-[12px]'>
+      <div className='w-[90%] mx-auto h-[1px] bg-[#26252a] my-2'></div>
+
+      <ul className='w-[90%] py-3 m-auto flex flex-wrap gap-[10px] text-white font-medium'>
+        <Link
+          to={`/danh-sach/phim-moi?page=1`}
+          className='flex items-center h-[36px] px-[17px] bg-[#23252b] rounded-[4px] gap-2 cursor-pointer'
+        >
+          <FaRegClone /> <span>Tất Cả</span>
+        </Link>
+        {navItemsData.map((nav) => (
           <Link
-            to={`/danh-sach/phim-moi?page=1`}
-            className='flex items-center font-[14px] h-[36px] px-[17px] bg-[#23252b] text-white rounded-[4px] gap-2 cursor-pointer'
+            to={`/danh-sach/${nav.slug}?page=1`}
+            className='flex items-center h-[36px] px-[17px] bg-[#23252b] rounded-[4px] gap-2'
           >
-            <FaRegClone /> <span>Tất Cả</span>
+            {nav.name}
           </Link>
-          {navItemsData.map((nav) => (
-            <Link
-              to={`/danh-sach/${nav.slug}?page=1`}
-              className='flex items-center font-[14px] h-[36px] px-[17px] bg-[#23252b] text-white rounded-[4px] gap-2'
-            >
-              {nav.name}
-            </Link>
-          ))}
-          {genreItemsData.map((genre) => (
-            <Link
-              to={`/the-loai/${genre.slug}?page=1`}
-              className='flex items-center font-[14px] h-[36px] px-[17px] bg-[#23252b] text-white rounded-[4px] gap-2'
-            >
-              {genre.name}
-            </Link>
-          ))}
-        </ul>
-      </div>
+        ))}
+        {genreItemsData.map((genre) => (
+          <Link
+            to={`/the-loai/${genre.slug}?page=1`}
+            className='flex items-center h-[36px] px-[17px] bg-[#23252b] rounded-[4px] gap-2'
+          >
+            {genre.name}
+          </Link>
+        ))}
+      </ul>
+
+      <div className='w-[90%] mx-auto h-[1px] bg-[#26252a] my-2'></div>
 
       <MovieSlider
-        slug={tvShowsData?.data?.type_list}
+        slug={phimLeData?.data?.type_list}
         title={phimLeData?.data?.titlePage}
         items={phimLeData?.data?.items || []}
       />
       <MovieSlider
-        slug={tvShowsData?.data?.type_list}
+        slug={phimBoData?.data?.type_list}
         title={phimBoData?.data?.titlePage}
         items={phimBoData?.data?.items || []}
       />
       <MovieSlider
-        slug={tvShowsData?.data?.type_list}
+        slug={phimDangChieuData?.data?.type_list}
         title={phimDangChieuData?.data?.titlePage}
         items={phimDangChieuData?.data?.items || []}
       />

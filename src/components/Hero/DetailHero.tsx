@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useGetDetailMovieQuery } from "../../features/movie/movieApi";
-import { removePTags } from "../../utils/functions";
+import { removeHTMLTags } from "../../utils/functions";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { Movie } from "../../utils/interfaces";
 import { Link } from "react-router-dom";
@@ -18,7 +18,7 @@ const DetailHero: FC<Props> = ({ slug }) => {
   return (
     <>
       <Link to={`/phim/${slug}`}>
-        <img src={movie?.poster_url} alt='' className='w-full h-full object-cover bg-[#303030bb]' />
+        <img src={movie?.poster_url} alt={movie?.name} className='w-full h-full object-cover bg-[#303030bb]' />
       </Link>
 
       <div className='absolute top-0 left-0 right-0 h-[60px] bg-gradient-to-b from-[#303030bb] to-transparent z-[10]' />
@@ -99,7 +99,7 @@ const DetailHero: FC<Props> = ({ slug }) => {
           )}
         </div>
         <p className='text-justify mt-[4px] text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] line-clamp-3 leading-[22px]'>
-          {removePTags(movie?.content)}
+          {removeHTMLTags(movie?.content)}
         </p>
       </div>
 

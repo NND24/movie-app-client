@@ -17,7 +17,7 @@ type Props = {
 const MovieSlider: FC<Props> = ({ title, slug, items = [] }) => {
   return (
     <div className='w-full relative'>
-      <div className='w-[90%] m-auto pt-5'>
+      <div className='w-[90%] m-auto py-3'>
         <Link to={`/danh-sach/${slug}?page=1`} className='text-[22px] font-bold text-white leading-[45px]'>
           {title}
         </Link>

@@ -8,16 +8,30 @@ import {
   useGetMovieByNationQuery,
 } from "../features/movie/movieApi";
 import Loader from "../components/Loader/Loader";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
 import { Movie } from "../utils/interfaces";
 import { useEffect, useState } from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaStar } from "react-icons/fa";
+import { FaEye, FaPlay, FaRegCirclePlay } from "react-icons/fa6";
 
 const ListMovie = () => {
   const { cat, genre, nation } = useParams<{ cat: string; genre: string; nation: string }>();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { data: phimSapChieuData, isLoading: phimSapChieuLoading } = useGetMovieByCategoryQuery({
+    category: "sap-chieu",
+    page: 1,
+  });
+  const { data: phimLeData, isLoading: phimLeLoading } = useGetMovieByCategoryQuery({
+    category: "phim-le",
+    page: 1,
+  });
+  const { data: phimBoData, isLoading: phimBoLoading } = useGetMovieByCategoryQuery({
+    category: "phim-bo",
+    page: 1,
+  });
 
   const queryParams = new URLSearchParams(location.search);
   const currentPage = parseInt(queryParams.get("page") || "1", 10);
@@ -45,7 +59,7 @@ const ListMovie = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentPage]);
 
-  if (isLoading) return <Loader />;
+  if (isLoading && phimSapChieuLoading && phimLeLoading && phimBoLoading) return <Loader />;
 
   const { totalItems, totalItemsPerPage } = data.data.params.pagination;
   const totalPages = Math.ceil(totalItems / totalItemsPerPage);
@@ -101,50 +115,183 @@ const ListMovie = () => {
 
       <div className='w-[90%] m-auto'>
         <h4 className='text-[22px] font-bold text-white py-3'>{data.data?.titlePage}</h4>
-        <div className='grid grid-cols-5 gap-[25px]'>
-          {data.data?.items?.map((movie: Movie, index: number) => (
-            <div key={index}>
-              <MovieCard slug={movie?.slug} />
+        <div className='grid grid-cols-12 gap-[35px]'>
+          <div className='xl:col-span-9 lg:col-span-8 col-span-12'>
+            <div className='grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-4 sm:grid-cols-3 sm:gap-[20px] grid-cols-2 gap-[15px]'>
+              {data.data?.items?.map((movie: Movie, index: number) => (
+                <div key={index}>
+                  <MovieCard slug={movie?.slug} />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        <div className='mt-5 w-full flex items-center justify-center'>
-          {page > 1 && (
-            <button
-              onClick={() => handlePageChange(page - 1)}
-              className='px-3 py-2 mr-2 text-[#e0e0e0] border-[#e0e0e0] border-[1px] border-solid rounded-[6px] h-[40px]'
+            <div className='mt-5 w-full flex items-center justify-center'>
+              {page > 1 && (
+                <button
+                  onClick={() => handlePageChange(page - 1)}
+                  className='px-3 py-2 mr-2 text-[#e0e0e0] border-[#e0e0e0] border-[1px] border-solid rounded-[6px] h-[40px]'
+                >
+                  <FaChevronLeft />
+                </button>
+              )}
+              {pageNumbers.map((pageNumber, index) =>
+                pageNumber === "..." ? (
+                  <span key={index} className='px-3 py-2 mr-2 text-[#e0e0e0]'>
+                    ...
+                  </span>
+                ) : (
+                  <button
+                    key={index}
+                    className={
+                      page === pageNumber
+                        ? "px-3 py-2 mr-2 bg-[#00DC5A] text-[#e0e0e0] border-[#e0e0e0] border-[1px] border-solid rounded-[6px] h-[40px]"
+                        : "px-3 py-2 mr-2 text-[#e0e0e0] border-[#e0e0e0] border-[1px] border-solid rounded-[6px] h-[40px]"
+                    }
+                    onClick={() => handlePageChange(pageNumber as number)}
+                  >
+                    {pageNumber}
+                  </button>
+                )
+              )}
+              {page < totalPages && (
+                <button
+                  onClick={() => handlePageChange(page + 1)}
+                  className='px-3 py-2 mr-2 text-[#e0e0e0] border-[#e0e0e0] border-[1px] border-solid rounded-[6px] h-[40px]'
+                >
+                  <FaChevronRight />
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className='xl:col-span-3 lg:col-span-4 hidden lg:block'>
+            <div
+              className='rounded-md mb-6 bg-[#212026] text-[#818083] overflow-hidden'
+              style={{
+                boxShadow: "inset 0 0 70px rgba(0, 0, 0, .3), 0 0 20px rgba(0, 0, 0, .5)",
+              }}
             >
-              <FaChevronLeft />
-            </button>
-          )}
-          {pageNumbers.map((pageNumber, index) =>
-            pageNumber === "..." ? (
-              <span key={index} className='px-3 py-2 mr-2 text-[#e0e0e0]'>
-                ...
-              </span>
-            ) : (
-              <button
-                key={index}
-                className={
-                  page === pageNumber
-                    ? "px-3 py-2 mr-2 bg-[#00DC5A] text-[#e0e0e0] border-[#e0e0e0] border-[1px] border-solid rounded-[6px] h-[40px]"
-                    : "px-3 py-2 mr-2 text-[#e0e0e0] border-[#e0e0e0] border-[1px] border-solid rounded-[6px] h-[40px]"
-                }
-                onClick={() => handlePageChange(pageNumber as number)}
-              >
-                {pageNumber}
-              </button>
-            )
-          )}
-          {page < totalPages && (
-            <button
-              onClick={() => handlePageChange(page + 1)}
-              className='px-3 py-2 mr-2 text-[#e0e0e0] border-[#e0e0e0] border-[1px] border-solid rounded-[6px] h-[40px]'
+              <h3 className='text-white text-[20px] bg-[#19181d] text-center px-4 py-3 font-semibold'>Sắp Chiếu</h3>
+              <ul className='py-1 max-h-[215px] overflow-auto small-scrollbar'>
+                {phimSapChieuData &&
+                  phimSapChieuData?.data?.items.map((movie: Movie) => (
+                    <li
+                      key={movie?._id}
+                      className='px-3 flex items-center justify-between leading-10 hover:shadow-[inset_0_0_70px_rgba(0,0,0,0.2)] hover:border-l-[3px] hover:border-[#00DC5A] hover:text-[#00DC5A]'
+                    >
+                      <Link to={`/phim/${movie?.slug}`} className='flex items-center gap-2'>
+                        <FaRegCirclePlay /> <span className='w-[175px] line-clamp-1'>{movie?.name}</span>
+                      </Link>
+                      <span className='text-[14px]'>{movie.year}</span>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+
+            <div
+              className='rounded-md mb-6 bg-[#212026] text-[#818083] overflow-hidden'
+              style={{
+                boxShadow: "inset 0 0 70px rgba(0, 0, 0, .3), 0 0 20px rgba(0, 0, 0, .5)",
+              }}
             >
-              <FaChevronRight />
-            </button>
-          )}
+              <h3 className='text-white text-[20px] bg-[#19181d] text-center px-4 py-3 font-semibold'>Top Phim Lẻ</h3>
+              <ul className='py-3 px-2 max-h-[540px] overflow-auto small-scrollbar'>
+                {phimLeData &&
+                  phimLeData?.data?.items.map((movie: Movie, index: number) => (
+                    <li className='relative pl-[68px] min-h-[90px] mb-4' key={movie?._id}>
+                      <Link to={`/phim/${movie?.slug}`}>
+                        <p className='text-[16px] font-bold text-white mb-[4px] z-10 hover:text-[#00DC5A] line-clamp-1'>
+                          {movie?.name}
+                        </p>
+
+                        <span className='absolute top-0 left-0 rounded-t-[4px] rounded-b-[4px] font-bold w-[20px] h-[20px] bg-[#1cc749] text-center text-white text-[0.65rem] leading-[1.2rem] z-10'>
+                          {index}
+                        </span>
+                        <div className='absolute top-0 left-0 w-[60px] p-[2px] rounded-[4px] bg-[#1cc749]'>
+                          <div className='pt-[86px] relative overflow-hidden rounded-[4px]'>
+                            <img
+                              className='absolute top-0 left-0 w-full h-full object-cover object-top rounded-[4px] overflow-hidden z-10'
+                              src={`https://img.ophim.live/uploads/movies/${movie?.thumb_url}`}
+                              alt={movie?.name}
+                            />
+
+                            <div className='absolute left-0 right-0 top-0 bottom-0 w-[3rem] h-[3rem] m-auto rounded-full text-center leading-[3rem] text-2xl scale-0 duration-200 bg-[#000000b3] shadow-[inset_0_0_0_2px_#fff] z-20'>
+                              <FaPlay />
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                      <div className='text-white font-bold text-[12px]'>
+                        <div className='flex items-center mb-[6px]'>
+                          <span className='px-2 bg-[#1cc749] rounded-2xl mr-[6px]'>{movie?.lang}</span>
+                          <span className='px-2 bg-[#1cc749] rounded-2xl mr-[6px]'>{movie?.quality}</span>
+                          <div className='inline-flex items-center gap-1'>
+                            <FaStar className='text-[#1cc749]' />
+                            <span>{movie?.tmdb?.vote_average}</span>
+                          </div>
+                        </div>
+                        <div className='flex items-center text-[#818083] font-bold text-[12px] '>
+                          <span className='mr-[6px]'>{movie?.year}</span>
+                          <span className='mr-[6px]'>{movie?.time}</span>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+
+            <div
+              className='rounded-md mb-6 bg-[#212026] text-[#818083] overflow-hidden'
+              style={{
+                boxShadow: "inset 0 0 70px rgba(0, 0, 0, .3), 0 0 20px rgba(0, 0, 0, .5)",
+              }}
+            >
+              <h3 className='text-white text-[20px] bg-[#19181d] text-center px-4 py-3 font-semibold'>Top Phim Bộ</h3>
+              <ul className='py-3 px-2 max-h-[540px] overflow-auto small-scrollbar'>
+                {phimBoData &&
+                  phimBoData?.data?.items.map((movie: Movie, index: number) => (
+                    <li className='relative pl-[68px] min-h-[90px] mb-4' key={movie?._id}>
+                      <Link to={`/phim/${movie?.slug}`}>
+                        <p className='text-[16px] font-bold text-white mb-[4px] z-10 hover:text-[#00DC5A] line-clamp-1'>
+                          {movie?.name}
+                        </p>
+
+                        <span className='absolute top-0 left-0 rounded-t-[4px] rounded-b-[4px] font-bold w-[20px] h-[20px] bg-[#1cc749] text-center text-white text-[0.65rem] leading-[1.2rem] z-10'>
+                          {index}
+                        </span>
+                        <div className='absolute top-0 left-0 w-[60px] p-[2px] rounded-[4px] bg-[#1cc749]'>
+                          <div className='pt-[86px] relative overflow-hidden rounded-[4px]'>
+                            <img
+                              className='absolute top-0 left-0 w-full h-full object-cover object-top rounded-[4px] overflow-hidden z-10'
+                              src={`https://img.ophim.live/uploads/movies/${movie?.thumb_url}`}
+                              alt={movie?.name}
+                            />
+
+                            <div className='absolute left-0 right-0 top-0 bottom-0 w-[3rem] h-[3rem] m-auto rounded-full text-center leading-[3rem] text-2xl scale-0 duration-200 bg-[#000000b3] shadow-[inset_0_0_0_2px_#fff] z-20'>
+                              <FaPlay />
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                      <div className='text-white font-bold text-[12px]'>
+                        <div className='flex items-center mb-[6px]'>
+                          <span className='px-2 bg-[#1cc749] rounded-2xl mr-[6px]'>{movie?.lang}</span>
+                          <span className='px-2 bg-[#1cc749] rounded-2xl mr-[6px]'>{movie?.quality}</span>
+                          <div className='inline-flex items-center gap-1'>
+                            <FaStar className='text-[#1cc749]' />
+                            <span>{movie?.tmdb?.vote_average}</span>
+                          </div>
+                        </div>
+                        <div className='flex items-center text-[#818083] font-bold text-[12px] '>
+                          <span className='mr-[6px]'>{movie?.year}</span>
+                          <span className='mr-[6px]'>{movie?.time}</span>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 

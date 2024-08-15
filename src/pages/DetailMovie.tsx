@@ -48,7 +48,7 @@ const DetailMovie = () => {
                 Danh sách tập: {serverName}
               </p>
 
-              <div className='max-h-[150px] scroll-auto overflow-auto episodes-wrapper'>
+              <div className='max-h-[150px] scroll-auto overflow-auto small-scrollbar'>
                 <div className='flex gap-2 flex-wrap'>
                   {episodes?.map((episode: ServerData, index: number) => (
                     <span
@@ -72,7 +72,7 @@ const DetailMovie = () => {
           <div className='flex w-full'>
             <img
               src='https://res.cloudinary.com/datnguyen240/image/upload/v1722168751/avatars/avatar_pnncdk.png'
-              alt=''
+              alt='avatar'
               className='w-[50px] h-[50px] object-cover rounded-full'
             />
             <textarea
@@ -100,7 +100,7 @@ const DetailMovie = () => {
               <div>
                 <img
                   src='https://res.cloudinary.com/datnguyen240/image/upload/v1722168751/avatars/avatar_pnncdk.png'
-                  alt=''
+                  alt='avatar'
                   className='w-[40px] h-[40px] object-cover rounded-full'
                 />
               </div>

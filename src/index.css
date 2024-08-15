@@ -20,7 +20,7 @@ input::-webkit-inner-spin-button {
   width: 10px;
 }
 
-.episodes-wrapper::-webkit-scrollbar {
+.small-scrollbar::-webkit-scrollbar {
   width: 4px;
 }
 
@@ -170,14 +170,4 @@ input::-webkit-inner-spin-button {
 .movie-slider .swiper-button-prev:after {
   font-size: 20px !important;
   font-weight: 700 !important;
-}
-
-@media (max-width: 1200px) {
-  .hide-nav-item {
-    display: none;
-  }
-
-  .show-nav-item {
-    display: block;
-  }
 }

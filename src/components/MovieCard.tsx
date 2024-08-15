@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
-import { removePTags } from "../utils/functions";
+import { removeHTMLTags } from "../utils/functions";
 import { useGetDetailMovieQuery } from "../features/movie/movieApi";
 import { Movie } from "../utils/interfaces";
 import { Link } from "react-router-dom";
@@ -39,8 +39,8 @@ const MovieCard: FC<Props> = ({ slug }) => {
             <Link to={`/phim/${slug}`}>
               <img
                 src={movie?.poster_url}
-                alt=''
-                className='object-cover w-full h-[120px] transition-opacity duration-300 bg-[#303030bb]'
+                alt={movie?.name}
+                className='object-cover w-full h-[120px] transition-opacity duration-300 bg-[#303030bb] font-bold text-white'
               />
             </Link>
             <div className='absolute top-[90px] right-[5px] flex justify-start gap-[10px]'>
@@ -76,7 +76,7 @@ const MovieCard: FC<Props> = ({ slug }) => {
             </div>
             {movie?.content.length > 0 && (
               <p className='line-clamp-4 text-justify mt-[12px] text-white text-[12px] h-[71px] transition-all duration-300'>
-                {removePTags(movie?.content)}
+                {removeHTMLTags(movie?.content)}
               </p>
             )}
             <p className='text-[#00dc5a] flex text-[12px] items-center justify-end pt-2'>
@@ -89,8 +89,8 @@ const MovieCard: FC<Props> = ({ slug }) => {
           <div className='relative transition-all duration-300'>
             <img
               src={movie?.thumb_url}
-              alt=''
-              className='object-cover h-full w-full max-h-[280px] transition-opacity duration-300 rounded-[4px]'
+              alt={movie?.name}
+              className='object-cover w-full max-h-[280px] h-[280px] transition-opacity duration-300 rounded-[4px] font-bold text-white'
             />
             <div
               className='absolute bottom-0 left-0 right-0 z-[300] h-[60px]'
