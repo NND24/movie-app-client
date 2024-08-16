@@ -267,121 +267,119 @@ const NavItems = (props: Props) => {
   const [openNationModal, setOpenNationModal] = useState(false);
 
   return (
-    <div>
-      <div className='flex items-center gap-[15px]'>
-        {navItemsData.map((nav) => (
-          <Link
-            to={`/danh-sach/${nav.slug}?page=1`}
-            className='hidden xl:block text-[17px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] hover:text-[#00dc5a]'
-          >
-            {nav.name}
-          </Link>
-        ))}
-
-        <div
-          className='flex xl:hidden items-center relative cursor-pointer text-[17px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] pr-4'
-          onClick={() => {
-            setOpenGenreModal(false);
-            setOpenNationModal(false);
-            setOpenCatModal(!openCatModal);
-          }}
+    <div className='flex items-center gap-[15px]'>
+      {navItemsData.map((nav) => (
+        <Link
+          to={`/danh-sach/${nav.slug}?page=1`}
+          className='hidden xl:block text-[17px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] hover:text-[#00dc5a]'
         >
-          <span>Danh Sách</span>
-          <FaSortDown fill='#00dc5a' className='absolute top-[2px] right-[-2px]' />
+          {nav.name}
+        </Link>
+      ))}
 
-          {openCatModal && (
-            <>
-              <FaSortUp className='absolute top-[25px] left-[5px]' fill='#00dc5a' />
-              <ul
-                className='absolute top-[32px] left-[0px] w-[350px] py-1 px-2 bg-[#1a191f] grid grid-cols-3 justify-items-center'
-                style={{
-                  borderTopColor: "#00dc5a",
-                  borderTopWidth: "3px",
-                  boxShadow: "inset 0 0 70px rgba(0, 0, 0, .3), 0 0 20px rgba(0, 0, 0, .5)",
-                }}
-              >
-                {navItemsData.map((nav) => (
-                  <Link
-                    to={`/danh-sach/${nav.slug}?page=1`}
-                    className='block text-[16px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] hover:text-[#00dc5a] p-2 text-left'
-                  >
-                    {nav.name}
-                  </Link>
-                ))}
-              </ul>
-            </>
-          )}
-        </div>
+      <div
+        className='flex xl:hidden items-center relative cursor-pointer text-[17px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] pr-4'
+        onClick={() => {
+          setOpenGenreModal(false);
+          setOpenNationModal(false);
+          setOpenCatModal(!openCatModal);
+        }}
+      >
+        <span>Danh Sách</span>
+        <FaSortDown fill='#00dc5a' className='absolute top-[2px] right-[-2px]' />
 
-        <div
-          className='flex items-center relative cursor-pointer text-[17px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] pr-4'
-          onClick={() => {
-            setOpenCatModal(false);
-            setOpenNationModal(false);
-            setOpenGenreModal(!openGenreModal);
-          }}
-        >
-          <span>Thể Loại</span>
-          <FaSortDown fill='#00dc5a' className='absolute top-[2px] right-[-2px]' />
+        {openCatModal && (
+          <>
+            <FaSortUp className='absolute top-[25px] left-[5px]' fill='#00dc5a' />
+            <ul
+              className='absolute top-[32px] left-[0px] w-[350px] py-1 px-2 bg-[#1a191f] grid grid-cols-3 justify-items-center'
+              style={{
+                borderTopColor: "#00dc5a",
+                borderTopWidth: "3px",
+                boxShadow: "inset 0 0 70px rgba(0, 0, 0, .3), 0 0 20px rgba(0, 0, 0, .5)",
+              }}
+            >
+              {navItemsData.map((nav) => (
+                <Link
+                  to={`/danh-sach/${nav.slug}?page=1`}
+                  className='block text-[16px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] hover:text-[#00dc5a] p-2 text-left'
+                >
+                  {nav.name}
+                </Link>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
 
-          {openGenreModal && (
-            <>
-              <FaSortUp className='absolute top-[25px] left-[5px]' fill='#00dc5a' />
-              <ul
-                className='absolute top-[32px] left-[0px] w-[350px] py-1 px-2 bg-[#1a191f] grid grid-cols-3 justify-items-center'
-                style={{
-                  borderTopColor: "#00dc5a",
-                  borderTopWidth: "3px",
-                  boxShadow: "inset 0 0 70px rgba(0, 0, 0, .3), 0 0 20px rgba(0, 0, 0, .5)",
-                }}
-              >
-                {genreItemsData.map((genre) => (
-                  <Link
-                    to={`/the-loai/${genre.slug}?page=1`}
-                    className='text-[16px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] hover:text-[#00dc5a] p-2 text-left'
-                  >
-                    {genre.name}
-                  </Link>
-                ))}
-              </ul>
-            </>
-          )}
-        </div>
+      <div
+        className='flex items-center relative cursor-pointer text-[17px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] pr-4'
+        onClick={() => {
+          setOpenCatModal(false);
+          setOpenNationModal(false);
+          setOpenGenreModal(!openGenreModal);
+        }}
+      >
+        <span>Thể Loại</span>
+        <FaSortDown fill='#00dc5a' className='absolute top-[2px] right-[-2px]' />
 
-        <div
-          className='flex items-center relative cursor-pointer text-[17px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] pr-4'
-          onClick={() => {
-            setOpenCatModal(false);
-            setOpenGenreModal(false);
-            setOpenNationModal(!openNationModal);
-          }}
-        >
-          <span>Quốc Gia</span>
-          <FaSortDown fill='#00dc5a' className='absolute top-[2px] right-[-2px]' />
+        {openGenreModal && (
+          <>
+            <FaSortUp className='absolute top-[25px] left-[5px]' fill='#00dc5a' />
+            <ul
+              className='absolute top-[32px] left-[0px] w-[350px] py-1 px-2 bg-[#1a191f] grid grid-cols-3 justify-items-center'
+              style={{
+                borderTopColor: "#00dc5a",
+                borderTopWidth: "3px",
+                boxShadow: "inset 0 0 70px rgba(0, 0, 0, .3), 0 0 20px rgba(0, 0, 0, .5)",
+              }}
+            >
+              {genreItemsData.map((genre) => (
+                <Link
+                  to={`/the-loai/${genre.slug}?page=1`}
+                  className='text-[16px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] hover:text-[#00dc5a] p-2 text-left'
+                >
+                  {genre.name}
+                </Link>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
 
-          {openNationModal && (
-            <>
-              <FaSortUp className='absolute top-[25px] left-[5px]' fill='#00dc5a' />
-              <ul
-                className='absolute top-[32px] left-[0px] w-[420px] py-1 px-2 bg-[#1a191f] grid grid-cols-3 justify-items-center'
-                style={{
-                  borderTopColor: "#00dc5a",
-                  borderTopWidth: "3px",
-                  boxShadow: "inset 0 0 70px rgba(0, 0, 0, .3), 0 0 20px rgba(0, 0, 0, .5)",
-                }}
-              >
-                {nationItemsData.map((nation) => (
-                  <Link
-                    to={`/quoc-gia/${nation.slug}?page=1`}
-                    className='text-[16px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] hover:text-[#00dc5a] p-2 text-left'
-                  >
-                    {nation.name}
-                  </Link>
-                ))}
-              </ul>
-            </>
-          )}
-        </div>
+      <div
+        className='flex items-center relative cursor-pointer text-[17px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] pr-4'
+        onClick={() => {
+          setOpenCatModal(false);
+          setOpenGenreModal(false);
+          setOpenNationModal(!openNationModal);
+        }}
+      >
+        <span>Quốc Gia</span>
+        <FaSortDown fill='#00dc5a' className='absolute top-[2px] right-[-2px]' />
+
+        {openNationModal && (
+          <>
+            <FaSortUp className='absolute top-[25px] left-[5px]' fill='#00dc5a' />
+            <ul
+              className='absolute top-[32px] left-[0px] w-[420px] py-1 px-2 bg-[#1a191f] grid grid-cols-3 justify-items-center'
+              style={{
+                borderTopColor: "#00dc5a",
+                borderTopWidth: "3px",
+                boxShadow: "inset 0 0 70px rgba(0, 0, 0, .3), 0 0 20px rgba(0, 0, 0, .5)",
+              }}
+            >
+              {nationItemsData.map((nation) => (
+                <Link
+                  to={`/quoc-gia/${nation.slug}?page=1`}
+                  className='text-[16px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] hover:text-[#00dc5a] p-2 text-left'
+                >
+                  {nation.name}
+                </Link>
+              ))}
+            </ul>
+          </>
+        )}
       </div>
     </div>
   );
