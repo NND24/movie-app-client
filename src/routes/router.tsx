@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
     element: <WatchMovie />,
   },
   {
-    path: "/danh-sach/:cat",
+    path: "/danh-sach/:category",
     element: <ListMovie />,
   },
   {
@@ -27,6 +27,10 @@ export const router = createBrowserRouter([
   },
   {
     path: "/quoc-gia/:nation",
+    element: <ListMovie />,
+  },
+  {
+    path: "/tim-kiem/:search",
     element: <ListMovie />,
   },
 ]);

@@ -7,7 +7,7 @@ import Loader from "../components/Loader/Loader";
 import { Episode, Movie, ServerData } from "../utils/interfaces";
 import Comment from "../components/Comment";
 import { removeHTMLTags } from "../utils/functions";
-import { FaEye, FaStar } from "react-icons/fa";
+import { FaEye, FaHome, FaStar } from "react-icons/fa";
 
 const WatchMovie = () => {
   const { slug, episode } = useParams<{ slug: string; episode: string }>();
@@ -17,8 +17,6 @@ const WatchMovie = () => {
   const serverNameFromUrl = queryParams.get("server-name");
 
   const decodedServerName = serverNameFromUrl ? decodeURIComponent(serverNameFromUrl) : "";
-
-  console.log(decodedServerName);
 
   const { data, isLoading } = useGetDetailMovieQuery(slug as string);
 
@@ -45,10 +43,24 @@ const WatchMovie = () => {
       <Heading title={`Phim ${movie?.name}`} description='' keywords='' icon='../../public/favicon.ico' />
       <Header />
 
-      <div className='w-[90%] m-auto mt-[60px] flex items-center justify-center'>
+      <div className='w-[90%] m-auto mt-[60px] flex items-center text-white font-semibold'>
+        <Link to='/' className='flex items-center gap-1 hover:text-[#1cc749]'>
+          <FaHome /> <span>Trang chủ</span>
+        </Link>
+        <span className='px-2'>/</span>
+        <Link to={`/phim/${movie?.slug}`} className='flex items-center gap-1 hover:text-[#1cc749]'>
+          <span>{movie?.name}</span>
+        </Link>
+        <span className='px-2'>/</span>
+        <Link to='' className='flex items-center gap-1 hover:text-[#1cc749]'>
+          <span>{selectedEpisode?.filename}</span>
+        </Link>
+      </div>
+
+      <div className='w-[90%] m-auto flex items-center justify-center pt-2'>
         <iframe
           src={`${selectedEpisode?.link_embed}?autoplay=1`}
-          className='h-[88vh] w-full'
+          className='h-[84vh] w-full'
           frameBorder='0'
           allowFullScreen
           title='Video Player'
@@ -57,7 +69,7 @@ const WatchMovie = () => {
 
       <div className='w-[90%] m-auto flex justify-center pt-5'>
         <div className='border-[1px] border-slate-50 rounded-[4px] p-2'>
-          <span className='py-1 px-1 text-white font-semibold text-center mr-2'>Đổi Server:</span>
+          <span className='py-1 px-2 text-white font-semibold text-center mr-2'>Đổi Server:</span>
           {separatedData &&
             Object.keys(separatedData).map((serverName) => (
               <span

@@ -26,6 +26,12 @@ export const movieApi = movieApiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getMovieBySearch: builder.query({
+      query: ({ search, page }: { search: string; page: number }) => ({
+        url: `/v1/api/tim-kiem?keyword=${search}&page=${page}`,
+        method: "GET",
+      }),
+    }),
     getDetailMovie: builder.query({
       query: (slug: string) => ({
         url: `phim/${slug}`,
@@ -40,5 +46,6 @@ export const {
   useGetMovieByCategoryQuery,
   useGetMovieByGenreQuery,
   useGetMovieByNationQuery,
+  useGetMovieBySearchQuery,
   useGetDetailMovieQuery,
 } = movieApi;

@@ -6,6 +6,7 @@ import {
   useGetMovieByCategoryQuery,
   useGetMovieByGenreQuery,
   useGetMovieByNationQuery,
+  useGetMovieBySearchQuery,
 } from "../features/movie/movieApi";
 import Loader from "../components/Loader/Loader";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -16,7 +17,12 @@ import { FaChevronLeft, FaChevronRight, FaStar } from "react-icons/fa";
 import { FaPlay, FaRegCirclePlay } from "react-icons/fa6";
 
 const ListMovie = () => {
-  const { cat, genre, nation } = useParams<{ cat: string; genre: string; nation: string }>();
+  const { category, genre, nation, search } = useParams<{
+    category: string;
+    genre: string;
+    nation: string;
+    search: string;
+  }>();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -38,17 +44,20 @@ const ListMovie = () => {
 
   const [page, setPage] = useState(currentPage);
 
-  const categoryQuery = useGetMovieByCategoryQuery({ category: cat || "", page: currentPage });
+  const categoryQuery = useGetMovieByCategoryQuery({ category: category || "", page: currentPage });
   const genreQuery = useGetMovieByGenreQuery({ genre: genre || "", page: currentPage });
   const nationQuery = useGetMovieByNationQuery({ nation: nation || "", page: currentPage });
+  const searchQuery = useGetMovieBySearchQuery({ search: search || "", page: currentPage });
 
   let queryResult;
-  if (cat) {
+  if (category) {
     queryResult = categoryQuery;
   } else if (genre) {
     queryResult = genreQuery;
   } else if (nation) {
     queryResult = nationQuery;
+  } else if (search) {
+    queryResult = searchQuery;
   } else {
     queryResult = categoryQuery;
   }
@@ -61,7 +70,8 @@ const ListMovie = () => {
 
   if (isLoading && phimSapChieuLoading && phimLeLoading && phimBoLoading) return <Loader />;
 
-  const { totalItems, totalItemsPerPage } = data.data.params.pagination;
+  const { totalItems, totalItemsPerPage } = data?.data?.params?.pagination || { totalItems: 0, totalItemsPerPage: 1 };
+
   const totalPages = Math.ceil(totalItems / totalItemsPerPage);
 
   const handlePageChange = (newPage: number) => {
@@ -109,16 +119,16 @@ const ListMovie = () => {
 
   return (
     <div>
-      <Heading title={data.data?.titlePage} description='' keywords='' icon='../../public/favicon.ico' />
+      <Heading title={data?.data?.titlePage} description='' keywords='' icon='../../public/favicon.ico' />
       <Header />
-      <Hero items={data.data?.items || []} />
+      <Hero items={data?.data?.items || []} />
 
       <div className='w-[90%] m-auto'>
-        <h4 className='text-[22px] font-bold text-white py-3'>{data.data?.titlePage}</h4>
+        <h4 className='text-[22px] font-bold text-white py-3'>{data?.data?.titlePage}</h4>
         <div className='grid grid-cols-12 gap-[35px]'>
           <div className='xl:col-span-9 lg:col-span-8 col-span-12'>
             <div className='grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-4 sm:grid-cols-3 sm:gap-[20px] grid-cols-2 gap-[15px]'>
-              {data.data?.items?.map((movie: Movie, index: number) => (
+              {data?.data?.items?.map((movie: Movie, index: number) => (
                 <div key={index}>
                   <MovieCard slug={movie?.slug} />
                 </div>

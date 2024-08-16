@@ -21,7 +21,7 @@ const DetailMovie = () => {
 
   const movie = data?.movie as Movie;
 
-  const separatedData = data.episodes.reduce((acc: Record<string, ServerData[]>, server: Episode) => {
+  const separatedData = data?.episodes.reduce((acc: Record<string, ServerData[]>, server: Episode) => {
     acc[server.server_name] = server.server_data;
     return acc;
   }, {} as Record<string, ServerData[]>);

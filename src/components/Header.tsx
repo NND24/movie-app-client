@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiHistory, BiSearch, BiUser } from "react-icons/bi";
 import NavItems from "./NavItems";
 
-type Props = {};
-
-const Header = (props: Props) => {
+const Header = () => {
   const [active, setActive] = useState(false);
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,12 +18,16 @@ const Header = (props: Props) => {
     }
   }, []);
 
+  const handelSearch = () => {
+    navigate(`/tim-kiem/${search}?page=1`);
+  };
+
   return (
     <header className='w-full relative'>
       <div
         className={`${
           active
-            ? "dark:bg-[#0a0c0f] bg-white fixed top-0 left-0 w-full h-[60px] z-[9999] transition duration-500 ease-in-out"
+            ? "bg-[#0a0c0f] fixed top-0 left-0 w-full h-[60px] z-[9999] transition duration-500 ease-in-out"
             : "w-full fixed top-0 left-0 h-[60px] z-[1000]"
         }`}
       >
@@ -44,14 +48,21 @@ const Header = (props: Props) => {
               <div className='w-[240px] h-[36px] relative flex rounded-[4px]'>
                 <input
                   type='search'
-                  className='w-full h-full pr-[40px] pl-[12px] rounded-[4px] bg-[#ffffff33] text-[#ffffff99] size-[14px] overflow-hidden whitespace-nowrap text-ellipsis'
+                  className='w-full h-full pr-[40px] pl-[12px] rounded-[4px] bg-[#bebebe42] text-white size-[14px] overflow-hidden whitespace-nowrap text-ellipsis outline-none'
                   autoComplete='off'
                   placeholder='Search...'
+                  onChange={(e) => setSearch(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handelSearch();
+                    }
+                  }}
                 />
                 <BiSearch
                   className='absolute right-[10px] top-[8px] flex align-center justify-center cursor-pointer'
                   size={24}
                   fill='#d8d2d1'
+                  onClick={handelSearch}
                 />
               </div>
 

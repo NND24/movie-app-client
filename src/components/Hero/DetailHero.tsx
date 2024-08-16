@@ -21,10 +21,10 @@ const DetailHero: FC<Props> = ({ slug }) => {
         <img src={movie?.poster_url} alt={movie?.name} className='w-full h-full object-cover bg-[#303030bb]' />
       </Link>
 
-      <div className='absolute top-0 left-0 right-0 h-[60px] bg-gradient-to-b from-[#303030bb] to-transparent z-[10]' />
-      <div className='absolute bottom-0 left-0 right-0 h-[80px] bg-gradient-to-t from-[#303030bb] to-transparent z-[10]' />
-      <div className='absolute top-0 bottom-0 left-0 h-full w-[70px] bg-gradient-to-r from-[#303030bb] to-transparent z-[10]' />
-      <div className='absolute top-0 bottom-0 right-0 h-full w-[70px] bg-gradient-to-l from-[#303030bb] to-transparent z-[10]' />
+      <div className='absolute top-0 left-0 right-0 h-[80px] bg-gradient-to-b from-[#0a0c0f] to-transparent z-[10]' />
+      <div className='absolute bottom-0 left-0 right-0 h-[80px] bg-gradient-to-t from-[#0a0c0f] to-transparent z-[10]' />
+      {/* <div className='absolute top-0 bottom-0 left-0 h-full w-[80px] bg-gradient-to-r from-[#0a0c0f] to-transparent z-[10]' />
+      <div className='absolute top-0 bottom-0 right-0 h-full w-[80px] bg-gradient-to-l from-[#0a0c0f] to-transparent z-[10]' /> */}
 
       <div className='absolute left-[64px] bottom-[calc(10%+24px+3.5vw)] flex flex-col items-start w-[50%] z-[20]'>
         <h1 className='font-bold text-[30px] text-[#e0e0e0] text-left drop-shadow-[1px_1px_1px_#000]'>{movie?.name}</h1>
@@ -71,7 +71,7 @@ const DetailHero: FC<Props> = ({ slug }) => {
             {movie?.category.map((cat) => (
               <Link
                 to={`/the-loai/${cat.slug}?page=1`}
-                className='px-[6px] rounded-[2px] color-[#ececec] bg-[#ffffff14] text-[14px] font-medium text-white w-max h-full shadow-[rgba(0,0,0,0.5)_0px_1px_2px]'
+                className='px-[6px] rounded-[2px] color-[#ececec] bg-[#69696950] text-[14px] font-medium text-white w-max h-full shadow-[rgba(0,0,0,0.5)_0px_1px_2px]'
                 key={cat.id}
               >
                 {cat.name}
