@@ -4,47 +4,94 @@ import Header from "../components/Header";
 import Heading from "../components/Heading";
 import Hero from "../components/Hero/Hero";
 import MovieSlider from "../components/MovieSlider";
-import { useGetMovieByCategoryQuery, useGetNewUpdatedMovieQuery } from "../features/movie/movieApi";
+import {
+  useGetMovieByCategoryQuery,
+  useGetMovieByGenreQuery,
+  useGetNewUpdatedMovieQuery,
+} from "../features/movie/movieApi";
 import Loader from "../components/Loader/Loader";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { genreItemsData, navItemsData } from "../components/NavItems";
 
 const Home = () => {
   const { data: movieData, isLoading } = useGetNewUpdatedMovieQuery(1);
-  const { data: tvShowsData, isLoading: tvShowsLoading } = useGetMovieByCategoryQuery({
-    category: "tv-shows",
-    page: 1,
-  });
-  const { data: phimLeData, isLoading: phimLeLoading } = useGetMovieByCategoryQuery({
-    category: "phim-le",
-    page: 1,
-  });
-  const { data: phimBoData, isLoading: phimBoLoading } = useGetMovieByCategoryQuery({
-    category: "phim-bo",
-    page: 1,
-  });
-  const { data: phimDangChieuData, isLoading: phimDangChieuLoading } = useGetMovieByCategoryQuery({
-    category: "phim-dang-chieu",
-    page: 1,
-  });
+
+  const initialSliders = 2; // Number of sliders initially visible
+  const incrementSliders = 2; // Number of sliders to show/hide on each load/hide
+
+  const catQueries = navItemsData.map((cat) => ({
+    cat,
+    query: useGetMovieByCategoryQuery({
+      category: cat.slug,
+      page: 1,
+    }),
+  }));
+
+  const [visibleCategorySliders, setVisibleCategorySliders] = useState(initialSliders);
+  const [visibleGenreSliders, setVisibleGenreSliders] = useState(initialSliders);
+
+  const genreQueries = genreItemsData.map((cat) => ({
+    cat,
+    query: useGetMovieByGenreQuery({
+      genre: cat.slug,
+      page: 1,
+    }),
+  }));
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  });
+  }, []);
 
-  if (isLoading && tvShowsLoading && phimLeLoading && phimBoLoading && phimDangChieuLoading) return <Loader />;
+  if (isLoading) return <Loader />;
+
+  const loadMoreCategorySliders = () => {
+    setVisibleCategorySliders((prev) => prev + incrementSliders);
+  };
+
+  const loadMoreGenreSliders = () => {
+    setVisibleGenreSliders((prev) => prev + incrementSliders);
+  };
+
+  const hideCategorySliders = () => {
+    setVisibleCategorySliders(initialSliders);
+  };
+
+  const hideGenreSliders = () => {
+    setVisibleGenreSliders(initialSliders);
+  };
 
   return (
     <div>
       <Heading title='dMOVIE' description='' keywords='' icon='../../public/favicon.ico' />
       <Header />
       <Hero items={movieData?.items || []} />
-      <MovieSlider
-        slug={tvShowsData?.data?.type_list}
-        title={tvShowsData?.data?.titlePage}
-        items={tvShowsData?.data?.items || []}
-      />
+
+      {catQueries.slice(0, visibleCategorySliders).map(({ cat, query }) => {
+        if (query.isLoading || !query.data) return null;
+
+        return (
+          <MovieSlider
+            key={cat.slug}
+            title={query.data.data?.titlePage}
+            slug={query.data.data?.type_list}
+            items={query.data.data?.items || []}
+          />
+        );
+      })}
+
+      <div className='text-center my-4'>
+        {visibleCategorySliders < catQueries.length && (
+          <button onClick={loadMoreCategorySliders} className='px-4 py-2 bg-[#23252b] text-white rounded-lg font-bold'>
+            Xem Thêm
+          </button>
+        )}
+        {visibleCategorySliders > initialSliders && (
+          <button onClick={hideCategorySliders} className='px-4 py-2 bg-[#23252b] text-white rounded-lg font-bold ml-2'>
+            Ẩn Bớt
+          </button>
+        )}
+      </div>
 
       <div className='w-[90%] mx-auto h-[1px] bg-[#26252a] my-2'></div>
 
@@ -57,6 +104,7 @@ const Home = () => {
         </Link>
         {navItemsData.map((nav) => (
           <Link
+            key={nav.slug}
             to={`/danh-sach/${nav.slug}?page=1`}
             className='flex items-center h-[36px] px-[17px] bg-[#23252b] rounded-[4px] gap-2'
           >
@@ -65,6 +113,7 @@ const Home = () => {
         ))}
         {genreItemsData.map((genre) => (
           <Link
+            key={genre.slug}
             to={`/the-loai/${genre.slug}?page=1`}
             className='flex items-center h-[36px] px-[17px] bg-[#23252b] rounded-[4px] gap-2'
           >
@@ -75,21 +124,32 @@ const Home = () => {
 
       <div className='w-[90%] mx-auto h-[1px] bg-[#26252a] my-2'></div>
 
-      <MovieSlider
-        slug={phimLeData?.data?.type_list}
-        title={phimLeData?.data?.titlePage}
-        items={phimLeData?.data?.items || []}
-      />
-      <MovieSlider
-        slug={phimBoData?.data?.type_list}
-        title={phimBoData?.data?.titlePage}
-        items={phimBoData?.data?.items || []}
-      />
-      <MovieSlider
-        slug={phimDangChieuData?.data?.type_list}
-        title={phimDangChieuData?.data?.titlePage}
-        items={phimDangChieuData?.data?.items || []}
-      />
+      {genreQueries.slice(0, visibleGenreSliders).map(({ cat, query }) => {
+        if (query.isLoading || !query.data) return null;
+
+        return (
+          <MovieSlider
+            key={cat.slug}
+            title={query.data.data?.titlePage}
+            slug={query.data.data?.type_list}
+            items={query.data.data?.items || []}
+          />
+        );
+      })}
+
+      <div className='text-center my-4'>
+        {visibleGenreSliders < genreQueries.length && (
+          <button onClick={loadMoreGenreSliders} className='px-4 py-2 bg-[#23252b] text-white rounded-lg font-bold'>
+            Xem Thêm
+          </button>
+        )}
+        {visibleGenreSliders > initialSliders && (
+          <button onClick={hideGenreSliders} className='px-4 py-2 bg-[#23252b] text-white rounded-lg font-bold ml-2'>
+            Ẩn Bớt
+          </button>
+        )}
+      </div>
+
       <Footer />
     </div>
   );

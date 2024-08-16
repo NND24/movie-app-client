@@ -55,7 +55,7 @@ const DetailHero: FC<Props> = ({ slug }) => {
               <span className='mr-[6px]'>•</span>
               {movie?.country.map((country) => (
                 <Link
-                  to=''
+                  to={`/quoc-gia/${country.slug}?page=1`}
                   className='mr-[6px] font-medium border-[#e0e0e0] border-[1px] border-solid rounded-[30px] px-[8px]'
                   key={country.id}
                 >
@@ -70,7 +70,7 @@ const DetailHero: FC<Props> = ({ slug }) => {
           <div className='flex gap-[8px] mt-[4px] flex-wrap w-full'>
             {movie?.category.map((cat) => (
               <Link
-                to=''
+                to={`/the-loai/${cat.slug}?page=1`}
                 className='px-[6px] rounded-[2px] color-[#ececec] bg-[#ffffff14] text-[14px] font-medium text-white w-max h-full shadow-[rgba(0,0,0,0.5)_0px_1px_2px]'
                 key={cat.id}
               >

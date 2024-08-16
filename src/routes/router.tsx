@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
 import DetailMovie from "../pages/DetailMovie";
 import ListMovie from "../pages/ListMovie";
+import WatchMovie from "../pages/WatchMovie";
 
 export const router = createBrowserRouter([
   {
@@ -11,6 +12,10 @@ export const router = createBrowserRouter([
   {
     path: "/phim/:slug",
     element: <DetailMovie />,
+  },
+  {
+    path: "/phim/:slug/:episode",
+    element: <WatchMovie />,
   },
   {
     path: "/danh-sach/:cat",

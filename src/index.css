@@ -90,78 +90,78 @@ input::-webkit-inner-spin-button {
 }
 
 .movie-slider .swiper-button-next {
-  top: 40px;
+  top: 38px;
   right: 5%;
 }
 
 .movie-slider .swiper-button-prev {
-  top: 40px;
+  top: 38px;
   left: 91%;
 }
 
 @media (min-width: 1024px) {
   .movie-slider .swiper-button-prev {
-    top: 40px;
+    top: 38px;
     left: 90%;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .movie-slider .swiper-button-next {
-    top: 40px;
+    top: 38px;
     right: 4%;
   }
 
   .movie-slider .swiper-button-prev {
-    top: 40px;
+    top: 38px;
     left: 89%;
   }
 }
 
 @media (min-width: 640px) and (max-width: 767px) {
   .movie-slider .swiper-button-next {
-    top: 40px;
+    top: 38px;
     right: 4%;
   }
 
   .movie-slider .swiper-button-prev {
-    top: 40px;
+    top: 38px;
     left: 88%;
   }
 }
 
 @media (min-width: 590px) and (max-width: 639px) {
   .movie-slider .swiper-button-next {
-    top: 40px;
+    top: 38px;
     right: 4%;
   }
 
   .movie-slider .swiper-button-prev {
-    top: 40px;
+    top: 38px;
     left: 87%;
   }
 }
 
 @media (min-width: 400px) and (max-width: 589px) {
   .movie-slider .swiper-button-next {
-    top: 40px;
+    top: 38px;
     right: 3%;
   }
 
   .movie-slider .swiper-button-prev {
-    top: 40px;
+    top: 38px;
     left: 86%;
   }
 }
 
 @media (min-width: 320px) and (max-width: 399px) {
   .movie-slider .swiper-button-next {
-    top: 40px;
+    top: 38px;
     right: 3%;
   }
 
   .movie-slider .swiper-button-prev {
-    top: 40px;
+    top: 38px;
     left: 82%;
   }
 }

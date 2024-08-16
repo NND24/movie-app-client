@@ -80,7 +80,7 @@ const MovieCard: FC<Props> = ({ slug }) => {
               </p>
             )}
             <p className='text-[#00dc5a] flex text-[12px] items-center justify-end pt-2'>
-              more info <FaChevronRight />
+              Chi tiết <FaChevronRight />
             </p>
           </Link>
         </div>
