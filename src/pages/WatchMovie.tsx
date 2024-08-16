@@ -72,7 +72,8 @@ const WatchMovie = () => {
           <span className='py-1 px-2 text-white font-semibold text-center mr-2'>Đổi Server:</span>
           {separatedData &&
             Object.keys(separatedData).map((serverName) => (
-              <span
+              <Link
+                to={`/phim/${slug}/${episode}?server-name=${encodeURIComponent(serverName)}`}
                 className={`
                   rounded-[4px] py-1 px-1 bg-[#0A0C0F] hover:bg-[#1cc749] text-white font-semibold cursor-pointer text-center mr-2 ${
                     serverName === selectedServerName ? "!bg-[#1cc749]" : ""
@@ -80,7 +81,7 @@ const WatchMovie = () => {
                 onClick={() => setSelectedServerName(serverName)}
               >
                 {serverName}
-              </span>
+              </Link>
             ))}
         </div>
       </div>
@@ -88,25 +89,27 @@ const WatchMovie = () => {
       <div className='w-[90%] m-auto'>
         {separatedData &&
           Object.entries(separatedData).map(([serverName, episodes]) => (
-            <div key={serverName} className='py-3'>
-              <p className='text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] text-[18px] font-semibold pb-2'>
-                Danh sách tập: {serverName}
-              </p>
-
+            <div key={serverName}>
               {selectedServerName === serverName && (
-                <div className='max-h-[160px] scroll-auto overflow-auto small-scrollbar'>
-                  <div className='grid gap-2' style={{ gridTemplateColumns: "repeat(auto-fill, minmax(80px, 1fr))" }}>
-                    {episodes?.map((e: ServerData, index: number) => (
-                      <Link
-                        to={`/phim/${slug}/${e.name}?server-name=${encodeURIComponent(serverName)}`}
-                        className={`rounded-[4px] py-1 bg-[#0A0C0F] hover:bg-[#1cc749] text-white font-semibold cursor-pointer text-center ${
-                          e.name === episode ? "!bg-[#1cc749]" : ""
-                        }`}
-                        key={index}
-                      >
-                        {e.name}
-                      </Link>
-                    ))}
+                <div className='py-3'>
+                  <p className='text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] text-[18px] font-semibold pb-2'>
+                    Danh sách tập: {serverName}
+                  </p>
+
+                  <div className='max-h-[160px] scroll-auto overflow-auto small-scrollbar'>
+                    <div className='grid gap-2' style={{ gridTemplateColumns: "repeat(auto-fill, minmax(80px, 1fr))" }}>
+                      {episodes?.map((e: ServerData, index: number) => (
+                        <Link
+                          to={`/phim/${slug}/${e.name}?server-name=${encodeURIComponent(serverName)}`}
+                          className={`rounded-[4px] py-1 bg-[#0A0C0F] hover:bg-[#1cc749] text-white font-semibold cursor-pointer text-center ${
+                            e.name === episode ? "!bg-[#1cc749]" : ""
+                          }`}
+                          key={index}
+                        >
+                          {e.name}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}

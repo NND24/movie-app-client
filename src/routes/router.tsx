@@ -3,6 +3,7 @@ import Home from "../pages/Home";
 import DetailMovie from "../pages/DetailMovie";
 import ListMovie from "../pages/ListMovie";
 import WatchMovie from "../pages/WatchMovie";
+import FollowedMovie from "../pages/FollowedMovie";
 
 export const router = createBrowserRouter([
   {
@@ -32,5 +33,9 @@ export const router = createBrowserRouter([
   {
     path: "/tim-kiem/:search",
     element: <ListMovie />,
+  },
+  {
+    path: "/theo-doi",
+    element: <FollowedMovie />,
   },
 ]);

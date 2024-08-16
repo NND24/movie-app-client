@@ -1,8 +1,8 @@
 import { FC, useState } from "react";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
-import { removeHTMLTags } from "../utils/functions";
-import { useGetDetailMovieQuery } from "../features/movie/movieApi";
-import { Movie } from "../utils/interfaces";
+import { removeHTMLTags } from "../../utils/functions";
+import { useGetDetailMovieQuery } from "../../features/movie/movieApi";
+import { Movie } from "../../utils/interfaces";
 import { Link } from "react-router-dom";
 import { FaEye, FaStar, FaPlay, FaChevronRight } from "react-icons/fa6";
 

@@ -3,7 +3,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Heading from "../components/Heading";
 import Hero from "../components/Hero/Hero";
-import MovieSlider from "../components/MovieSlider";
+import MovieSlider from "../components/Movie/MovieSlider";
 import {
   useGetMovieByCategoryQuery,
   useGetMovieByGenreQuery,
@@ -17,8 +17,8 @@ import { genreItemsData, navItemsData } from "../components/NavItems";
 const Home = () => {
   const { data: movieData, isLoading } = useGetNewUpdatedMovieQuery(1);
 
-  const initialSliders = 2; // Number of sliders initially visible
-  const incrementSliders = 2; // Number of sliders to show/hide on each load/hide
+  const initialSliders = 2;
+  const incrementSliders = 2;
 
   const catQueries = navItemsData.map((cat) => ({
     cat,

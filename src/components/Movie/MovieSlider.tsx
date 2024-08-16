@@ -5,7 +5,7 @@ import "swiper/css/pagination";
 
 import { Navigation } from "swiper/modules";
 import MovieCard from "./MovieCard";
-import { Movie } from "../utils/interfaces";
+import { Movie } from "../../utils/interfaces";
 import { Link } from "react-router-dom";
 
 type Props = {

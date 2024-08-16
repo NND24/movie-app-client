@@ -10,7 +10,7 @@ import {
 } from "../features/movie/movieApi";
 import Loader from "../components/Loader/Loader";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import MovieCard from "../components/MovieCard";
+import MovieCard from "../components/Movie/MovieCard";
 import { Movie } from "../utils/interfaces";
 import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight, FaStar } from "react-icons/fa";
