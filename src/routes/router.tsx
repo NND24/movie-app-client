@@ -4,6 +4,7 @@ import DetailMovie from "../pages/DetailMovie";
 import ListMovie from "../pages/ListMovie";
 import WatchMovie from "../pages/WatchMovie";
 import FollowedMovie from "../pages/FollowedMovie";
+import History from "../pages/History";
 
 export const router = createBrowserRouter([
   {
@@ -37,5 +38,9 @@ export const router = createBrowserRouter([
   {
     path: "/theo-doi",
     element: <FollowedMovie />,
+  },
+  {
+    path: "/lich-su",
+    element: <History />,
   },
 ]);

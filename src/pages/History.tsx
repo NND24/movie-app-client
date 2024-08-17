@@ -13,10 +13,11 @@ import Loader from "../components/Loader/Loader";
 import { Movie } from "../utils/interfaces";
 import Footer from "../components/Footer";
 import FollowedMovieCard from "../components/Movie/FollowedMovieCard";
+import HistoryMovieCard from "../components/Movie/HistoryMovieCard";
 
 type Props = {};
 
-const FollowedMovie = (props: Props) => {
+const History = (props: Props) => {
   const { category, genre, nation, search } = useParams<{
     category: string;
     genre: string;
@@ -118,7 +119,7 @@ const FollowedMovie = (props: Props) => {
   const pageNumbers = getPageNumbers();
   return (
     <div>
-      <Heading title={`Tủ phim bạn đang theo dõi`} description='' keywords='' icon='../../public/favicon.ico' />
+      <Heading title={`Lịch sử xem phim của bạn`} description='' keywords='' icon='../../public/favicon.ico' />
       <Header />
 
       <div className='w-[90%] m-auto mt-[60px] flex items-center text-white font-semibold'>
@@ -127,16 +128,16 @@ const FollowedMovie = (props: Props) => {
         </Link>
         <span className='px-2'>/</span>
         <Link to='' className='flex items-center gap-1 hover:text-[#1cc749]'>
-          <span>Phim bạn đang theo dõi</span>
+          <span>Lịch sử xem</span>
         </Link>
       </div>
 
       <div className='w-[90%] m-auto grid grid-cols-12 gap-[35px] mt-2'>
         <div className='col-span-12'>
-          <div className='grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-3 sm:gap-[20px] grid-cols-2 gap-[15px]'>
+          <div className='grid xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 sm:gap-[20px] grid-cols-2 gap-[15px]'>
             {data?.data?.items?.map((movie: Movie, index: number) => (
               <div key={index}>
-                <FollowedMovieCard slug={movie?.slug} />
+                <HistoryMovieCard slug={movie?.slug} />
               </div>
             ))}
           </div>
@@ -186,4 +187,4 @@ const FollowedMovie = (props: Props) => {
   );
 };
 
-export default FollowedMovie;
+export default History;
