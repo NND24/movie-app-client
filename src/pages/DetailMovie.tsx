@@ -34,6 +34,34 @@ const DetailMovie = () => {
   //   }),
   // }));
 
+  let data_history = JSON.parse(localStorage.getItem("data_history")) || [];
+  const addToHistory = (ep) => {
+    const existingEntry = data_history.find((item) => item.movie_slug === slug);
+
+    if (existingEntry) {
+      existingEntry.lasted_ep = Math.max(existingEntry.lasted_ep, ep);
+
+      if (!existingEntry?.watched_eps.includes(ep)) {
+        existingEntry.watched_eps.push(ep);
+      }
+    } else {
+      const data = {
+        movie_slug: slug,
+        lasted_ep: ep,
+        watched_eps: [ep],
+      };
+      data_history.push(data);
+    }
+
+    localStorage.setItem("data_history", JSON.stringify(data_history));
+  };
+
+  const getItemBySlug = () => {
+    return data_history.find((item) => item.movie_slug === slug);
+  };
+
+  const watchedMovieItem = getItemBySlug();
+
   return (
     <div>
       <Heading title={`Phim ${movie?.name}`} description='' keywords='' icon='../../public/favicon.ico' />
@@ -50,13 +78,16 @@ const DetailMovie = () => {
 
               <div className='max-h-[160px] scroll-auto overflow-auto small-scrollbar'>
                 <div className='grid gap-2' style={{ gridTemplateColumns: "repeat(auto-fill, minmax(80px, 1fr))" }}>
-                  {episodes?.map((episode: ServerData, index: number) => (
+                  {episodes?.map((e: ServerData, index: number) => (
                     <Link
-                      to={`/phim/${slug}/${episode.name}?server-name=${encodeURIComponent(serverName)}`}
-                      className='rounded-[4px] py-1 bg-[#0A0C0F] hover:bg-[#1cc749] text-white font-semibold cursor-pointer text-center'
+                      to={`/phim/${slug}/${e.name}?server-name=${encodeURIComponent(serverName)}`}
+                      className={`rounded-[4px] py-1 text-white font-semibold cursor-pointer text-center ${
+                        watchedMovieItem?.watched_eps.includes(e.name) ? "!bg-[#8a8a8ac7]" : "bg-[#0A0C0F]"
+                      } hover:bg-[#1cc749]`}
                       key={index}
+                      onClick={() => addToHistory(e.name)}
                     >
-                      {episode.name}
+                      {e.name}
                     </Link>
                   ))}
                 </div>

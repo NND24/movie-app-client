@@ -6,9 +6,10 @@ import { FaPlay } from "react-icons/fa";
 
 type Props = {
   slug: string;
+  lasted_ep: string;
 };
 
-const HistoryMovieCard: FC<Props> = ({ slug }) => {
+const HistoryMovieCard: FC<Props> = ({ slug, lasted_ep }) => {
   const { data } = useGetDetailMovieQuery(slug);
 
   const movie = data?.movie as Movie;
@@ -30,7 +31,7 @@ const HistoryMovieCard: FC<Props> = ({ slug }) => {
           </div>
         </div>
         <p className='text-white text-[16px] text-left line-clamp-1 pt-[6px] hover:text-[#00dc5a]'>{movie?.name}</p>
-        <p className='text-[#ffffff9a] text-[14px]'>Bạn đang xem tập 6</p>
+        <p className='text-[#ffffff9a] text-[14px]'>Bạn đang xem tập {lasted_ep}</p>
       </Link>
     </div>
   );

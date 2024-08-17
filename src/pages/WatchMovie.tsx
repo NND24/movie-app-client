@@ -38,6 +38,34 @@ const WatchMovie = () => {
   const episodesForServer = separatedData[selectedServerName] || [];
   const selectedEpisode = episodesForServer.find((ep) => ep.name === episode);
 
+  let data_history = JSON.parse(localStorage.getItem("data_history")) || [];
+  const addToHistory = (ep) => {
+    const existingEntry = data_history.find((item) => item.movie_slug === slug);
+
+    if (existingEntry) {
+      existingEntry.lasted_ep = Math.max(existingEntry.lasted_ep, ep);
+
+      if (!existingEntry?.watched_eps.includes(ep)) {
+        existingEntry?.watched_eps.push(ep);
+      }
+    } else {
+      const data = {
+        movie_slug: slug,
+        lasted_ep: ep,
+        watched_eps: [ep],
+      };
+      data_history.push(data);
+    }
+
+    localStorage.setItem("data_history", JSON.stringify(data_history));
+  };
+
+  const getItemBySlug = () => {
+    return data_history.find((item) => item.movie_slug === slug);
+  };
+
+  const watchedMovieItem = getItemBySlug();
+
   return (
     <div>
       <Heading title={`Phim ${movie?.name}`} description='' keywords='' icon='../../public/favicon.ico' />
@@ -101,10 +129,15 @@ const WatchMovie = () => {
                       {episodes?.map((e: ServerData, index: number) => (
                         <Link
                           to={`/phim/${slug}/${e.name}?server-name=${encodeURIComponent(serverName)}`}
-                          className={`rounded-[4px] py-1 bg-[#0A0C0F] hover:bg-[#1cc749] text-white font-semibold cursor-pointer text-center ${
-                            e.name === episode ? "!bg-[#1cc749]" : ""
-                          }`}
+                          className={`rounded-[4px] py-1 text-white font-semibold cursor-pointer text-center ${
+                            e.name === episode
+                              ? "!bg-[#1cc749]"
+                              : watchedMovieItem?.watched_eps.includes(e.name)
+                              ? "!bg-[#8a8a8ac7]"
+                              : "bg-[#0A0C0F]"
+                          } hover:bg-[#1cc749]`}
                           key={index}
+                          onClick={() => addToHistory(e.name)}
                         >
                           {e.name}
                         </Link>

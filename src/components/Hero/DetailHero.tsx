@@ -15,6 +15,19 @@ const DetailHero: FC<Props> = ({ slug }) => {
 
   const movie = data?.movie as Movie;
 
+  const addToFollowed = async () => {
+    let followed_movie = JSON.parse(localStorage.getItem("followed_movie")) || [];
+    const existingEntry = followed_movie.find((item) => item.movie_slug === slug);
+
+    if (!existingEntry) {
+      const data = {
+        movie_slug: slug,
+      };
+      followed_movie.push(data);
+      localStorage.setItem("followed_movie", JSON.stringify(followed_movie));
+    }
+  };
+
   return (
     <>
       <Link to={`/phim/${slug}`}>
@@ -110,7 +123,10 @@ const DetailHero: FC<Props> = ({ slug }) => {
         >
           <FaPlay className='text-white' size={15} />
         </Link>
-        <button className='w-[36px] h-[36px] rounded-full bg-[#e4e0d9] hover:bg-[#ffffff] flex items-center justify-center'>
+        <button
+          className='w-[36px] h-[36px] rounded-full bg-[#e4e0d9] hover:bg-[#ffffff] flex items-center justify-center'
+          onClick={() => addToFollowed()}
+        >
           <MdOutlineBookmarkAdd className='text-[#111319]' size={21} />
         </button>
       </div>

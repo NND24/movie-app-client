@@ -4,12 +4,17 @@ import { BiHistory, BiSearch, BiUser } from "react-icons/bi";
 import NavItems from "./NavItems";
 import Login from "./Auth/Login";
 import SignUp from "./Auth/SignUp";
+import { FaRegBookmark, FaSortUp } from "react-icons/fa";
+import { FaArrowRightFromBracket } from "react-icons/fa6";
+import { RiUserLine } from "react-icons/ri";
 
 const Header = () => {
+  const [isLogged, setIsLogged] = useState(true);
   const [openLogin, setOpenLogin] = useState(false);
   const [openSignUp, setOpenSignUp] = useState(false);
   const [active, setActive] = useState(false);
   const [search, setSearch] = useState("");
+  const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -71,15 +76,64 @@ const Header = () => {
                   />
                 </div>
 
-                <BiHistory className='mx-4 text-white hover:text-[#00dc5a] cursor-pointer' size={25} />
-                <BiUser
-                  className='mx-4 text-white hover:text-[#00dc5a] cursor-pointer'
-                  size={25}
-                  onClick={() => {
-                    setOpenSignUp(false);
-                    setOpenLogin(!openLogin);
-                  }}
-                />
+                <Link to='/lich-su'>
+                  <BiHistory className='mx-4 text-white hover:text-[#00dc5a] cursor-pointer' size={30} />
+                </Link>
+                {isLogged ? (
+                  <div className='relative'>
+                    <img
+                      src='https://res.cloudinary.com/datnguyen240/image/upload/v1722168751/avatars/avatar_pnncdk.png'
+                      alt='avatar'
+                      className='w-[30px] h-[30px] object-cover rounded-full cursor-pointer'
+                      onClick={() => setOpenModal(!openModal)}
+                    />
+
+                    {openModal && (
+                      <>
+                        <FaSortUp className='absolute top-[32px] left-[8px]' fill='#00dc5a' />
+                        <ul
+                          className='absolute top-[39px] right-[-50px] w-[250px] py-1 bg-[#1a191f] flex flex-col'
+                          style={{
+                            borderTopColor: "#00dc5a",
+                            borderTopWidth: "3px",
+                            boxShadow: "inset 0 0 70px rgba(0, 0, 0, .3), 0 0 20px rgba(0, 0, 0, .5)",
+                          }}
+                        >
+                          <Link
+                            to={``}
+                            className='text-[16px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] hover:text-[#00dc5a] hover:border-l-[3px] hover:border-[#00DC5A] p-2 flex items-center gap-2 hover:bg-[#96969633]'
+                          >
+                            <FaRegBookmark />
+                            <span>Phim đã lưu</span>
+                          </Link>
+                          <Link
+                            to={``}
+                            className='text-[16px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] hover:text-[#00dc5a] hover:border-l-[3px] hover:border-[#00DC5A] p-2 flex items-center gap-2 hover:bg-[#96969633]'
+                          >
+                            <RiUserLine />
+                            <span> Tài khoản của tôi</span>
+                          </Link>
+                          <Link
+                            to={``}
+                            className='text-[16px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] hover:text-[#00dc5a] hover:border-l-[3px] hover:border-[#00DC5A] p-2 flex items-center gap-2 hover:bg-[#96969633]'
+                          >
+                            <FaArrowRightFromBracket />
+                            <span>Đăng xuất</span>
+                          </Link>
+                        </ul>
+                      </>
+                    )}
+                  </div>
+                ) : (
+                  <BiUser
+                    className='mx-4 text-white hover:text-[#00dc5a] cursor-pointer'
+                    size={30}
+                    onClick={() => {
+                      setOpenSignUp(false);
+                      setOpenLogin(!openLogin);
+                    }}
+                  />
+                )}
                 {/* <ThemeSwitcher /> */}
               </div>
             </div>

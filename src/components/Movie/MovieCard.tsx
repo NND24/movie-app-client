@@ -25,6 +25,19 @@ const MovieCard: FC<Props> = ({ slug }) => {
     setIsHovered(false);
   };
 
+  const addToFollowed = async () => {
+    let followed_movie = JSON.parse(localStorage.getItem("followed_movie")) || [];
+    const existingEntry = followed_movie.find((item) => item.movie_slug === slug);
+
+    if (!existingEntry) {
+      const data = {
+        movie_slug: slug,
+      };
+      followed_movie.push(data);
+      localStorage.setItem("followed_movie", JSON.stringify(followed_movie));
+    }
+  };
+
   return (
     <div
       className={`bg-[#111319] cursor-pointer transition-transform duration-300 ${
@@ -50,7 +63,10 @@ const MovieCard: FC<Props> = ({ slug }) => {
               >
                 <FaPlay className='text-white' size={11} />
               </Link>
-              <button className='w-[26px] h-[26px] rounded-full bg-[#e4e0d9] hover:bg-[#ffffff] flex items-center justify-center transition-colors duration-300'>
+              <button
+                className='w-[26px] h-[26px] rounded-full bg-[#e4e0d9] hover:bg-[#ffffff] flex items-center justify-center transition-colors duration-300'
+                onClick={() => addToFollowed()}
+              >
                 <MdOutlineBookmarkAdd className='text-[#111319]' size={16} />
               </button>
             </div>
