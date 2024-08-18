@@ -7,19 +7,28 @@ import SignUp from "./Auth/SignUp";
 import { FaRegBookmark, FaSortUp } from "react-icons/fa";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { RiUserLine } from "react-icons/ri";
+import { useSelector } from "react-redux";
+import { useLogoutQuery } from "../features/auth/authApi";
 
 type Props = {
   isProfile?: boolean;
 };
 
 const Header: FC<Props> = ({ isProfile }) => {
-  const [isLogged, setIsLogged] = useState(true);
+  const [isLogged, setIsLogged] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
   const [openSignUp, setOpenSignUp] = useState(false);
   const [active, setActive] = useState(false);
   const [search, setSearch] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const [logout, setLogout] = useState(false);
+
   const navigate = useNavigate();
+
+  const { user } = useSelector((state) => state.auth);
+  useLogoutQuery(undefined, {
+    skip: !logout ? true : false,
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,6 +39,14 @@ const Header: FC<Props> = ({ isProfile }) => {
       return () => window.removeEventListener("scroll", handleScroll);
     }
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      setIsLogged(true);
+    } else {
+      setIsLogged(false);
+    }
+  }, [user]);
 
   const handelSearch = () => {
     navigate(`/tim-kiem/${search}?page=1`);
@@ -117,13 +134,13 @@ const Header: FC<Props> = ({ isProfile }) => {
                             <RiUserLine />
                             <span> Tài khoản của tôi</span>
                           </Link>
-                          <Link
-                            to={``}
-                            className='text-[16px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] hover:text-[#00dc5a] hover:border-l-[3px] hover:border-[#00DC5A] p-2 flex items-center gap-2 hover:bg-[#96969633]'
+                          <div
+                            className='text-[16px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] hover:text-[#00dc5a] hover:border-l-[3px] hover:border-[#00DC5A] p-2 flex items-center gap-2 hover:bg-[#96969633] cursor-pointer'
+                            onClick={() => setLogout(true)}
                           >
                             <FaArrowRightFromBracket />
                             <span>Đăng xuất</span>
-                          </Link>
+                          </div>
                         </ul>
                       </>
                     )}
