@@ -5,6 +5,8 @@ import ListMovie from "../pages/ListMovie";
 import WatchMovie from "../pages/WatchMovie";
 import FollowedMovie from "../pages/FollowedMovie";
 import History from "../pages/History";
+import NotFound from "../pages/NotFound";
+import Profile from "../pages/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -43,4 +45,9 @@ export const router = createBrowserRouter([
     path: "/lich-su",
     element: <History />,
   },
+  {
+    path: "/trang-ca-nhan",
+    element: <Profile />,
+  },
+  { path: "*", element: <NotFound /> },
 ]);

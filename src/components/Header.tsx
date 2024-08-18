@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BiHistory, BiSearch, BiUser } from "react-icons/bi";
 import NavItems from "./NavItems";
@@ -8,7 +8,11 @@ import { FaRegBookmark, FaSortUp } from "react-icons/fa";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { RiUserLine } from "react-icons/ri";
 
-const Header = () => {
+type Props = {
+  isProfile?: boolean;
+};
+
+const Header: FC<Props> = ({ isProfile }) => {
   const [isLogged, setIsLogged] = useState(true);
   const [openLogin, setOpenLogin] = useState(false);
   const [openSignUp, setOpenSignUp] = useState(false);
@@ -36,7 +40,7 @@ const Header = () => {
       <header className='w-full relative'>
         <div
           className={`${
-            active
+            active || isProfile
               ? "bg-[#0a0c0f] fixed top-0 left-0 w-full h-[60px] z-[1000] transition duration-500 ease-in-out"
               : "w-full fixed top-0 left-0 h-[60px] z-[1000]"
           }`}
