@@ -58,7 +58,7 @@ export const apiSlice = createApi({
 export const movieApiSlice = createApi({
   reducerPath: "movieApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.MOVIE_API_URL,
+    baseUrl: "https://ophim1.com/",
   }),
   endpoints: () => ({}),
 });

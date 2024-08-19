@@ -52,6 +52,8 @@ const Header: FC<Props> = ({ isProfile }) => {
     navigate(`/tim-kiem/${search}?page=1`);
   };
 
+  console.log(user.avatar.length);
+
   return (
     <>
       <header className='w-full relative'>
@@ -103,7 +105,11 @@ const Header: FC<Props> = ({ isProfile }) => {
                 {isLogged ? (
                   <div className='relative'>
                     <img
-                      src='https://res.cloudinary.com/datnguyen240/image/upload/v1722168751/avatars/avatar_pnncdk.png'
+                      src={
+                        user.avatar && user.avatar.url
+                          ? user.avatar.url
+                          : "https://res.cloudinary.com/datnguyen240/image/upload/v1722168751/avatars/avatar_pnncdk.png"
+                      }
                       alt='avatar'
                       className='w-[30px] h-[30px] object-cover rounded-full cursor-pointer'
                       onClick={() => setOpenModal(!openModal)}

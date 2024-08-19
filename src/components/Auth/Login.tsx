@@ -21,7 +21,7 @@ const schema = Yup.object().shape({
 const Login: FC<Props> = ({ setOpenLogin, setOpenSignUp }) => {
   const [show, setShow] = useState(false);
 
-  const [login, { isSuccess, error, data }] = useLoginMutation();
+  const [login, { isSuccess, error }] = useLoginMutation();
 
   const formik = useFormik({
     initialValues: { email: "", password: "" },
@@ -38,8 +38,8 @@ const Login: FC<Props> = ({ setOpenLogin, setOpenSignUp }) => {
     }
     if (error) {
       if ("data" in error) {
-        // const errorData = error;
-        // toast.error(errorData.data.message);
+        const errorData = error;
+        toast.error(errorData.data.message);
       } else {
         console.log("An error occurred:", error);
       }
@@ -97,7 +97,7 @@ const Login: FC<Props> = ({ setOpenLogin, setOpenSignUp }) => {
           <input type='submit' value='Đăng nhập' className={`${styles.button} hover:bg-[#11ff74] text-white`} />
         </div>
 
-        <div className='relative py-3 mt-3'>
+        {/* <div className='relative py-3 mt-3'>
           <h5 className='absolute top-[0px] left-[35%] text-center bg-[#f8f8f8] font-Poppins text-[14px] text-black'>
             Hoặc đăng nhập bằng
           </h5>
@@ -109,7 +109,7 @@ const Login: FC<Props> = ({ setOpenLogin, setOpenSignUp }) => {
             <FcGoogle size={30} />
             <span className='text-black ml-2'>Đăng nhập bằng Google</span>
           </div>
-        </div>
+        </div> */}
         <h5 className='text-center pt-4 font-Poppins text-[14px] text-black'>
           Chưa có tài khoản?
           <span

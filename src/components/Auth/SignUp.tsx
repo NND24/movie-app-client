@@ -32,8 +32,8 @@ const SignUp: FC<Props> = ({ setOpenLogin, setOpenSignUp }) => {
 
     if (error) {
       if ("data" in error) {
-        // const errorData = error as any;
-        // toast.error(errorData.data.message);
+        const errorData = error as any;
+        toast.error(errorData.data.message);
       } else {
         console.log("An error occurred:", error);
       }
@@ -126,7 +126,8 @@ const SignUp: FC<Props> = ({ setOpenLogin, setOpenSignUp }) => {
         <div className='w-full mt-5'>
           <input type='submit' value='Đăng ký' className={`${styles.button} text-white`} />
         </div>
-        <br />
+
+        {/* <br />
         <div className='relative py-3'>
           <h5 className='absolute top-[0px] left-[35%] text-center bg-[#f8f8f8] font-Poppins text-[14px] text-black'>
             Hoặc đăng nhập bằng
@@ -139,7 +140,8 @@ const SignUp: FC<Props> = ({ setOpenLogin, setOpenSignUp }) => {
             <FcGoogle size={30} />
             <span className='text-black ml-2'>Đăng nhập bằng Google</span>
           </div>
-        </div>
+        </div> */}
+
         <h5 className='text-center pt-4 font-Poppins text-[14px]'>
           Đã có tài khoản?
           <span
