@@ -35,10 +35,11 @@ const baseQueryWithReAuth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
       // Type the refresh result data as RefreshResponse
       const refreshData = refreshResult.data as RefreshResponse;
       const { accessToken } = refreshData;
-      const userId = (api.getState() as RootState).auth.userId;
+      const user = (api.getState() as RootState).auth.user;
 
       // store the new token
-      api.dispatch(setCredentials({ userId, accessToken }));
+      await localStorage.setItem("user", JSON.stringify({ user, accessToken }));
+      api.dispatch(setCredentials({ user, accessToken }));
 
       // retry the original query with new access token
       result = await baseQuery(args, api, extraOptions);

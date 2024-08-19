@@ -26,6 +26,7 @@ const Header: FC<Props> = ({ isProfile }) => {
   const navigate = useNavigate();
 
   const { user } = useSelector((state) => state.auth);
+
   useLogoutQuery(undefined, {
     skip: !logout ? true : false,
   });
@@ -51,8 +52,6 @@ const Header: FC<Props> = ({ isProfile }) => {
   const handelSearch = () => {
     navigate(`/tim-kiem/${search}?page=1`);
   };
-
-  console.log(user.avatar.length);
 
   return (
     <>
@@ -106,8 +105,8 @@ const Header: FC<Props> = ({ isProfile }) => {
                   <div className='relative'>
                     <img
                       src={
-                        user.avatar && user.avatar.url
-                          ? user.avatar.url
+                        user?.avatar && user?.avatar?.url
+                          ? user?.avatar?.url
                           : "https://res.cloudinary.com/datnguyen240/image/upload/v1722168751/avatars/avatar_pnncdk.png"
                       }
                       alt='avatar'

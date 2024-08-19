@@ -1,5 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
-import { logOut } from "./authSlice";
+import { logOut, setCredentials } from "./authSlice";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -21,10 +21,16 @@ export const authApi = apiSlice.injectEndpoints({
         },
         credentials: "include" as const,
       }),
-      async onQueryStarted(arg, { queryFulfilled }) {
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          localStorage.setItem("user", JSON.stringify(result.data));
+          await localStorage.setItem("user", JSON.stringify(result.data));
+          dispatch(
+            setCredentials({
+              accessToken: result.data.accessToken,
+              user: result.data.user,
+            })
+          );
         } catch (error) {
           console.log(error);
         }
@@ -39,7 +45,7 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           await queryFulfilled;
-          localStorage.removeItem("user");
+          await localStorage.removeItem("user");
           dispatch(logOut());
         } catch (error) {
           console.log(error);
