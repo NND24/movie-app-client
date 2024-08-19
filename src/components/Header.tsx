@@ -7,15 +7,15 @@ import SignUp from "./Auth/SignUp";
 import { FaRegBookmark, FaSortUp } from "react-icons/fa";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { RiUserLine } from "react-icons/ri";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useLogoutQuery } from "../features/auth/authApi";
+import { logOut } from "../features/auth/authSlice";
 
 type Props = {
   isProfile?: boolean;
 };
 
 const Header: FC<Props> = ({ isProfile }) => {
-  const [isLogged, setIsLogged] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
   const [openSignUp, setOpenSignUp] = useState(false);
   const [active, setActive] = useState(false);
@@ -24,33 +24,33 @@ const Header: FC<Props> = ({ isProfile }) => {
   const [logout, setLogout] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
 
-  useLogoutQuery(undefined, {
-    skip: !logout ? true : false,
+  const { refetch } = useLogoutQuery(undefined, {
+    skip: !logout,
+    onSuccess: () => {
+      dispatch(logOut());
+      setOpenModal(false);
+    },
   });
 
   useEffect(() => {
     const handleScroll = () => {
       setActive(window.scrollY > 80);
     };
-    if (typeof window !== "undefined") {
-      window.addEventListener("scroll", handleScroll);
-      return () => window.removeEventListener("scroll", handleScroll);
-    }
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (user) {
-      setIsLogged(true);
-    } else {
-      setIsLogged(false);
-    }
-  }, [user]);
-
-  const handelSearch = () => {
+  const handleSearch = () => {
     navigate(`/tim-kiem/${search}?page=1`);
+  };
+
+  const handleLogout = () => {
+    setLogout(true);
+    refetch();
   };
 
   return (
@@ -86,7 +86,7 @@ const Header: FC<Props> = ({ isProfile }) => {
                     onChange={(e) => setSearch(e.target.value)}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
-                        handelSearch();
+                        handleSearch();
                       }
                     }}
                   />
@@ -94,18 +94,18 @@ const Header: FC<Props> = ({ isProfile }) => {
                     className='absolute right-[10px] top-[8px] flex align-center justify-center cursor-pointer'
                     size={24}
                     fill='#d8d2d1'
-                    onClick={handelSearch}
+                    onClick={handleSearch}
                   />
                 </div>
 
                 <Link to='/lich-su'>
                   <BiHistory className='mx-4 text-white hover:text-[#00dc5a] cursor-pointer' size={30} />
                 </Link>
-                {isLogged ? (
+                {user ? (
                   <div className='relative'>
                     <img
                       src={
-                        user?.avatar && user?.avatar?.url
+                        user?.avatar?.url
                           ? user?.avatar?.url
                           : "https://res.cloudinary.com/datnguyen240/image/upload/v1722168751/avatars/avatar_pnncdk.png"
                       }
@@ -126,14 +126,14 @@ const Header: FC<Props> = ({ isProfile }) => {
                           }}
                         >
                           <Link
-                            to={``}
+                            to={`/theo-doi`}
                             className='text-[16px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] hover:text-[#00dc5a] hover:border-l-[3px] hover:border-[#00DC5A] p-2 flex items-center gap-2 hover:bg-[#96969633]'
                           >
                             <FaRegBookmark />
                             <span>Phim đã lưu</span>
                           </Link>
                           <Link
-                            to={``}
+                            to={`/trang-ca-nhan`}
                             className='text-[16px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] hover:text-[#00dc5a] hover:border-l-[3px] hover:border-[#00DC5A] p-2 flex items-center gap-2 hover:bg-[#96969633]'
                           >
                             <RiUserLine />
@@ -141,7 +141,7 @@ const Header: FC<Props> = ({ isProfile }) => {
                           </Link>
                           <div
                             className='text-[16px] font-Poppins font-medium text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] hover:text-[#00dc5a] hover:border-l-[3px] hover:border-[#00DC5A] p-2 flex items-center gap-2 hover:bg-[#96969633] cursor-pointer'
-                            onClick={() => setLogout(true)}
+                            onClick={handleLogout}
                           >
                             <FaArrowRightFromBracket />
                             <span>Đăng xuất</span>
@@ -160,7 +160,6 @@ const Header: FC<Props> = ({ isProfile }) => {
                     }}
                   />
                 )}
-                {/* <ThemeSwitcher /> */}
               </div>
             </div>
           </div>

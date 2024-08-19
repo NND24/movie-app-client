@@ -3,7 +3,7 @@ import { useGetDetailMovieQuery } from "../../features/movie/movieApi";
 import { Movie } from "../../utils/interfaces";
 import { Link } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
-import { FaStar } from "react-icons/fa";
+import { useRemoveFollowedMovieMutation } from "../../features/user/userApi";
 
 type Props = {
   slug: string;
@@ -11,6 +11,11 @@ type Props = {
 
 const FollowedMovieCard: FC<Props> = ({ slug }) => {
   const { data } = useGetDetailMovieQuery(slug);
+  const [removeFollowedMovie, { isSuccess, error }] = useRemoveFollowedMovieMutation();
+
+  const removeFromFollowed = async () => {
+    await removeFollowedMovie({ slug });
+  };
 
   const movie = data?.movie as Movie;
 
@@ -36,7 +41,10 @@ const FollowedMovieCard: FC<Props> = ({ slug }) => {
         </p>
       </Link>
 
-      <div className='absolute top-[6px] right-[6px] w-[22px] h-[22px] bg-[#0A0C0F] flex items-center justify-center z-10 hover:bg-[#1cc749]'>
+      <div
+        className='absolute top-[6px] right-[6px] w-[22px] h-[22px] bg-[#0A0C0F] flex items-center justify-center z-10 hover:bg-[#1cc749]'
+        onClick={() => removeFromFollowed()}
+      >
         <IoClose className='text-[20px] font-bold text-white' />
       </div>
 

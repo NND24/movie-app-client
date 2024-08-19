@@ -22,12 +22,13 @@ const schema = Yup.object().shape({
 const SignUp: FC<Props> = ({ setOpenLogin, setOpenSignUp }) => {
   const [show, setShow] = useState(false);
 
-  const [register, { data, error, isSuccess }] = useRegisterMutation();
+  const [register, { error, isSuccess }] = useRegisterMutation();
 
   useEffect(() => {
     if (isSuccess) {
-      const message = data?.message || "Registration successful";
-      toast.success(message);
+      toast.success("Đăng ký thành công");
+      setOpenSignUp(false);
+      setOpenLogin(true);
     }
 
     if (error) {
@@ -38,7 +39,7 @@ const SignUp: FC<Props> = ({ setOpenLogin, setOpenSignUp }) => {
         console.log("An error occurred:", error);
       }
     }
-  }, [isSuccess, error, data?.message]);
+  }, [isSuccess, error]);
 
   const formik = useFormik({
     initialValues: { name: "", email: "", password: "" },

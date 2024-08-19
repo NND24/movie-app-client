@@ -5,6 +5,7 @@ import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { Movie } from "../../utils/interfaces";
 import { Link } from "react-router-dom";
 import { FaEye, FaStar, FaPlay } from "react-icons/fa6";
+import { useAddFollowedMovieMutation } from "../../features/user/userApi";
 
 type Props = {
   slug: string;
@@ -12,20 +13,12 @@ type Props = {
 
 const DetailHero: FC<Props> = ({ slug }) => {
   const { data } = useGetDetailMovieQuery(slug);
+  const [addFollowedMovie, { isSuccess, error }] = useAddFollowedMovieMutation();
 
   const movie = data?.movie as Movie;
 
   const addToFollowed = async () => {
-    let followed_movie = JSON.parse(localStorage.getItem("followed_movie")) || [];
-    const existingEntry = followed_movie.find((item) => item.movie_slug === slug);
-
-    if (!existingEntry) {
-      const data = {
-        movie_slug: slug,
-      };
-      followed_movie.push(data);
-      localStorage.setItem("followed_movie", JSON.stringify(followed_movie));
-    }
+    await addFollowedMovie({ slug });
   };
 
   return (

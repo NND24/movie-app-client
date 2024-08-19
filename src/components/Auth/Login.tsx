@@ -33,7 +33,7 @@ const Login: FC<Props> = ({ setOpenLogin, setOpenSignUp }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Login successfully!");
+      toast.success("Đăng nhập thành công!");
       setOpenLogin(false);
     }
     if (error) {

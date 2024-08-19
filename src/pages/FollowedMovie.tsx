@@ -3,18 +3,17 @@ import Header from "../components/Header";
 import Heading from "../components/Heading";
 import { FaHome } from "react-icons/fa";
 import { useEffect } from "react";
-import { Movie } from "../utils/interfaces";
 import Footer from "../components/Footer";
 import FollowedMovieCard from "../components/Movie/FollowedMovieCard";
+import { useSelector } from "react-redux";
+import { RootState } from "../features/store";
 
-type Props = {};
+const FollowedMovie = () => {
+  const user = useSelector((state: RootState) => state.auth.user);
 
-const FollowedMovie = (props: Props) => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
-
-  let followed_movie = JSON.parse(localStorage.getItem("followed_movie")) || [];
 
   return (
     <div>
@@ -34,9 +33,9 @@ const FollowedMovie = (props: Props) => {
       <div className='w-[90%] m-auto grid grid-cols-12 gap-[35px] mt-2'>
         <div className='col-span-12'>
           <div className='grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-3 sm:gap-[20px] grid-cols-2 gap-[15px]'>
-            {followed_movie?.map((movie, index: number) => (
+            {user?.followedMovie?.map((slug: string, index: number) => (
               <div key={index}>
-                <FollowedMovieCard slug={movie?.movie_slug} />
+                <FollowedMovieCard slug={slug} />
               </div>
             ))}
           </div>

@@ -5,15 +5,16 @@ import { FaHome } from "react-icons/fa";
 import { useEffect } from "react";
 import Footer from "../components/Footer";
 import HistoryMovieCard from "../components/Movie/HistoryMovieCard";
+import { useSelector } from "react-redux";
 
 type Props = {};
 
 const History = (props: Props) => {
+  const { user } = useSelector((state) => state.auth);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
-
-  let data_history = JSON.parse(localStorage.getItem("data_history")) || [];
 
   return (
     <div>
@@ -33,7 +34,7 @@ const History = (props: Props) => {
       <div className='w-[90%] m-auto grid grid-cols-12 gap-[35px] mt-2'>
         <div className='col-span-12'>
           <div className='grid xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 sm:gap-[20px] grid-cols-2 gap-[15px]'>
-            {data_history?.map((movie, index: number) => (
+            {user?.followedMovie?.map((movie, index: number) => (
               <div key={index}>
                 <HistoryMovieCard slug={movie?.movie_slug} lasted_ep={movie.lasted_ep} />
               </div>
