@@ -13,7 +13,7 @@ type Props = {
 
 const DetailHero: FC<Props> = ({ slug }) => {
   const { data } = useGetDetailMovieQuery(slug);
-  const [addFollowedMovie, { isSuccess, error }] = useAddFollowedMovieMutation();
+  const [addFollowedMovie] = useAddFollowedMovieMutation();
 
   const movie = data?.movie as Movie;
 

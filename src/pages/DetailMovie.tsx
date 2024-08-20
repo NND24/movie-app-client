@@ -8,10 +8,16 @@ import Footer from "../components/Footer";
 import { Episode, Movie, ServerData } from "../utils/interfaces";
 import { useEffect } from "react";
 import Comment from "../components/Comment";
+import { useAddToHistoryMutation } from "../features/user/userApi";
+import { useSelector } from "react-redux";
+import { RootState } from "../features/store";
 
 const DetailMovie = () => {
   const { slug } = useParams<{ slug: string }>();
   const { data, isLoading } = useGetDetailMovieQuery(slug as string);
+
+  const user = useSelector((state: RootState) => state.auth.user);
+  const [addToHistory, { isSuccess, error }] = useAddToHistoryMutation();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -34,30 +40,12 @@ const DetailMovie = () => {
   //   }),
   // }));
 
-  let data_history = JSON.parse(localStorage.getItem("data_history")) || [];
-  const addToHistory = (ep) => {
-    const existingEntry = data_history.find((item) => item.movie_slug === slug);
-
-    if (existingEntry) {
-      existingEntry.lasted_ep = Math.max(existingEntry.lasted_ep, ep);
-
-      if (!existingEntry?.watched_eps.includes(ep)) {
-        existingEntry.watched_eps.push(ep);
-      }
-    } else {
-      const data = {
-        movie_slug: slug,
-        lasted_ep: ep,
-        watched_eps: [ep],
-      };
-      data_history.push(data);
-    }
-
-    localStorage.setItem("data_history", JSON.stringify(data_history));
+  const addHistory = (ep) => {
+    addToHistory({ movie_slug: slug, ep });
   };
 
   const getItemBySlug = () => {
-    return data_history.find((item) => item.movie_slug === slug);
+    return user?.history?.find((item) => item.movie_slug === slug);
   };
 
   const watchedMovieItem = getItemBySlug();
@@ -85,7 +73,7 @@ const DetailMovie = () => {
                         watchedMovieItem?.watched_eps.includes(e.name) ? "!bg-[#8a8a8ac7]" : "bg-[#0A0C0F]"
                       } hover:bg-[#1cc749]`}
                       key={index}
-                      onClick={() => addToHistory(e.name)}
+                      onClick={() => addHistory(e.name)}
                     >
                       {e.name}
                     </Link>

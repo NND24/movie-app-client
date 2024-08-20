@@ -5,6 +5,7 @@ import { useGetDetailMovieQuery } from "../../features/movie/movieApi";
 import { Movie } from "../../utils/interfaces";
 import { Link } from "react-router-dom";
 import { FaEye, FaStar, FaPlay, FaChevronRight } from "react-icons/fa6";
+import { useAddFollowedMovieMutation } from "../../features/user/userApi";
 
 type Props = {
   slug: string;
@@ -14,6 +15,7 @@ const MovieCard: FC<Props> = ({ slug }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const { data } = useGetDetailMovieQuery(slug);
+  const [addFollowedMovie] = useAddFollowedMovieMutation();
 
   const movie = data?.movie as Movie;
 
@@ -26,16 +28,7 @@ const MovieCard: FC<Props> = ({ slug }) => {
   };
 
   const addToFollowed = async () => {
-    let followed_movie = JSON.parse(localStorage.getItem("followed_movie")) || [];
-    const existingEntry = followed_movie.find((item) => item.movie_slug === slug);
-
-    if (!existingEntry) {
-      const data = {
-        movie_slug: slug,
-      };
-      followed_movie.push(data);
-      localStorage.setItem("followed_movie", JSON.stringify(followed_movie));
-    }
+    await addFollowedMovie({ slug });
   };
 
   return (

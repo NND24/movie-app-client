@@ -8,19 +8,23 @@ import { Episode, Movie, ServerData } from "../utils/interfaces";
 import Comment from "../components/Comment";
 import { removeHTMLTags } from "../utils/functions";
 import { FaEye, FaHome, FaStar } from "react-icons/fa";
+import { useAddToHistoryMutation } from "../features/user/userApi";
+import { useSelector } from "react-redux";
+import { RootState } from "../features/store";
 
 const WatchMovie = () => {
   const { slug, episode } = useParams<{ slug: string; episode: string }>();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-
   const serverNameFromUrl = queryParams.get("server-name");
-
   const decodedServerName = serverNameFromUrl ? decodeURIComponent(serverNameFromUrl) : "";
 
   const { data, isLoading } = useGetDetailMovieQuery(slug as string);
 
   const [selectedServerName, setSelectedServerName] = useState<string>(decodedServerName);
+
+  const user = useSelector((state: RootState) => state.auth.user);
+  const [addToHistory, { isSuccess, error }] = useAddToHistoryMutation();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -38,30 +42,12 @@ const WatchMovie = () => {
   const episodesForServer = separatedData[selectedServerName] || [];
   const selectedEpisode = episodesForServer.find((ep) => ep.name === episode);
 
-  let data_history = JSON.parse(localStorage.getItem("data_history")) || [];
-  const addToHistory = (ep) => {
-    const existingEntry = data_history.find((item) => item.movie_slug === slug);
-
-    if (existingEntry) {
-      existingEntry.lasted_ep = Math.max(existingEntry.lasted_ep, ep);
-
-      if (!existingEntry?.watched_eps.includes(ep)) {
-        existingEntry?.watched_eps.push(ep);
-      }
-    } else {
-      const data = {
-        movie_slug: slug,
-        lasted_ep: ep,
-        watched_eps: [ep],
-      };
-      data_history.push(data);
-    }
-
-    localStorage.setItem("data_history", JSON.stringify(data_history));
+  const addHistory = (ep) => {
+    addToHistory({ movie_slug: slug, ep });
   };
 
   const getItemBySlug = () => {
-    return data_history.find((item) => item.movie_slug === slug);
+    return user?.history?.find((item) => item.movie_slug === slug);
   };
 
   const watchedMovieItem = getItemBySlug();
@@ -137,7 +123,7 @@ const WatchMovie = () => {
                               : "bg-[#0A0C0F]"
                           } hover:bg-[#1cc749]`}
                           key={index}
-                          onClick={() => addToHistory(e.name)}
+                          onClick={() => addHistory(e.name)}
                         >
                           {e.name}
                         </Link>

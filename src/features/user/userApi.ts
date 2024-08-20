@@ -56,7 +56,33 @@ export const userApi = apiSlice.injectEndpoints({
         }
       },
     }),
+
+    addToHistory: builder.mutation({
+      query: ({ movie_slug, ep }) => ({
+        url: "addToHistory",
+        method: "PUT",
+        body: { movie_slug, ep },
+        credentials: "include" as const,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          const user = result.data.user;
+          const token = getUserFromLocalStorage?.accessToken;
+
+          await localStorage.setItem("user", JSON.stringify({ user, accessToken: token }));
+          dispatch(
+            setCredentials({
+              accessToken: token,
+              user: user,
+            })
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    }),
   }),
 });
 
-export const { useAddFollowedMovieMutation, useRemoveFollowedMovieMutation } = userApi;
+export const { useAddFollowedMovieMutation, useRemoveFollowedMovieMutation, useAddToHistoryMutation } = userApi;
