@@ -12,7 +12,7 @@ type Props = {
 
 const FollowedMovieCard: FC<Props> = ({ slug }) => {
   const { data } = useGetDetailMovieQuery(slug);
-  const [removeFollowedMovie, { isSuccess, error }] = useRemoveFollowedMovieMutation();
+  const [removeFollowedMovie] = useRemoveFollowedMovieMutation();
 
   const removeFromFollowed = async () => {
     await removeFollowedMovie({ slug });

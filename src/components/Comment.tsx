@@ -13,7 +13,7 @@ const Comment = (props: Props) => {
       <div>
         <div className='flex w-full'>
           <img
-            src='https://res.cloudinary.com/datnguyen240/image/upload/v1722168751/avatars/avatar_pnncdk.png'
+            src='../../public/defaultAvatar.png'
             alt='avatar'
             className='w-[50px] h-[50px] object-cover rounded-full'
           />
@@ -34,7 +34,7 @@ const Comment = (props: Props) => {
           <div className='flex mb-1'>
             <div>
               <img
-                src='https://res.cloudinary.com/datnguyen240/image/upload/v1722168751/avatars/avatar_pnncdk.png'
+                src='../../public/defaultAvatar.png'
                 alt='avatar'
                 className='w-[40px] h-[40px] object-cover rounded-full'
               />

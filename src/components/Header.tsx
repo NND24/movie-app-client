@@ -104,11 +104,7 @@ const Header: FC<Props> = ({ isProfile }) => {
                 {user ? (
                   <div className='relative'>
                     <img
-                      src={
-                        user?.avatar?.url
-                          ? user?.avatar?.url
-                          : "https://res.cloudinary.com/datnguyen240/image/upload/v1722168751/avatars/avatar_pnncdk.png"
-                      }
+                      src={user?.avatar?.url ? user?.avatar?.url : "../../public/defaultAvatar.png"}
                       alt='avatar'
                       className='w-[30px] h-[30px] object-cover rounded-full cursor-pointer'
                       onClick={() => setOpenModal(!openModal)}

@@ -6,6 +6,81 @@ const getUserFromLocalStorage = user ? JSON.parse(user) : null;
 
 export const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    updateAvatar: builder.mutation({
+      query: (avatar) => ({
+        url: "update-user-avatar",
+        method: "PUT",
+        body: { avatar },
+        credentials: "include" as const,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          const user = result.data.user;
+          const token = getUserFromLocalStorage?.accessToken;
+
+          await localStorage.setItem("user", JSON.stringify({ user, accessToken: token }));
+          dispatch(
+            setCredentials({
+              accessToken: token,
+              user: user,
+            })
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    }),
+    editProfile: builder.mutation({
+      query: ({ name }) => ({
+        url: "update-user-info",
+        method: "PUT",
+        body: { name },
+        credentials: "include" as const,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          const user = result.data.user;
+          const token = getUserFromLocalStorage?.accessToken;
+
+          await localStorage.setItem("user", JSON.stringify({ user, accessToken: token }));
+          dispatch(
+            setCredentials({
+              accessToken: token,
+              user: user,
+            })
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    }),
+    updatePassword: builder.mutation({
+      query: ({ oldPassword, newPassword }) => ({
+        url: "update-user-password",
+        method: "PUT",
+        body: { oldPassword, newPassword },
+        credentials: "include" as const,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          const user = result.data.user;
+          const token = getUserFromLocalStorage?.accessToken;
+
+          await localStorage.setItem("user", JSON.stringify({ user, accessToken: token }));
+          dispatch(
+            setCredentials({
+              accessToken: token,
+              user: user,
+            })
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    }),
     addFollowedMovie: builder.mutation({
       query: ({ slug }) => ({
         url: "addFollowedMovie",
@@ -85,4 +160,11 @@ export const userApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useAddFollowedMovieMutation, useRemoveFollowedMovieMutation, useAddToHistoryMutation } = userApi;
+export const {
+  useUpdateAvatarMutation,
+  useEditProfileMutation,
+  useUpdatePasswordMutation,
+  useAddFollowedMovieMutation,
+  useRemoveFollowedMovieMutation,
+  useAddToHistoryMutation,
+} = userApi;
