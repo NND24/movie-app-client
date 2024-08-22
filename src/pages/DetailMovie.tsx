@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Heading from "../components/Heading";
 import HeroDetailMovie from "../components/Hero/HeroDetailMovie";
 import Loader from "../components/Loader/Loader";
-import { useGetDetailMovieQuery, useGetMovieByGenreQuery } from "../features/movie/movieApi";
+import { useGetDetailMovieQuery } from "../features/movie/movieApi";
 import Footer from "../components/Footer";
 import { Episode, Movie, ServerData } from "../utils/interfaces";
 import { useEffect } from "react";
@@ -17,7 +17,7 @@ const DetailMovie = () => {
   const { data, isLoading } = useGetDetailMovieQuery(slug as string);
 
   const user = useSelector((state: RootState) => state.auth.user);
-  const [addToHistory, { isSuccess, error }] = useAddToHistoryMutation();
+  const [addToHistory] = useAddToHistoryMutation();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -86,7 +86,7 @@ const DetailMovie = () => {
 
       <div className='w-[90%] mx-auto h-[1px] bg-[#26252a] my-2'></div>
 
-      <Comment />
+      <Comment slug={slug} />
 
       <div className='w-[90%] mx-auto h-[1px] bg-[#26252a] my-2'></div>
 
