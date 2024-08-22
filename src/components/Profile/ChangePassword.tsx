@@ -2,8 +2,8 @@ import { FC, useEffect, useState } from "react";
 import { useUpdatePasswordMutation } from "../../features/user/userApi";
 import toast from "react-hot-toast";
 import Heading from "../Heading";
-import Header from "../Header";
 import { styles } from "../../styles/style";
+import Header from "../Header/Header";
 
 type Props = {
   setEditInfo: (editInfo: boolean) => void;

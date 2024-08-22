@@ -1,6 +1,5 @@
 import { FaRegClone } from "react-icons/fa";
 import Footer from "../components/Footer";
-import Header from "../components/Header";
 import Heading from "../components/Heading";
 import Hero from "../components/Hero/Hero";
 import MovieSlider from "../components/Movie/MovieSlider";
@@ -12,7 +11,8 @@ import {
 import Loader from "../components/Loader/Loader";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { genreItemsData, navItemsData } from "../components/NavItems";
+import { genreItemsData, navItemsData } from "../components/Header/NavItems";
+import Header from "../components/Header/Header";
 
 const Home = () => {
   const { data: movieData, isLoading } = useGetNewUpdatedMovieQuery(1);

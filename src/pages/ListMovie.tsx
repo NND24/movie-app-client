@@ -1,5 +1,4 @@
 import Footer from "../components/Footer";
-import Header from "../components/Header";
 import Heading from "../components/Heading";
 import Hero from "../components/Hero/Hero";
 import {
@@ -15,6 +14,7 @@ import { Movie } from "../utils/interfaces";
 import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight, FaStar } from "react-icons/fa";
 import { FaPlay, FaRegCirclePlay } from "react-icons/fa6";
+import Header from "../components/Header/Header";
 
 const ListMovie = () => {
   const { category, genre, nation, search } = useParams<{

@@ -1,17 +1,17 @@
 import { FC, useEffect, useState } from "react";
-import { styles } from "../styles/style";
 import { BiMessage } from "react-icons/bi";
+import { format } from "timeago.js";
+import toast from "react-hot-toast";
+import { VscVerifiedFilled } from "react-icons/vsc";
+import { useSelector } from "react-redux";
 import {
   useAddNewAnswerMutation,
   useAddNewCommentMutation,
   useDeleteCommentMutation,
   useDeleteReplyMutation,
   useGetCommentQuery,
-} from "../features/comment/commentApi";
-import { format } from "timeago.js";
-import toast from "react-hot-toast";
-import { VscVerifiedFilled } from "react-icons/vsc";
-import { useSelector } from "react-redux";
+} from "../../features/comment/commentApi";
+import { styles } from "../../styles/style";
 
 type Props = {
   slug: string;

@@ -1,5 +1,4 @@
 import { Link, useParams } from "react-router-dom";
-import Header from "../components/Header";
 import Heading from "../components/Heading";
 import HeroDetailMovie from "../components/Hero/HeroDetailMovie";
 import Loader from "../components/Loader/Loader";
@@ -7,10 +6,11 @@ import { useGetDetailMovieQuery } from "../features/movie/movieApi";
 import Footer from "../components/Footer";
 import { Episode, Movie, ServerData } from "../utils/interfaces";
 import { useEffect } from "react";
-import Comment from "../components/Comment";
 import { useAddToHistoryMutation } from "../features/user/userApi";
 import { useSelector } from "react-redux";
 import { RootState } from "../features/store";
+import Header from "../components/Header/Header";
+import Comment from "../components/Movie/Comment";
 
 const DetailMovie = () => {
   const { slug } = useParams<{ slug: string }>();

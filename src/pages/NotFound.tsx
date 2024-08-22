@@ -1,9 +1,7 @@
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import Heading from "../components/Heading";
 
-type Props = {};
-
-const NotFound = (props: Props) => {
+const NotFound = () => {
   return (
     <div>
       <Heading title='404 NOT FOUND' description='' keywords='' icon='../../public/favicon.ico' />

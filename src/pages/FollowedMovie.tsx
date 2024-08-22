@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Header from "../components/Header";
 import Heading from "../components/Heading";
 import { FaHome } from "react-icons/fa";
 import { useEffect } from "react";
@@ -7,6 +6,7 @@ import Footer from "../components/Footer";
 import FollowedMovieCard from "../components/Movie/FollowedMovieCard";
 import { useSelector } from "react-redux";
 import { RootState } from "../features/store";
+import Header from "../components/Header/Header";
 
 const FollowedMovie = () => {
   const user = useSelector((state: RootState) => state.auth.user);

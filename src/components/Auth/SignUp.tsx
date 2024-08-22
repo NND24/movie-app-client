@@ -9,8 +9,8 @@ import { useRegisterMutation } from "../../features/auth/authApi";
 import { IoClose } from "react-icons/io5";
 
 type Props = {
-  setOpenLogin: (open: boolean) => void;
-  setOpenSignUp: (open: boolean) => void;
+  setOpenLogin: (openLogin: boolean) => void;
+  setOpenSignUp: (openSignUp: boolean) => void;
 };
 
 const schema = Yup.object().shape({

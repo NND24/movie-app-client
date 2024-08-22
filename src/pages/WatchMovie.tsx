@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import Heading from "../components/Heading";
-import Header from "../components/Header";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useGetDetailMovieQuery } from "../features/movie/movieApi";
 import Loader from "../components/Loader/Loader";
 import { Episode, Movie, ServerData } from "../utils/interfaces";
-import Comment from "../components/Comment";
 import { removeHTMLTags } from "../utils/functions";
 import { FaEye, FaHome, FaStar } from "react-icons/fa";
 import { useAddToHistoryMutation } from "../features/user/userApi";
 import { useSelector } from "react-redux";
 import { RootState } from "../features/store";
+import Header from "../components/Header/Header";
+import Comment from "../components/Movie/Comment";
 
 const WatchMovie = () => {
   const { slug, episode } = useParams<{ slug: string; episode: string }>();
@@ -24,7 +24,7 @@ const WatchMovie = () => {
   const [selectedServerName, setSelectedServerName] = useState<string>(decodedServerName);
 
   const user = useSelector((state: RootState) => state.auth.user);
-  const [addToHistory, { isSuccess, error }] = useAddToHistoryMutation();
+  const [addToHistory] = useAddToHistoryMutation();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });

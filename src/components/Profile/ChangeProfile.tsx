@@ -3,8 +3,8 @@ import { useEditProfileMutation, useUpdateAvatarMutation } from "../../features/
 import toast from "react-hot-toast";
 import { AiOutlineCamera } from "react-icons/ai";
 import Heading from "../Heading";
-import Header from "../Header";
 import { styles } from "../../styles/style";
+import Header from "../Header/Header";
 
 type Props = {
   avatar: string | null;
