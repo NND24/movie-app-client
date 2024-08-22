@@ -27,7 +27,29 @@ export const commentApi = apiSlice.injectEndpoints({
         credentials: "include" as const,
       }),
     }),
+    deleteComment: builder.mutation({
+      query: ({ slug, commentId }) => ({
+        url: `comment`,
+        method: "DELETE",
+        body: { slug, commentId },
+        credentials: "include" as const,
+      }),
+    }),
+    deleteReply: builder.mutation({
+      query: ({ slug, commentId, replyId }) => ({
+        url: `comment/reply`,
+        method: "DELETE",
+        body: { slug, commentId, replyId },
+        credentials: "include" as const,
+      }),
+    }),
   }),
 });
 
-export const { useGetCommentQuery, useAddNewCommentMutation, useAddNewAnswerMutation } = commentApi;
+export const {
+  useGetCommentQuery,
+  useAddNewCommentMutation,
+  useAddNewAnswerMutation,
+  useDeleteCommentMutation,
+  useDeleteReplyMutation,
+} = commentApi;

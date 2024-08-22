@@ -1,10 +1,17 @@
 import { FC, useEffect, useState } from "react";
 import { styles } from "../styles/style";
 import { BiMessage } from "react-icons/bi";
-import { useAddNewAnswerMutation, useAddNewCommentMutation, useGetCommentQuery } from "../features/comment/commentApi";
+import {
+  useAddNewAnswerMutation,
+  useAddNewCommentMutation,
+  useDeleteCommentMutation,
+  useDeleteReplyMutation,
+  useGetCommentQuery,
+} from "../features/comment/commentApi";
 import { format } from "timeago.js";
 import toast from "react-hot-toast";
 import { VscVerifiedFilled } from "react-icons/vsc";
+import { useSelector } from "react-redux";
 
 type Props = {
   slug: string;
@@ -12,6 +19,7 @@ type Props = {
 
 const Comment: FC<Props> = ({ slug }) => {
   const { data, refetch } = useGetCommentQuery(slug, { refetchOnMountOrArgChange: true });
+  const { user } = useSelector((state) => state.auth);
 
   const [comment, setComment] = useState("");
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -21,6 +29,8 @@ const Comment: FC<Props> = ({ slug }) => {
   const [addNewComment, { isLoading: commentCreationLoading, error, isSuccess }] = useAddNewCommentMutation();
   const [addNewAnswer, { isSuccess: answerSuccess, error: answerError, isLoading: answerCreationLoading }] =
     useAddNewAnswerMutation();
+  const [deleteComment, { isLoading: deleteCommentLoading }] = useDeleteCommentMutation();
+  const [deleteReply, { isLoading: deleteReplyLoading }] = useDeleteReplyMutation();
 
   const handleCommentSubmit = async () => {
     if (comment.length === 0) {
@@ -40,11 +50,9 @@ const Comment: FC<Props> = ({ slug }) => {
 
   const toggleReplyActive = (id: string) => {
     if (activeReply === id) {
-      // If the same reply is clicked again, close it
       setActiveReply(null);
       setCommentId("");
     } else {
-      // Close other reply sections and clear their inputs
       setActiveReply(id);
       setAnswers((prevState) => ({
         ...prevState,
@@ -74,6 +82,26 @@ const Comment: FC<Props> = ({ slug }) => {
       refetch();
     }
   }, [isSuccess, error, answerSuccess, answerError, data, refetch, commentId]);
+
+  const handleDeleteComment = async (commentId: string) => {
+    try {
+      await deleteComment({ slug, commentId });
+      toast.success("Bình luận đã được xóa");
+      refetch();
+    } catch (error) {
+      toast.error("Không thể xóa bình luận");
+    }
+  };
+
+  const handleDeleteReply = async (commentId: string, replyId: string) => {
+    try {
+      await deleteReply({ slug, commentId, replyId });
+      toast.success("Phản hồi đã được xóa");
+      refetch();
+    } catch (error) {
+      toast.error("Không thể xóa phản hồi");
+    }
+  };
 
   return (
     <div className='w-[90%] m-auto py-3'>
@@ -120,6 +148,15 @@ const Comment: FC<Props> = ({ slug }) => {
                   <h5 className='text-[20px]'>{comment?.user?.name}</h5>
                   <p>{comment?.comment}</p>
                   <small className='text-[#ffffff83]'>{!comment.createdAt ? "" : format(comment?.createdAt)}</small>
+                  {user?.id === comment?.user?._id && (
+                    <button
+                      onClick={() => handleDeleteComment(comment._id)}
+                      className='text-red-500 ml-2'
+                      disabled={deleteCommentLoading}
+                    >
+                      Xóa
+                    </button>
+                  )}
                 </div>
               </div>
               <div className='flex w-full items-center'>
@@ -156,6 +193,15 @@ const Comment: FC<Props> = ({ slug }) => {
                         </div>
                         <p>{item?.comment}</p>
                         <small className='text-[#ffffff83]'>{format(item.createdAt)}</small>
+                        {user?.id === item?.user?._id && (
+                          <button
+                            onClick={() => handleDeleteReply(comment._id, item._id)}
+                            className='text-red-500 ml-2'
+                            disabled={deleteReplyLoading}
+                          >
+                            Xóa
+                          </button>
+                        )}
                       </div>
                     </div>
                   ))}
