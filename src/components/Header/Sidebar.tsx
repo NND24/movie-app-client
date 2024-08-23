@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { BiSearch, BiUser } from "react-icons/bi";
-import { FaHistory, FaRegBookmark, FaSortUp } from "react-icons/fa";
+import { FaHistory, FaRegBookmark } from "react-icons/fa";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { RiUserLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
@@ -91,7 +91,7 @@ const Sidebar: FC<Props> = ({
 
               {openModal && (
                 <ul
-                  className='absolute top-[-172px] left-[5px] sm:left-[10px] w-[250px] py-1 bg-[#1a191f] flex flex-col'
+                  className='absolute top-[-172px] left-[0px] sm:left-[10px] w-[220px] sm:w-[250px] py-1 bg-[#1a191f] flex flex-col'
                   style={{
                     borderTopColor: "#00dc5a",
                     borderTopWidth: "3px",

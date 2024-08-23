@@ -32,61 +32,67 @@ const DetailHero: FC<Props> = ({ slug }) => {
       {/* <div className='absolute top-0 bottom-0 left-0 h-full w-[80px] bg-gradient-to-r from-[#0a0c0f] to-transparent z-[10]' />
       <div className='absolute top-0 bottom-0 right-0 h-full w-[80px] bg-gradient-to-l from-[#0a0c0f] to-transparent z-[10]' /> */}
 
-      <div className='absolute left-[64px] bottom-[calc(10%+24px+3.5vw)] flex flex-col items-start w-[50%] z-[20]'>
-        <h1 className='font-bold text-[30px] text-[#e0e0e0] text-left drop-shadow-[1px_1px_1px_#000]'>{movie?.name}</h1>
-        <p className='font-bold text-[#e0e0e0] mb-1 drop-shadow-[1px_1px_1px_#000]'>{movie?.origin_name}</p>
-        <div className='text-[14px] text-[#e0e0e0] text-left drop-shadow-[1px_1px_1px_#000] my-1 flex items-center'>
-          <div className='mr-[6px] font-medium inline-flex items-center gap-1'>
+      <div className='absolute left-[35px] mobile-m:left-[38px] mobile-l:left-[38px] mobile-xl:left-[50px] sm:left-[65px] bottom-[calc(6%+24px+3.5vw)] sm:bottom-[calc(10%+24px+3.5vw)] flex flex-col items-start w-[79%] mobile-m:w-[82%] mobile-l:w-[84%] sm:w-[70%] md:w-[60%] lg:w-[50%] z-[20]'>
+        <h1 className='font-bold text-[22px] mobile-m:text-[25px] sm:text-[30px] text-[#e0e0e0] text-left drop-shadow-[1px_1px_1px_#000]'>
+          {movie?.name}
+        </h1>
+        <p className='font-bold text-[14px] mobile-m:text-[16px] sm:text-[18px] text-[#e0e0e0] mb-1 drop-shadow-[1px_1px_1px_#000]'>
+          {movie?.origin_name}
+        </p>
+        <div className='text-[13px] sm:text-[14px] text-[#e0e0e0] text-left drop-shadow-[1px_1px_1px_#000] my-1 flex items-center flex-wrap gap-[4px] sm:gap-[6px]'>
+          <div className=' font-medium inline-flex items-center gap-1'>
             <FaStar className='text-[#1cc749]' />
             <span>{movie?.tmdb?.vote_average}</span>
           </div>
-          <span className='mr-[6px]'>•</span>
-          <Link to='' className='mr-[6px] font-medium'>
+          <span className=''>•</span>
+          <Link to='' className=' font-medium'>
             {movie?.year}
           </Link>
-          <span className='mr-[6px]'>•</span>
-          <span className='mr-[6px] font-medium border-[#e0e0e0] border-[1px] border-solid rounded-[30px] px-[8px]'>
+          <span className='hidden mobile-l:block'>•</span>
+          <span className='hidden mobile-l:block font-medium border-[#e0e0e0] border-[1px] border-solid rounded-[30px] px-[8px] w-max'>
             {movie?.status === "completed" ? "Hoàn tất" : "Đang chiếu"}
           </span>
-          <span className='mr-[6px]'>•</span>
-          <span className='mr-[6px] font-medium'>{movie?.time}</span>
-          <span className='mr-[6px]'>•</span>
-          <div className='mr-[6px] font-medium inline-flex items-center gap-1'>
+          <span className=''>•</span>
+          <span className=' font-medium'>{movie?.time}</span>
+          <span className=''>•</span>
+          <div className=' font-medium inline-flex items-center gap-1'>
             <FaEye />
             <span>{movie?.view}</span>
           </div>
 
           {movie?.country && movie.country.length > 0 && (
-            <>
-              <span className='mr-[6px]'>•</span>
+            <div className='hidden mobile-l:block'>
+              <span className='mr-[4px] sm:mr-[6px]'>•</span>
               {movie?.country.map((country) => (
                 <Link
                   to={`/quoc-gia/${country.slug}?page=1`}
-                  className='mr-[6px] font-medium border-[#e0e0e0] border-[1px] border-solid rounded-[30px] px-[8px]'
+                  className='mr-[4px] sm:mr-[6px] font-medium border-[#e0e0e0] border-[1px] border-solid rounded-[30px] px-[8px]'
                   key={country.id}
                 >
                   {country.name}
                 </Link>
               ))}
-            </>
+            </div>
           )}
         </div>
 
         {movie?.category && movie.category.length > 0 && (
-          <div className='flex gap-[8px] mt-[4px] flex-wrap w-full'>
-            {movie?.category.map((cat) => (
-              <Link
-                to={`/the-loai/${cat.slug}?page=1`}
-                className='px-[6px] rounded-[2px] color-[#ececec] bg-[#69696950] text-[14px] font-medium text-white w-max h-full shadow-[rgba(0,0,0,0.5)_0px_1px_2px]'
-                key={cat.id}
-              >
-                {cat.name}
-              </Link>
-            ))}
+          <div className='hidden mobile-l:block'>
+            <div className='flex gap-[8px] mt-[4px] flex-wrap w-full'>
+              {movie?.category.map((cat) => (
+                <Link
+                  to={`/the-loai/${cat.slug}?page=1`}
+                  className='px-[6px] rounded-[2px] color-[#ececec] bg-[#33333341] text-[14px] font-medium text-white w-max h-full shadow-[rgba(0,0,0,0.5)_0px_1px_2px]'
+                  key={cat.id}
+                >
+                  {cat.name}
+                </Link>
+              ))}
+            </div>
           </div>
         )}
 
-        <div className='mt-[4px]'>
+        <div className='mt-[4px] hidden sm:block'>
           {movie?.director && movie.director[0].length > 0 && (
             <p className='text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] text-left line-clamp-1'>
               Đạo diễn:{" "}
@@ -104,20 +110,20 @@ const DetailHero: FC<Props> = ({ slug }) => {
             </p>
           )}
         </div>
-        <p className='text-justify mt-[4px] text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] line-clamp-3 leading-[22px]'>
+        <p className='text-[16px] sm:text-[18px] text-justify mt-[4px] text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] line-clamp-2 mobile-l:line-clamp-3 leading-[18px] sm:leading-[22px]'>
           {removeHTMLTags(movie?.content)}
         </p>
       </div>
 
-      <div className='absolute bottom-[10%] left-[64px] flex justify-between gap-[20px] z-[20]'>
+      <div className='absolute left-[35px] mobile-m:left-[38px] mobile-l:left-[38px] mobile-xl:left-[50px] sm:left-[65px] bottom-[6%] sm:bottom-[10%] flex justify-between gap-[10px] sm:gap-[20px] z-[20]'>
         <Link
           to={`/phim/${slug}`}
-          className='w-[36px] h-[36px] rounded-full bg-[#1cc749] hover:bg-[#3bf56d] flex items-center justify-center'
+          className='w-[28px] sm:w-[38px] h-[28px] sm:h-[38px] rounded-full bg-[#1cc749] hover:bg-[#3bf56d] flex items-center justify-center'
         >
           <FaPlay className='text-white' size={15} />
         </Link>
         <button
-          className='w-[36px] h-[36px] rounded-full bg-[#e4e0d9] hover:bg-[#ffffff] flex items-center justify-center'
+          className='w-[28px] sm:w-[38px] h-[28px] sm:h-[38px] rounded-full bg-[#e4e0d9] hover:bg-[#ffffff] flex items-center justify-center'
           onClick={() => addToFollowed()}
         >
           <MdOutlineBookmarkAdd className='text-[#111319]' size={21} />

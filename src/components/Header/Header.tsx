@@ -62,12 +62,12 @@ const Header: FC<Props> = ({ isProfile }) => {
         <div
           className={`${
             active || isProfile
-              ? "bg-[#0a0c0f] fixed top-0 left-0 w-full h-[60px] z-[1000] transition duration-500 ease-in-out"
-              : "w-full fixed top-0 left-0 h-[60px] z-[1000]"
+              ? "bg-[#0a0c0f] fixed top-0 left-0 w-full h-[50px] sm:h-[60px] z-[1000] transition duration-500 ease-in-out"
+              : "w-full fixed top-0 left-0 h-[50px] sm:h-[60px] z-[1000]"
           }`}
         >
           <div className='w-[95%] 800px:w-[92%] m-auto h-full'>
-            <div className='w-full h-[60px] flex items-center justify-between p-3'>
+            <div className='w-full h-[50px] sm:h-[60px] flex items-center justify-between p-3'>
               <div className='flex items-center gap-[20px]'>
                 <Link
                   to='/'
@@ -115,7 +115,7 @@ const Header: FC<Props> = ({ isProfile }) => {
                         <>
                           <FaSortUp className='absolute top-[32px] left-[8px]' fill='#00dc5a' />
                           <ul
-                            className='absolute top-[39px] right-[-50px] w-[250px] py-1 bg-[#1a191f] flex flex-col'
+                            className='absolute top-[39px] right-[-50px] w-[220px] sm:w-[250px] py-1 bg-[#1a191f] flex flex-col'
                             style={{
                               borderTopColor: "#00dc5a",
                               borderTopWidth: "3px",
@@ -161,7 +161,7 @@ const Header: FC<Props> = ({ isProfile }) => {
                     />
                   </div>
                 ) : (
-                  <div className='flex items-center gap-3'>
+                  <div className='flex items-center gap-1'>
                     <BiUser
                       className='mx-4 text-white hover:text-[#00dc5a] cursor-pointer'
                       size={30}
@@ -183,12 +183,12 @@ const Header: FC<Props> = ({ isProfile }) => {
         </div>
       </header>
       {openLogin && (
-        <div className='fixed top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[450px]  bg-[#f8f8f8] rounded-[8px] shadow p-4 outline-none z-[2000]'>
+        <div className='fixed top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[85%] sm:w-[500px] bg-[#f8f8f8] rounded-[8px] shadow p-4 outline-none z-[2000]'>
           <Login setOpenLogin={setOpenLogin} setOpenSignUp={setOpenSignUp} />
         </div>
       )}
       {openSignUp && (
-        <div className='fixed top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[450px]  bg-[#f8f8f8] rounded-[8px] shadow p-4 outline-none z-[2000]'>
+        <div className='fixed top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[85%] sm:w-[500px] bg-[#f8f8f8] rounded-[8px] shadow p-4 outline-none z-[2000]'>
           <SignUp setOpenLogin={setOpenLogin} setOpenSignUp={setOpenSignUp} />
         </div>
       )}
