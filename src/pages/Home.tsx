@@ -63,7 +63,7 @@ const Home = () => {
 
   return (
     <div>
-      <Heading title='dMOVIE' description='' keywords='' icon='../../public/favicon.ico' />
+      <Heading title='dMovie' description='' keywords='' icon='../../public/favicon.ico' />
       <Header />
       <Hero items={movieData?.items || []} />
 
@@ -115,7 +115,7 @@ const Home = () => {
           <Link
             key={genre.slug}
             to={`/the-loai/${genre.slug}?page=1`}
-            className='flex items-center h-[36px] px-[17px] bg-[#23252b] rounded-[4px] gap-2'
+            className='hidden sm:flex items-center h-[36px] px-[17px] bg-[#23252b] rounded-[4px] gap-2'
           >
             {genre.name}
           </Link>

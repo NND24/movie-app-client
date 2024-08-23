@@ -109,7 +109,7 @@ const Comment: FC<Props> = ({ slug }) => {
       <div>
         <div className='flex w-full'>
           <img
-            src='../../public/defaultAvatar.png'
+            src={user?.avatar ? user?.avatar?.url : "../../public/defaultAvatar.png"}
             alt='avatar'
             className='w-[50px] h-[50px] object-cover rounded-full'
           />
@@ -117,14 +117,16 @@ const Comment: FC<Props> = ({ slug }) => {
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             cols={40}
-            rows={5}
+            rows={2}
             placeholder='Viết bình luận...'
             className='outline-none bg-transparent ml-3 border border-[#ffffff57] 800px:w-full p-2 rounded w-[90%] 800px:text-[18px] font-Poppins text-white'
           ></textarea>
         </div>
         <div className='w-full flex justify-end'>
           <div
-            className={`${styles.button} !w-[120px] !h-[40px] text-[18px] mt-5 text-white ${
+            className={`${
+              styles.button
+            } !w-[80px] mobile-l:!w-[120px] !h-[35px] !min-h-[35px] mobile-l:!h-[40px] text-[18px] mt-5 text-white ${
               commentCreationLoading && "cursor-no-drop"
             }`}
             onClick={commentCreationLoading ? () => {} : handleCommentSubmit}
@@ -159,7 +161,7 @@ const Comment: FC<Props> = ({ slug }) => {
                   )}
                 </div>
               </div>
-              <div className='flex w-full items-center'>
+              <div className='flex w-full items-center ml-12'>
                 <span
                   className='800px:pl-12 text-[#ffffff83] cursor-pointer mr-2'
                   onClick={() => toggleReplyActive(comment._id)}
@@ -174,7 +176,7 @@ const Comment: FC<Props> = ({ slug }) => {
                 <span className='pl-1 mt-[-4px] cursor-pointer text-[#ffffff83]'>{comment?.commentReplies.length}</span>
               </div>
               {activeReply === comment._id && (
-                <>
+                <div className='ml-12'>
                   {comment.commentReplies.map((item) => (
                     <div key={item._id} className='w-full flex 800px:ml-16 my-5  text-white'>
                       <div>
@@ -224,7 +226,7 @@ const Comment: FC<Props> = ({ slug }) => {
                       Gửi
                     </button>
                   </div>
-                </>
+                </div>
               )}
             </div>
           ))}

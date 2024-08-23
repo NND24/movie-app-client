@@ -57,17 +57,13 @@ const WatchMovie = () => {
       <Heading title={`Phim ${movie?.name}`} description='' keywords='' icon='../../public/favicon.ico' />
       <Header />
 
-      <div className='w-[90%] m-auto mt-[60px] flex items-center text-white font-semibold'>
+      <div className='w-[90%] m-auto mt-[60px] flex flex-wrap items-center text-white font-semibold'>
         <Link to='/' className='flex items-center gap-1 hover:text-[#1cc749]'>
           <FaHome /> <span>Trang chủ</span>
         </Link>
         <span className='px-2'>/</span>
         <Link to={`/phim/${movie?.slug}`} className='flex items-center gap-1 hover:text-[#1cc749]'>
           <span>{movie?.name}</span>
-        </Link>
-        <span className='px-2'>/</span>
-        <Link to='' className='flex items-center gap-1 hover:text-[#1cc749]'>
-          <span>{selectedEpisode?.filename}</span>
         </Link>
       </div>
 
@@ -138,39 +134,39 @@ const WatchMovie = () => {
 
       <div className='w-[90%] mx-auto h-[1px] bg-[#26252a] my-2'></div>
 
-      <div className='w-[90%] m-auto'>
+      <div className='w-[90%] m-auto block sm:hidden'>
         <h1 className='font-bold text-[30px] text-[#e0e0e0] text-left drop-shadow-[1px_1px_1px_#000]'>{movie?.name}</h1>
         <p className='font-bold text-[#e0e0e0] pb-1 drop-shadow-[1px_1px_1px_#000]'>{movie?.origin_name}</p>
-        <div className='text-[14px] text-[#e0e0e0] text-left drop-shadow-[1px_1px_1px_#000] my-2 flex items-center'>
-          <div className='mr-[6px] font-medium inline-flex items-center gap-1'>
+        <div className='text-[14px] text-[#e0e0e0] text-left drop-shadow-[1px_1px_1px_#000] my-2 flex flex-wrap items-center gap-[4px] sm:gap-[6px]'>
+          <div className=' font-medium inline-flex items-center gap-1'>
             <FaStar className='text-[#1cc749]' />
             <span>
               {movie?.tmdb?.vote_average} / {movie?.tmdb?.vote_count} đánh giá
             </span>
           </div>
-          <span className='mr-[6px]'>•</span>
-          <Link to='' className='mr-[6px] font-medium'>
+          <span className=''>•</span>
+          <Link to='' className=' font-medium'>
             {movie?.year}
           </Link>
-          <span className='mr-[6px]'>•</span>
-          <span className='mr-[6px] font-medium border-[#e0e0e0] border-[1px] border-solid rounded-[30px] px-[8px]'>
+          <span className=''>•</span>
+          <span className=' font-medium border-[#e0e0e0] border-[1px] border-solid rounded-[30px] px-[8px]'>
             {movie?.status === "completed" ? "Hoàn tất" : "Đang chiếu"}
           </span>
-          <span className='mr-[6px]'>•</span>
-          <span className='mr-[6px] font-medium'>{movie?.time}</span>
-          <span className='mr-[6px]'>•</span>
-          <div className='mr-[6px] font-medium inline-flex items-center gap-1'>
+          <span className=''>•</span>
+          <span className=' font-medium'>{movie?.time}</span>
+          <span className=''>•</span>
+          <div className=' font-medium inline-flex items-center gap-1'>
             <FaEye />
             <span>{movie?.view}</span>
           </div>
 
           {movie?.country && movie.country.length > 0 && (
             <>
-              <span className='mr-[6px]'>•</span>
+              <span className=''>•</span>
               {movie?.country.map((country) => (
                 <Link
                   to=''
-                  className='mr-[6px] font-medium border-[#e0e0e0] border-[1px] border-solid rounded-[30px] px-[8px]'
+                  className='mr-[4px] sm:mr-[6px] font-medium border-[#e0e0e0] border-[1px] border-solid rounded-[30px] px-[8px]'
                   key={country.id}
                 >
                   {country.name}
@@ -219,7 +215,7 @@ const WatchMovie = () => {
 
       <div className='w-[90%] mx-auto h-[1px] bg-[#26252a] my-2'></div>
 
-      <Comment />
+      <Comment slug={slug} />
 
       <div className='w-[90%] mx-auto h-[1px] bg-[#26252a] my-2'></div>
     </div>

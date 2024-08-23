@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../features/store";
 import Header from "../components/Header/Header";
 import Comment from "../components/Movie/Comment";
+import { FaEye, FaStar } from "react-icons/fa6";
+import { removeHTMLTags } from "../utils/functions";
 
 const DetailMovie = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -82,6 +84,87 @@ const DetailMovie = () => {
               </div>
             </div>
           ))}
+      </div>
+
+      <div className='w-[90%] mx-auto h-[1px] bg-[#26252a] my-2 block sm:hidden'></div>
+
+      <div className='w-[90%] m-auto block sm:hidden'>
+        <h1 className='font-bold text-[30px] text-[#e0e0e0] text-left drop-shadow-[1px_1px_1px_#000]'>{movie?.name}</h1>
+        <p className='font-bold text-[#e0e0e0] pb-1 drop-shadow-[1px_1px_1px_#000]'>{movie?.origin_name}</p>
+        <div className='text-[14px] text-[#e0e0e0] text-left drop-shadow-[1px_1px_1px_#000] my-2 flex flex-wrap items-center gap-[4px] sm:gap-[6px]'>
+          <div className='font-medium inline-flex items-center gap-1'>
+            <FaStar className='text-[#1cc749]' />
+            <span>
+              {movie?.tmdb?.vote_average} / {movie?.tmdb?.vote_count} đánh giá
+            </span>
+          </div>
+          <span className=''>•</span>
+          <Link to='' className='font-medium'>
+            {movie?.year}
+          </Link>
+          <span className=''>•</span>
+          <span className='font-medium border-[#e0e0e0] border-[1px] border-solid rounded-[30px] px-[8px]'>
+            {movie?.status === "completed" ? "Hoàn tất" : "Đang chiếu"}
+          </span>
+          <span className=''>•</span>
+          <span className='font-medium'>{movie?.time}</span>
+          <span className=''>•</span>
+          <div className='font-medium inline-flex items-center gap-1'>
+            <FaEye />
+            <span>{movie?.view}</span>
+          </div>
+
+          {movie?.country && movie.country.length > 0 && (
+            <>
+              <span className=''>•</span>
+              {movie?.country.map((country) => (
+                <Link
+                  to=''
+                  className='mr-[4px] sm:mr-[6px] font-medium border-[#e0e0e0] border-[1px] border-solid rounded-[30px] px-[8px]'
+                  key={country.id}
+                >
+                  {country.name}
+                </Link>
+              ))}
+            </>
+          )}
+        </div>
+
+        {movie?.category && movie.category.length > 0 && (
+          <div className='flex gap-[8px] py-2 flex-wrap w-full'>
+            {movie?.category.map((cat) => (
+              <Link
+                to=''
+                className='px-[6px] rounded-[2px] color-[#ececec] bg-[#ffffff14] text-[14px] font-medium text-white w-max h-full shadow-[rgba(0,0,0,0.5)_0px_1px_2px]'
+                key={cat.id}
+              >
+                {cat.name}
+              </Link>
+            ))}
+          </div>
+        )}
+
+        <div className='mt-[4px]'>
+          {movie?.director && movie.director[0].length > 0 && (
+            <p className='text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] text-left'>
+              Đạo diễn:{" "}
+              {movie?.director.map((name, index) => (
+                <Link to='' key={index}>{`${name}, `}</Link>
+              ))}
+            </p>
+          )}
+          {movie?.actor && movie.actor[0].length > 0 && (
+            <p className='text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] text-left'>
+              Diễn viên:{" "}
+              {movie?.actor.map((name, index) => (
+                <Link to='' key={index}>{`${name}, `}</Link>
+              ))}
+            </p>
+          )}
+        </div>
+        <p className='text-justify mt-[4px] text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] leading-[22px]'>
+          {removeHTMLTags(movie?.content)}
+        </p>
       </div>
 
       <div className='w-[90%] mx-auto h-[1px] bg-[#26252a] my-2'></div>
