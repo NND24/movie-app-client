@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { removeHTMLTags } from "../../utils/functions";
 import { useGetDetailMovieQuery } from "../../features/movie/movieApi";
@@ -6,16 +6,20 @@ import { Movie } from "../../utils/interfaces";
 import { Link } from "react-router-dom";
 import { FaEye, FaStar, FaPlay, FaChevronRight } from "react-icons/fa6";
 import { useAddFollowedMovieMutation } from "../../features/user/userApi";
+import { useSelector } from "react-redux";
+import { RootState } from "../../features/store";
+import toast from "react-hot-toast";
 
 type Props = {
   slug: string;
 };
 
 const MovieCard: FC<Props> = ({ slug }) => {
+  const user = useSelector((state: RootState) => state.auth.user);
   const [isHovered, setIsHovered] = useState(false);
 
   const { data } = useGetDetailMovieQuery(slug);
-  const [addFollowedMovie] = useAddFollowedMovieMutation();
+  const [addFollowedMovie, { isSuccess, error }] = useAddFollowedMovieMutation();
 
   const movie = data?.movie as Movie;
 
@@ -28,8 +32,26 @@ const MovieCard: FC<Props> = ({ slug }) => {
   };
 
   const addToFollowed = async () => {
-    await addFollowedMovie({ slug });
+    if (user) {
+      await addFollowedMovie({ slug });
+    } else {
+      toast.error("Vui lòng đăng nhập để lưu phim!");
+    }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Lưu phim thành công!");
+    }
+    if (error) {
+      if ("data" in error) {
+        const errorData = error;
+        if (errorData.data.message === "Movie already followed") {
+          toast.success("Phim đã được lưu!");
+        }
+      }
+    }
+  }, [isSuccess, error]);
 
   return (
     <div
@@ -74,7 +96,7 @@ const MovieCard: FC<Props> = ({ slug }) => {
                 <span>{movie?.tmdb?.vote_average}</span>
               </div>
               <span className='mr-[4px]'>•</span>
-              <Link to='' className='mr-[4px] font-medium'>
+              <Link to={`/danh-sach/phim-moi?page=1&year=${movie?.year}`} className='mr-[4px] font-medium'>
                 {movie?.year}
               </Link>
               <span className='mr-[4px]'>•</span>

@@ -12,6 +12,7 @@ import Login from "../Auth/Login";
 import SignUp from "../Auth/SignUp";
 import Sidebar from "./Sidebar";
 import { IoMdList } from "react-icons/io";
+import { RootState } from "../../features/store";
 
 type Props = {
   isProfile?: boolean;
@@ -29,7 +30,7 @@ const Header: FC<Props> = ({ isProfile }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth);
 
   const { refetch } = useLogoutQuery(undefined, {
     skip: !logout,

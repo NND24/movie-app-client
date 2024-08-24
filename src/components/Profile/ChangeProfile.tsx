@@ -7,7 +7,6 @@ import { styles } from "../../styles/style";
 import Header from "../Header/Header";
 
 type Props = {
-  avatar: string | null;
   user: {
     name: string;
     email: string;
@@ -16,8 +15,8 @@ type Props = {
   setEditInfo: (editInfo: boolean) => void;
 };
 
-const ChangeProfile: FC<Props> = ({ avatar, user, setEditInfo }) => {
-  const [name, setName] = useState(user.name);
+const ChangeProfile: FC<Props> = ({ user, setEditInfo }) => {
+  const [name, setName] = useState(user?.name);
 
   const [updateAvatar, { isSuccess: isAvatarSuccess, error: avatarError }] = useUpdateAvatarMutation();
   const [editProfile, { isSuccess: isProfileSuccess, error: profileError }] = useEditProfileMutation();
@@ -60,12 +59,12 @@ const ChangeProfile: FC<Props> = ({ avatar, user, setEditInfo }) => {
       <Heading title='Hồ sơ cá nhân' description='' keywords='' icon='../../public/favicon.ico' />
       <Header isProfile={true} />
 
-      <div className='bg-[#1a1c22] w-[50%] h-max p-3 mx-auto mt-[70px]'>
-        <h1 className='text-[#fff] font-bold text-[26px] mb-2'>Quản lý tài khoản</h1>
+      <div className='bg-[#1a1c22] w-[90%] sm:w-[80%] md:w-[70%] lg:w-[50%] h-max p-3 mx-auto mt-[70px]'>
+        <h1 className='text-[#fff] font-bold text-[22px] mobile-m:text-[26px] mb-2'>Quản lý tài khoản</h1>
 
-        <div className='flex text-white font-medium text-[16px]'>
+        <div className='flex text-white font-medium text-[13px] mobile-m:text-[16px]'>
           <span
-            className={`text-[#fff] cursor-pointer py-1 px-3 hover:bg-[#ffffff2c]
+            className={`text-[#fff] cursor-pointer py-1 px-2 mobile-m:px-3 hover:bg-[#ffffff2c]
             }`}
             style={{
               borderBottom: "#00dc5a 3px solid",
@@ -75,7 +74,7 @@ const ChangeProfile: FC<Props> = ({ avatar, user, setEditInfo }) => {
             Chỉnh sửa thông tin
           </span>
           <span
-            className={`text-[#ffffff85] cursor-pointer py-1 px-3 hover:bg-[#ffffff2c] `}
+            className={`text-[#ffffff85] cursor-pointer py-1 px-2 mobile-m:px-3 hover:bg-[#ffffff2c] `}
             onClick={() => setEditInfo(true)}
           >
             Cài đặt tài khoản
@@ -83,12 +82,12 @@ const ChangeProfile: FC<Props> = ({ avatar, user, setEditInfo }) => {
         </div>
 
         <div className='mt-3'>
-          <h3 className='text-[#fff] text-[20px] font-medium'>Thông tin cá nhân</h3>
+          <h3 className='text-[#fff] text-[18px] mobile-m:text-[20px] font-medium mb-2'>Thông tin cá nhân</h3>
 
           <div className='w-full flex justify-center'>
             <div className='relative'>
               <img
-                src={user.avatar?.url || avatar || "../../../public/defaultAvatar.png"}
+                src={user?.avatar?.url || "../../../public/defaultAvatar.png"}
                 alt='User Avatar'
                 className='w-[120px] h-[120px] cursor-pointer border-[3px] border-[#37a39a] rounded-full'
               />
@@ -107,7 +106,7 @@ const ChangeProfile: FC<Props> = ({ avatar, user, setEditInfo }) => {
             </div>
           </div>
 
-          <div className='w-full pl-6 800px:pl-10'>
+          <div className='w-full pl-2 mobile-l:pl-4 sm:pl-5 '>
             <form onSubmit={handleSubmit}>
               <div className='m-auto block pb-4 text-[#fff]'>
                 <div className='w-full mb-4'>
@@ -127,13 +126,13 @@ const ChangeProfile: FC<Props> = ({ avatar, user, setEditInfo }) => {
                     readOnly
                     className={`${styles.input} !w-[95%] !text-[#fff]`}
                     required
-                    value={user.email}
+                    value={user?.email}
                   />
                 </div>
                 <input
                   type='submit'
                   value='Cập nhật'
-                  className='w-full 800px:w-[250px] h-[40px] border border-[#37a39a] text-center dark:text-[#fff] text-black rounded-[3px] mt-8 cursor-pointer'
+                  className='w-[40%] h-[40px] border border-[#37a39a] text-center dark:text-[#fff] text-black rounded-[3px] mt-8 cursor-pointer'
                 />
               </div>
             </form>

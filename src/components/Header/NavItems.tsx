@@ -20,8 +20,28 @@ export const navItemsData = [
     slug: "hoat-hinh",
   },
   {
-    name: "Sắp chiếu",
+    name: "Sắp Chiếu",
     slug: "phim-sap-chieu",
+  },
+  {
+    name: "Phim Vietsub",
+    slug: "phim-vietsub",
+  },
+  {
+    name: "Thuyết Minh",
+    slug: "phim-thuyet-minh",
+  },
+  {
+    name: "Lồng Tiếng",
+    slug: "phim-long-tieng",
+  },
+  {
+    name: "Đang Chiếu",
+    slug: "phim-bo-dang-chieu",
+  },
+  {
+    name: "Trọn Bộ",
+    slug: "phim-bo-hoan-thanh",
   },
 ];
 
@@ -365,7 +385,7 @@ const NavItems: FC<Props> = ({ isMobileTablet }) => {
       ) : (
         <div className='hidden md:block'>
           <div className='flex items-center gap-[15px]'>
-            {navItemsData.map((nav, index) => (
+            {navItemsData.slice(0, 5).map((nav, index) => (
               <Link
                 key={index}
                 to={`/danh-sach/${nav.slug}?page=1`}

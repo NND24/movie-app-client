@@ -43,7 +43,9 @@ const DetailMovie = () => {
   // }));
 
   const addHistory = (ep) => {
-    addToHistory({ movie_slug: slug, ep });
+    if (user) {
+      addToHistory({ movie_slug: slug, ep });
+    }
   };
 
   const getItemBySlug = () => {
@@ -99,7 +101,7 @@ const DetailMovie = () => {
             </span>
           </div>
           <span className=''>•</span>
-          <Link to='' className='font-medium'>
+          <Link to={`/danh-sach/phim-moi?page=1&year=${movie?.year}`} className='font-medium'>
             {movie?.year}
           </Link>
           <span className=''>•</span>
@@ -119,7 +121,7 @@ const DetailMovie = () => {
               <span className=''>•</span>
               {movie?.country.map((country) => (
                 <Link
-                  to=''
+                  to={`/quoc-gia/${country.slug}?page=1`}
                   className='mr-[4px] sm:mr-[6px] font-medium border-[#e0e0e0] border-[1px] border-solid rounded-[30px] px-[8px]'
                   key={country.id}
                 >
@@ -134,7 +136,7 @@ const DetailMovie = () => {
           <div className='flex gap-[8px] py-2 flex-wrap w-full'>
             {movie?.category.map((cat) => (
               <Link
-                to=''
+                to={`/the-loai/${cat.slug}?page=1`}
                 className='px-[6px] rounded-[2px] color-[#ececec] bg-[#ffffff14] text-[14px] font-medium text-white w-max h-full shadow-[rgba(0,0,0,0.5)_0px_1px_2px]'
                 key={cat.id}
               >
@@ -149,7 +151,7 @@ const DetailMovie = () => {
             <p className='text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] text-left'>
               Đạo diễn:{" "}
               {movie?.director.map((name, index) => (
-                <Link to='' key={index}>{`${name}, `}</Link>
+                <Link to={`/tim-kiem/${name}?page=1`} key={index}>{`${name}, `}</Link>
               ))}
             </p>
           )}
@@ -157,7 +159,7 @@ const DetailMovie = () => {
             <p className='text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] text-left'>
               Diễn viên:{" "}
               {movie?.actor.map((name, index) => (
-                <Link to='' key={index}>{`${name}, `}</Link>
+                <Link to={`/tim-kiem/${name}?page=1`} key={index}>{`${name}, `}</Link>
               ))}
             </p>
           )}

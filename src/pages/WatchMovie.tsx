@@ -43,7 +43,9 @@ const WatchMovie = () => {
   const selectedEpisode = episodesForServer.find((ep) => ep.name === episode);
 
   const addHistory = (ep) => {
-    addToHistory({ movie_slug: slug, ep });
+    if (user) {
+      addToHistory({ movie_slug: slug, ep });
+    }
   };
 
   const getItemBySlug = () => {
@@ -134,7 +136,7 @@ const WatchMovie = () => {
 
       <div className='w-[90%] mx-auto h-[1px] bg-[#26252a] my-2'></div>
 
-      <div className='w-[90%] m-auto block sm:hidden'>
+      <div className='w-[90%] m-auto'>
         <h1 className='font-bold text-[30px] text-[#e0e0e0] text-left drop-shadow-[1px_1px_1px_#000]'>{movie?.name}</h1>
         <p className='font-bold text-[#e0e0e0] pb-1 drop-shadow-[1px_1px_1px_#000]'>{movie?.origin_name}</p>
         <div className='text-[14px] text-[#e0e0e0] text-left drop-shadow-[1px_1px_1px_#000] my-2 flex flex-wrap items-center gap-[4px] sm:gap-[6px]'>
@@ -145,7 +147,7 @@ const WatchMovie = () => {
             </span>
           </div>
           <span className=''>•</span>
-          <Link to='' className=' font-medium'>
+          <Link to={`/danh-sach/phim-moi?page=1&year=${movie?.year}`} className=' font-medium'>
             {movie?.year}
           </Link>
           <span className=''>•</span>
@@ -165,7 +167,7 @@ const WatchMovie = () => {
               <span className=''>•</span>
               {movie?.country.map((country) => (
                 <Link
-                  to=''
+                  to={`/quoc-gia/${country.slug}?page=1`}
                   className='mr-[4px] sm:mr-[6px] font-medium border-[#e0e0e0] border-[1px] border-solid rounded-[30px] px-[8px]'
                   key={country.id}
                 >
@@ -180,7 +182,7 @@ const WatchMovie = () => {
           <div className='flex gap-[8px] py-2 flex-wrap w-full'>
             {movie?.category.map((cat) => (
               <Link
-                to=''
+                to={`/the-loai/${cat.slug}?page=1`}
                 className='px-[6px] rounded-[2px] color-[#ececec] bg-[#ffffff14] text-[14px] font-medium text-white w-max h-full shadow-[rgba(0,0,0,0.5)_0px_1px_2px]'
                 key={cat.id}
               >
@@ -195,7 +197,7 @@ const WatchMovie = () => {
             <p className='text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] text-left'>
               Đạo diễn:{" "}
               {movie?.director.map((name, index) => (
-                <Link to='' key={index}>{`${name}, `}</Link>
+                <Link to={`/tim-kiem/${name}?page=1`} key={index}>{`${name}, `}</Link>
               ))}
             </p>
           )}
@@ -203,7 +205,7 @@ const WatchMovie = () => {
             <p className='text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] text-left'>
               Diễn viên:{" "}
               {movie?.actor.map((name, index) => (
-                <Link to='' key={index}>{`${name}, `}</Link>
+                <Link to={`/tim-kiem/${name}?page=1`} key={index}>{`${name}, `}</Link>
               ))}
             </p>
           )}

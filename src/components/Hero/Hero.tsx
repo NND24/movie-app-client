@@ -19,7 +19,7 @@ const Hero: FC<HeroProps> = ({ items = [] }) => {
           slidesPerView={1}
           spaceBetween={0}
           autoplay={{
-            delay: 40000,
+            delay: 4000,
             disableOnInteraction: false,
           }}
           loop={true}

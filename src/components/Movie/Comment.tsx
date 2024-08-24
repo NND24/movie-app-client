@@ -12,6 +12,7 @@ import {
   useGetCommentQuery,
 } from "../../features/comment/commentApi";
 import { styles } from "../../styles/style";
+import { RootState } from "../../features/store";
 
 type Props = {
   slug: string;
@@ -19,7 +20,7 @@ type Props = {
 
 const Comment: FC<Props> = ({ slug }) => {
   const { data, refetch } = useGetCommentQuery(slug, { refetchOnMountOrArgChange: true });
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth);
 
   const [comment, setComment] = useState("");
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -107,45 +108,51 @@ const Comment: FC<Props> = ({ slug }) => {
     <div className='w-[90%] m-auto py-3'>
       <p className='text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] text-[18px] font-semibold pb-2'>Bình luận:</p>
       <div>
-        <div className='flex w-full'>
-          <img
+        <div className='flex items-center w-full'>
+          {/* <img
             src={user?.avatar ? user?.avatar?.url : "../../public/defaultAvatar.png"}
             alt='avatar'
-            className='w-[50px] h-[50px] object-cover rounded-full'
-          />
-          <textarea
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            cols={40}
-            rows={2}
-            placeholder='Viết bình luận...'
-            className='outline-none bg-transparent ml-3 border border-[#ffffff57] 800px:w-full p-2 rounded w-[90%] 800px:text-[18px] font-Poppins text-white'
-          ></textarea>
+            className='w-[40px] h-[40px] object-cover rounded-full'
+          /> */}
+          {user ? (
+            <textarea
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              cols={40}
+              rows={2}
+              placeholder='Viết bình luận...'
+              className='outline-none bg-transparent ml-3 border border-[#ffffff57] 800px:w-full p-2 rounded w-[90%] 800px:text-[18px] font-Poppins text-white flex-1'
+            ></textarea>
+          ) : (
+            <div className='h-[66px] bg-transparent ml-3 border border-[#ffffff57] 800px:w-full p-2 rounded w-[90%] 800px:text-[18px] font-Poppins text-white flex-1'>
+              <span>Vui lòng đăng nhập để bình luận</span>
+            </div>
+          )}
         </div>
-        <div className='w-full flex justify-end'>
-          <div
-            className={`${
-              styles.button
-            } !w-[80px] mobile-l:!w-[120px] !h-[35px] !min-h-[35px] mobile-l:!h-[40px] text-[18px] mt-5 text-white ${
-              commentCreationLoading && "cursor-no-drop"
-            }`}
-            onClick={commentCreationLoading ? () => {} : handleCommentSubmit}
-          >
-            Gửi
+        {user && (
+          <div className='w-full flex justify-end'>
+            <div
+              className={`${
+                styles.button
+              } !w-[80px] mobile-l:!w-[120px] !h-[35px] !min-h-[35px] mobile-l:!h-[40px] text-[18px] mt-5 text-white ${
+                commentCreationLoading && "cursor-no-drop"
+              }`}
+              onClick={commentCreationLoading ? () => {} : handleCommentSubmit}
+            >
+              Gửi
+            </div>
           </div>
-        </div>
+        )}
 
-        <div className='w-full my-2'>
+        <div className='w-full mb-2 mt-4'>
           {data?.comments.map((comment) => (
             <div key={comment._id} className='mb-2'>
               <div className='flex mb-1'>
-                <div>
-                  <img
-                    src={comment?.user?.avatar ? comment?.user?.avatar?.url : "../../public/defaultAvatar.png"}
-                    alt='avatar'
-                    className='w-[40px] h-[40px] object-cover rounded-full'
-                  />
-                </div>
+                <img
+                  src={comment?.user?.avatar ? comment?.user?.avatar?.url : "../../public/defaultAvatar.png"}
+                  alt='avatar'
+                  className='w-[40px] h-[40px] object-cover rounded-full'
+                />
                 <div className='pl-3 text-white '>
                   <h5 className='text-[20px]'>{comment?.user?.name}</h5>
                   <p>{comment?.comment}</p>
@@ -207,25 +214,27 @@ const Comment: FC<Props> = ({ slug }) => {
                       </div>
                     </div>
                   ))}
-                  <div className='w-full flex relative text-white '>
-                    <input
-                      type='text'
-                      placeholder='Nhập phản hồi...'
-                      value={answers[comment._id] || ""}
-                      onChange={(e) => handleAnswerChange(comment._id, e.target.value)}
-                      className={`block 800px:ml-2 mt-2 outline-none bg-transparent border-b border-[#00000027] border-[#fff] text-white  p-[5px] w-[95%] ${
-                        answerCreationLoading && "cursor-not-allowed"
-                      }`}
-                    />
-                    <button
-                      type='submit'
-                      className='absolute right-0 bottom-1'
-                      onClick={handleAnswerSubmit}
-                      disabled={answerCreationLoading}
-                    >
-                      Gửi
-                    </button>
-                  </div>
+                  {user && (
+                    <div className='w-full flex relative text-white '>
+                      <input
+                        type='text'
+                        placeholder='Nhập phản hồi...'
+                        value={answers[comment._id] || ""}
+                        onChange={(e) => handleAnswerChange(comment._id, e.target.value)}
+                        className={`block 800px:ml-2 mt-2 outline-none bg-transparent border-b border-[#00000027] border-[#fff] text-white  p-[5px] w-[95%] ${
+                          answerCreationLoading && "cursor-not-allowed"
+                        }`}
+                      />
+                      <button
+                        type='submit'
+                        className='absolute right-0 bottom-1'
+                        onClick={handleAnswerSubmit}
+                        disabled={answerCreationLoading}
+                      >
+                        Gửi
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

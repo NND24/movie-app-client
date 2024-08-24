@@ -25,6 +25,10 @@ const Home = () => {
     query: useGetMovieByCategoryQuery({
       category: cat.slug,
       page: 1,
+      sortField: "",
+      filterGenre: "",
+      country: "",
+      year: "",
     }),
   }));
 
@@ -100,7 +104,7 @@ const Home = () => {
           to={`/danh-sach/phim-moi?page=1`}
           className='flex items-center h-[36px] px-[17px] bg-[#23252b] rounded-[4px] gap-2 cursor-pointer'
         >
-          <FaRegClone /> <span>Tất Cả</span>
+          <FaRegClone /> <span>Phim mới</span>
         </Link>
         {navItemsData.map((nav) => (
           <Link

@@ -42,7 +42,7 @@ const Sidebar: FC<Props> = ({
         onClick={() => setOpenSideBar(!openSideBar)}
       ></div>
       <div className='fixed top-0 bottom-0 right-0 w-[65%] sm:w-[50%] bg-[#0a0c0f] z-[1005]'>
-        <div className='h-[90vh] overflow-x-hidden overflow-auto small-scrollbar'>
+        <div className='h-full overflow-x-hidden overflow-auto small-scrollbar'>
           <IoMdList
             className='text-white cursor-pointer mx-2 my-3'
             size={30}

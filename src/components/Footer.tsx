@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className='w-full relative pt-5'>
-      <div className='dark:bg-[#0a0c0f] bg-white border border-[#0000000e] dark:border-[#ffffff1e] sticky bottom-0 left-0 right-0'>
+    <footer className='w-full pt-5'>
+      <div className='dark:bg-[#0a0c0f] bg-white border border-[#0000000e] dark:border-[#ffffff1e] '>
         <br />
         <div className='w-[95%] 800px:w-full 800px:max-w-[85%] mx-auto px-2 ms:px-6 lg-px-8'>
           <div className='grid grid-cols-2 gap-8 md:grid-cols-4'>

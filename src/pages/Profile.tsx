@@ -1,19 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ChangeProfile from "../components/Profile/ChangeProfile";
 import ChangePassword from "../components/Profile/ChangePassword";
+import { RootState } from "../features/store";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth);
   const [editInfo, setEditInfo] = useState(false);
-  const [avatar, setAvatar] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   return (
     <>
       {editInfo ? (
         <ChangePassword setEditInfo={setEditInfo} />
       ) : (
-        <ChangeProfile avatar={avatar} user={user} setEditInfo={setEditInfo} />
+        <ChangeProfile user={user} setEditInfo={setEditInfo} />
       )}
     </>
   );

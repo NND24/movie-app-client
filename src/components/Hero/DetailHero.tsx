@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useGetDetailMovieQuery } from "../../features/movie/movieApi";
 import { removeHTMLTags } from "../../utils/functions";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
@@ -6,20 +6,42 @@ import { Movie } from "../../utils/interfaces";
 import { Link } from "react-router-dom";
 import { FaEye, FaStar, FaPlay } from "react-icons/fa6";
 import { useAddFollowedMovieMutation } from "../../features/user/userApi";
+import { useSelector } from "react-redux";
+import { RootState } from "../../features/store";
+import toast from "react-hot-toast";
 
 type Props = {
   slug: string;
 };
 
 const DetailHero: FC<Props> = ({ slug }) => {
+  const user = useSelector((state: RootState) => state.auth.user);
   const { data } = useGetDetailMovieQuery(slug);
-  const [addFollowedMovie] = useAddFollowedMovieMutation();
+  const [addFollowedMovie, { isSuccess, error }] = useAddFollowedMovieMutation();
 
   const movie = data?.movie as Movie;
 
   const addToFollowed = async () => {
-    await addFollowedMovie({ slug });
+    if (user) {
+      await addFollowedMovie({ slug });
+    } else {
+      toast.error("Vui lòng đăng nhập để lưu phim!");
+    }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Lưu phim thành công!");
+    }
+    if (error) {
+      if ("data" in error) {
+        const errorData = error;
+        if (errorData.data.message === "Movie already followed") {
+          toast.success("Phim đã được lưu!");
+        }
+      }
+    }
+  }, [isSuccess, error]);
 
   return (
     <>
@@ -45,7 +67,7 @@ const DetailHero: FC<Props> = ({ slug }) => {
             <span>{movie?.tmdb?.vote_average}</span>
           </div>
           <span className=''>•</span>
-          <Link to='' className=' font-medium'>
+          <Link to={`/danh-sach/phim-moi?page=1&year=${movie?.year}`} className=' font-medium'>
             {movie?.year}
           </Link>
           <span className='hidden mobile-l:block'>•</span>
@@ -97,7 +119,7 @@ const DetailHero: FC<Props> = ({ slug }) => {
             <p className='text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] text-left line-clamp-1'>
               Đạo diễn:{" "}
               {movie?.director.map((name, index) => (
-                <Link to='' key={index}>{`${name}, `}</Link>
+                <Link to={`/tim-kiem/${name}?page=1`} key={index}>{`${name}, `}</Link>
               ))}
             </p>
           )}
@@ -105,7 +127,7 @@ const DetailHero: FC<Props> = ({ slug }) => {
             <p className='text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] text-left line-clamp-1'>
               Diễn viên:{" "}
               {movie?.actor.map((name, index) => (
-                <Link to='' key={index}>{`${name}, `}</Link>
+                <Link to={`/tim-kiem/${name}?page=1`} key={index}>{`${name}, `}</Link>
               ))}
             </p>
           )}

@@ -27,7 +27,7 @@ const FollowedMovieCard: FC<Props> = ({ slug }) => {
           <img
             src={movie?.thumb_url}
             alt={movie?.name}
-            className='object-cover w-full max-h-[280px] h-[280px] transition-opacity duration-300 rounded-[4px] font-bold text-white z-0'
+            className='object-cover w-full max-h-[200px] mobile-m:max-h-[230px] mobile-xl:max-h-[280px] sm:max-h-[280px] h-[200px] mobile-m:h-[230px] mobile-xl:h-[280px] sm:h-[280px] transition-opacity duration-300 rounded-[4px] font-bold text-white z-0'
           />
           <div
             className='absolute bottom-0 left-0 right-0 z-2 h-[60px]'

@@ -9,8 +9,22 @@ export const movieApi = movieApiSlice.injectEndpoints({
       }),
     }),
     getMovieByCategory: builder.query({
-      query: ({ category, page }: { category: string; page: number }) => ({
-        url: `/v1/api/danh-sach/${category}?page=${page}`,
+      query: ({
+        category,
+        page,
+        sortField,
+        filterGenre,
+        country,
+        year,
+      }: {
+        category: string;
+        page: number;
+        sortField: string;
+        filterGenre: string;
+        country: string;
+        year: string;
+      }) => ({
+        url: `/v1/api/danh-sach/${category}?page=${page}&sort_field=${sortField}&category=${filterGenre}&country=${country}&year=${year}`,
         method: "GET",
       }),
     }),
