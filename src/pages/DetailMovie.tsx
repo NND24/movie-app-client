@@ -72,9 +72,9 @@ const DetailMovie = () => {
                 <div className='grid gap-2' style={{ gridTemplateColumns: "repeat(auto-fill, minmax(80px, 1fr))" }}>
                   {episodes?.map((e: ServerData, index: number) => (
                     <Link
-                      to={`/phim/${slug}/${e.name}?server-name=${encodeURIComponent(serverName)}`}
+                      to={`/phim/${slug}/${e.name}?server-name=${encodeURIComponent(serverName)}&server=1`}
                       className={`rounded-[4px] py-1 text-white font-semibold cursor-pointer text-center ${
-                        watchedMovieItem?.watched_eps.includes(e.name) ? "!bg-[#8a8a8ac7]" : "bg-[#0A0C0F]"
+                        watchedMovieItem?.watched_eps.includes(e.name) ? "!bg-[#4a4a4aab]" : "bg-[#0A0C0F]"
                       } hover:bg-[#1cc749]`}
                       key={index}
                       onClick={() => addHistory(e.name)}

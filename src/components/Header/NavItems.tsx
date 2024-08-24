@@ -410,7 +410,7 @@ const NavItems: FC<Props> = ({ isMobileTablet }) => {
                 <>
                   <FaSortUp className='absolute top-[25px] left-[5px]' fill='#00dc5a' />
                   <ul
-                    className='absolute top-[32px] left-[0px] w-[350px] py-1 px-2 bg-[#1a191f] grid-cols-2 sm:grid-cols-3 justify-items-center'
+                    className='absolute top-[32px] left-[0px] w-[350px] py-1 px-2 bg-[#1a191f] grid grid-cols-2 justify-items-center'
                     style={{
                       borderTopColor: "#00dc5a",
                       borderTopWidth: "3px",
@@ -446,7 +446,7 @@ const NavItems: FC<Props> = ({ isMobileTablet }) => {
                 <>
                   <FaSortUp className='absolute top-[25px] left-[5px]' fill='#00dc5a' />
                   <ul
-                    className='absolute top-[32px] left-[0px] w-[350px] py-1 px-2 bg-[#1a191f] grid-cols-2 sm:grid-cols-3 justify-items-center'
+                    className='absolute top-[32px] left-[0px] w-[350px] py-1 px-2 bg-[#1a191f] grid grid-cols-2 sm:grid-cols-3 justify-items-center'
                     style={{
                       borderTopColor: "#00dc5a",
                       borderTopWidth: "3px",
@@ -482,7 +482,7 @@ const NavItems: FC<Props> = ({ isMobileTablet }) => {
                 <>
                   <FaSortUp className='absolute top-[25px] left-[5px]' fill='#00dc5a' />
                   <ul
-                    className='absolute top-[32px] left-[0px] w-[420px] py-1 px-2 bg-[#1a191f] grid-cols-2 sm:grid-cols-3 justify-items-center'
+                    className='absolute top-[32px] left-[0px] w-[420px] py-1 px-2 bg-[#1a191f] grid grid-cols-2 sm:grid-cols-3 justify-items-center'
                     style={{
                       borderTopColor: "#00dc5a",
                       borderTopWidth: "3px",

@@ -124,7 +124,7 @@ const ListMovie = () => {
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
     navigate(
-      `?page=${newPage}&sortField=${sortFieldItem}&category=${filterCatItem}&country=${countryItem}&year=${yearItem}`
+      `?page=${newPage}&sortField=${sortFieldItem}&category=${sortFieldItem}&country=${countryItem}&year=${yearItem}`
     );
   };
 
@@ -197,7 +197,7 @@ const ListMovie = () => {
                 <span className='p-2 font-bold w-full text-left'>Lọc phim:</span>
                 <div className='grid grid-cols-2 mobile-l:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 flex-1 w-full'>
                   <select
-                    name=''
+                    name='sort_field'
                     id=''
                     className='bg-[#212026] py-2 px-1 rounded-md outline-none small-scrollbar'
                     onChange={(e) => setSortFieldItem(e.target.value)}
@@ -209,11 +209,11 @@ const ListMovie = () => {
                   </select>
 
                   <select
-                    name=''
+                    name='filter_cat'
                     id=''
                     className='bg-[#212026] py-2 px-1 rounded-md outline-none small-scrollbar'
                     onChange={(e) => setFilterCatItem(e.target.value)}
-                    value={category}
+                    value={filterCatItem}
                   >
                     <option value=''>Phim mới</option>
                     {navItemsData.map((nav, index) => (
@@ -224,7 +224,7 @@ const ListMovie = () => {
                   </select>
 
                   <select
-                    name=''
+                    name='filter_genre'
                     id=''
                     className='bg-[#212026] py-2 px-1 rounded-md outline-none small-scrollbar'
                     onChange={(e) => setFilterGenreItem(e.target.value)}
@@ -239,7 +239,7 @@ const ListMovie = () => {
                   </select>
 
                   <select
-                    name=''
+                    name='country'
                     id=''
                     className='bg-[#212026] py-2 px-1 rounded-md outline-none small-scrollbar'
                     onChange={(e) => setCountryItem(e.target.value)}
@@ -254,7 +254,7 @@ const ListMovie = () => {
                   </select>
 
                   <select
-                    name=''
+                    name='year'
                     id=''
                     className='bg-[#212026] py-2 px-1 rounded-md outline-none small-scrollbar'
                     onChange={(e) => setYearItem(e.target.value)}

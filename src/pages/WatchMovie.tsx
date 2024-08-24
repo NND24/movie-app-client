@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../features/store";
 import Header from "../components/Header/Header";
 import Comment from "../components/Movie/Comment";
+import MoviePlayer from "../components/Movie/MoviePlayer";
 
 const WatchMovie = () => {
   const { slug, episode } = useParams<{ slug: string; episode: string }>();
@@ -18,10 +19,12 @@ const WatchMovie = () => {
   const queryParams = new URLSearchParams(location.search);
   const serverNameFromUrl = queryParams.get("server-name");
   const decodedServerName = serverNameFromUrl ? decodeURIComponent(serverNameFromUrl) : "";
+  const [selectedServerName, setSelectedServerName] = useState<string>(decodedServerName);
 
   const { data, isLoading } = useGetDetailMovieQuery(slug as string);
 
-  const [selectedServerName, setSelectedServerName] = useState<string>(decodedServerName);
+  const serverFromUrl = queryParams.get("server") || "1";
+  const [selectedServer, setSelectedServer] = useState<string>(serverFromUrl);
 
   const user = useSelector((state: RootState) => state.auth.user);
   const [addToHistory] = useAddToHistoryMutation();
@@ -70,31 +73,42 @@ const WatchMovie = () => {
       </div>
 
       <div className='w-[90%] m-auto flex items-center justify-center pt-2'>
-        <iframe
-          src={`${selectedEpisode?.link_embed}?autoplay=1`}
-          className='h-[84vh] w-full'
-          frameBorder='0'
-          allowFullScreen
-          title='Video Player'
-        ></iframe>
+        {serverFromUrl === "1" ? (
+          <iframe
+            src={`${selectedEpisode?.link_embed}?autoplay=1`}
+            className='h-[84vh] w-full'
+            frameBorder='0'
+            allowFullScreen
+            title='Video Player'
+          ></iframe>
+        ) : (
+          <MoviePlayer videoSrc={`${selectedEpisode?.link_m3u8}`} />
+        )}
       </div>
 
       <div className='w-[90%] m-auto flex justify-center pt-5'>
         <div className='border-[1px] border-slate-50 rounded-[4px] p-2'>
           <span className='py-1 px-2 text-white font-semibold text-center mr-2'>Đổi Server:</span>
-          {separatedData &&
-            Object.keys(separatedData).map((serverName) => (
-              <Link
-                to={`/phim/${slug}/${episode}?server-name=${encodeURIComponent(serverName)}`}
-                className={`
-                  rounded-[4px] py-1 px-1 bg-[#0A0C0F] hover:bg-[#1cc749] text-white font-semibold cursor-pointer text-center mr-2 ${
-                    serverName === selectedServerName ? "!bg-[#1cc749]" : ""
+          <Link
+            to={`/phim/${slug}/${episode}?server-name=${encodeURIComponent(decodedServerName)}&server=1`}
+            className={`
+                  rounded-[4px] py-1 px-2 bg-[#0A0C0F] hover:bg-[#1cc749] text-white font-semibold cursor-pointer text-center mr-2 ${
+                    selectedServer === "1" ? "!bg-[#1cc749]" : ""
                   }`}
-                onClick={() => setSelectedServerName(serverName)}
-              >
-                {serverName}
-              </Link>
-            ))}
+            onClick={() => setSelectedServer("1")}
+          >
+            Server 1
+          </Link>
+          <Link
+            to={`/phim/${slug}/${episode}?server-name=${encodeURIComponent(decodedServerName)}&server=2`}
+            className={`
+                  rounded-[4px] py-1 px-2 bg-[#0A0C0F] hover:bg-[#1cc749] text-white font-semibold cursor-pointer text-center mr-2 ${
+                    selectedServer === "2" ? "!bg-[#1cc749]" : ""
+                  }`}
+            onClick={() => setSelectedServer("2")}
+          >
+            Server 2
+          </Link>
         </div>
       </div>
 
@@ -102,34 +116,34 @@ const WatchMovie = () => {
         {separatedData &&
           Object.entries(separatedData).map(([serverName, episodes]) => (
             <div key={serverName}>
-              {selectedServerName === serverName && (
-                <div className='py-3'>
-                  <p className='text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] text-[18px] font-semibold pb-2'>
-                    Danh sách tập: {serverName}
-                  </p>
+              <div className='py-3'>
+                <p className='text-[#e0e0e0] drop-shadow-[1px_1px_1px_#000] text-[18px] font-semibold pb-2'>
+                  Danh sách tập: {serverName}
+                </p>
 
-                  <div className='max-h-[160px] scroll-auto overflow-auto small-scrollbar'>
-                    <div className='grid gap-2' style={{ gridTemplateColumns: "repeat(auto-fill, minmax(80px, 1fr))" }}>
-                      {episodes?.map((e: ServerData, index: number) => (
-                        <Link
-                          to={`/phim/${slug}/${e.name}?server-name=${encodeURIComponent(serverName)}`}
-                          className={`rounded-[4px] py-1 text-white font-semibold cursor-pointer text-center ${
-                            e.name === episode
-                              ? "!bg-[#1cc749]"
-                              : watchedMovieItem?.watched_eps.includes(e.name)
-                              ? "!bg-[#8a8a8ac7]"
-                              : "bg-[#0A0C0F]"
-                          } hover:bg-[#1cc749]`}
-                          key={index}
-                          onClick={() => addHistory(e.name)}
-                        >
-                          {e.name}
-                        </Link>
-                      ))}
-                    </div>
+                <div className='max-h-[160px] scroll-auto overflow-auto small-scrollbar'>
+                  <div className='grid gap-2' style={{ gridTemplateColumns: "repeat(auto-fill, minmax(80px, 1fr))" }}>
+                    {episodes?.map((e: ServerData, index: number) => (
+                      <Link
+                        to={`/phim/${slug}/${e.name}?server-name=${encodeURIComponent(
+                          serverName
+                        )}&server=${selectedServer}`}
+                        className={`rounded-[4px] py-1 text-white font-semibold cursor-pointer text-center ${
+                          e.name === episode
+                            ? "!bg-[#1cc749]"
+                            : watchedMovieItem?.watched_eps.includes(e.name)
+                            ? "!bg-[#4a4a4aab]"
+                            : "bg-[#0A0C0F]"
+                        } hover:bg-[#1cc749]`}
+                        key={index}
+                        onClick={() => addHistory(e.name)}
+                      >
+                        {e.name}
+                      </Link>
+                    ))}
                   </div>
                 </div>
-              )}
+              </div>
             </div>
           ))}
       </div>

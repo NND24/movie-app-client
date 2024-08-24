@@ -1,9 +1,6 @@
 import { apiSlice } from "../api/apiSlice";
 import { setCredentials } from "../auth/authSlice";
 
-const user = localStorage.getItem("user");
-const getUserFromLocalStorage = user ? JSON.parse(user) : null;
-
 export const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     updateAvatar: builder.mutation({
@@ -16,14 +13,12 @@ export const userApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          const user = result.data.user;
-          const token = getUserFromLocalStorage?.accessToken;
 
-          await localStorage.setItem("user", JSON.stringify({ user, accessToken: token }));
+          await localStorage.setItem("user", JSON.stringify(result.data));
           dispatch(
             setCredentials({
-              accessToken: token,
-              user: user,
+              accessToken: result.data.accessToken,
+              user: result.data.user,
             })
           );
         } catch (error) {
@@ -41,14 +36,12 @@ export const userApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          const user = result.data.user;
-          const token = getUserFromLocalStorage?.accessToken;
 
-          await localStorage.setItem("user", JSON.stringify({ user, accessToken: token }));
+          await localStorage.setItem("user", JSON.stringify(result.data));
           dispatch(
             setCredentials({
-              accessToken: token,
-              user: user,
+              accessToken: result.data.accessToken,
+              user: result.data.user,
             })
           );
         } catch (error) {
@@ -66,14 +59,12 @@ export const userApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          const user = result.data.user;
-          const token = getUserFromLocalStorage?.accessToken;
 
-          await localStorage.setItem("user", JSON.stringify({ user, accessToken: token }));
+          await localStorage.setItem("user", JSON.stringify(result.data));
           dispatch(
             setCredentials({
-              accessToken: token,
-              user: user,
+              accessToken: result.data.accessToken,
+              user: result.data.user,
             })
           );
         } catch (error) {
@@ -91,14 +82,12 @@ export const userApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          const user = result.data.user;
-          const token = getUserFromLocalStorage?.accessToken;
 
-          await localStorage.setItem("user", JSON.stringify({ user, accessToken: token }));
+          await localStorage.setItem("user", JSON.stringify(result.data));
           dispatch(
             setCredentials({
-              accessToken: token,
-              user: user,
+              accessToken: result.data.accessToken,
+              user: result.data.user,
             })
           );
         } catch (error) {
@@ -116,14 +105,12 @@ export const userApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          const user = result.data.user;
-          const token = getUserFromLocalStorage?.accessToken;
 
-          await localStorage.setItem("user", JSON.stringify({ user, accessToken: token }));
+          await localStorage.setItem("user", JSON.stringify(result.data));
           dispatch(
             setCredentials({
-              accessToken: token,
-              user: user,
+              accessToken: result.data.accessToken,
+              user: result.data.user,
             })
           );
         } catch (error) {
@@ -142,14 +129,12 @@ export const userApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          const user = result.data.user;
-          const token = getUserFromLocalStorage?.accessToken;
 
-          await localStorage.setItem("user", JSON.stringify({ user, accessToken: token }));
+          await localStorage.setItem("user", JSON.stringify(result.data));
           dispatch(
             setCredentials({
-              accessToken: token,
-              user: user,
+              accessToken: result.data.accessToken,
+              user: result.data.user,
             })
           );
         } catch (error) {

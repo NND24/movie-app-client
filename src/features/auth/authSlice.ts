@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
 const user = localStorage.getItem("user");
 const getUserFromLocalStorage = user ? JSON.parse(user) : null;
