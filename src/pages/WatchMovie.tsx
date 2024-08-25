@@ -19,7 +19,7 @@ const WatchMovie = () => {
   const queryParams = new URLSearchParams(location.search);
   const serverNameFromUrl = queryParams.get("server-name");
   const decodedServerName = serverNameFromUrl ? decodeURIComponent(serverNameFromUrl) : "";
-  const [selectedServerName, setSelectedServerName] = useState<string>(decodedServerName);
+  const [selectedServerName, setSelectedServerName] = useState<string>("");
 
   const { data, isLoading } = useGetDetailMovieQuery(slug as string);
 
@@ -28,6 +28,10 @@ const WatchMovie = () => {
 
   const user = useSelector((state: RootState) => state.auth.user);
   const [addToHistory] = useAddToHistoryMutation();
+
+  useEffect(() => {
+    setSelectedServerName(decodedServerName);
+  }, [decodedServerName]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -43,16 +47,16 @@ const WatchMovie = () => {
   }, {} as Record<string, ServerData[]>);
 
   const episodesForServer = separatedData[selectedServerName] || [];
-  const selectedEpisode = episodesForServer.find((ep) => ep.name === episode);
+  const selectedEpisode = episodesForServer.find((ep: { name: string | undefined }) => ep.name === episode);
 
-  const addHistory = (ep) => {
+  const addHistory = (ep: string) => {
     if (user) {
       addToHistory({ movie_slug: slug, ep });
     }
   };
 
   const getItemBySlug = () => {
-    return user?.history?.find((item) => item.movie_slug === slug);
+    return user?.history?.find((item: { movie_slug: string | undefined }) => item.movie_slug === slug);
   };
 
   const watchedMovieItem = getItemBySlug();
@@ -231,7 +235,7 @@ const WatchMovie = () => {
 
       <div className='w-[90%] mx-auto h-[1px] bg-[#26252a] my-2'></div>
 
-      <Comment slug={slug} />
+      {slug && <Comment slug={slug} />}
 
       <div className='w-[90%] mx-auto h-[1px] bg-[#26252a] my-2'></div>
     </div>

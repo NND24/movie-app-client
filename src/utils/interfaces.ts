@@ -76,3 +76,43 @@ export interface Movie {
   _id: string;
   episodes: Episode[];
 }
+
+export interface DetailMovieResponse {
+  movie: Movie;
+  episodes: Episode[];
+}
+
+export interface Avatar {
+  public_id: string;
+  url: string;
+}
+
+export interface User {
+  _id: string;
+  avatar: Avatar;
+  email: string;
+  name: string;
+  role: string;
+}
+
+export interface CommentReply {
+  _id: string;
+  user: User;
+  comment: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CommentInt {
+  _id: string;
+  user: User;
+  comment: string;
+  commentReplies: CommentReply[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface HistoryMovie {
+  movie_slug: string;
+  lasted_ep: string;
+}

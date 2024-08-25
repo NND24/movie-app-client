@@ -9,6 +9,7 @@ import { useAddFollowedMovieMutation } from "../../features/user/userApi";
 import { useSelector } from "react-redux";
 import { RootState } from "../../features/store";
 import toast from "react-hot-toast";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 type Props = {
   slug: string;
@@ -33,11 +34,15 @@ const DetailHero: FC<Props> = ({ slug }) => {
     if (isSuccess) {
       toast.success("Lưu phim thành công!");
     }
+
     if (error) {
       if ("data" in error) {
-        const errorData = error;
-        if (errorData.data.message === "Movie already followed") {
-          toast.success("Phim đã được lưu!");
+        const errorData = error as FetchBaseQueryError;
+        if (errorData.data && typeof errorData.data === "object" && "message" in errorData.data) {
+          const message = (errorData.data as { message: string }).message;
+          if (message === "Movie already followed") {
+            toast.success("Phim đã được lưu!");
+          }
         }
       }
     }

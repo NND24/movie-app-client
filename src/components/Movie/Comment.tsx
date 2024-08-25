@@ -13,6 +13,7 @@ import {
 } from "../../features/comment/commentApi";
 import { styles } from "../../styles/style";
 import { RootState } from "../../features/store";
+import { CommentInt } from "../../utils/interfaces";
 
 type Props = {
   slug: string;
@@ -145,7 +146,7 @@ const Comment: FC<Props> = ({ slug }) => {
         )}
 
         <div className='w-full mb-2 mt-4'>
-          {data?.comments.map((comment) => (
+          {data?.comments.map((comment: CommentInt) => (
             <div key={comment._id} className='mb-2'>
               <div className='flex mb-1'>
                 <img

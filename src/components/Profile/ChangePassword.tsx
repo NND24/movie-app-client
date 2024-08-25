@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import Heading from "../Heading";
 import { styles } from "../../styles/style";
 import Header from "../Header/Header";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 type Props = {
   setEditInfo: (editInfo: boolean) => void;
@@ -16,7 +17,7 @@ const ChangePassword: FC<Props> = ({ setEditInfo }) => {
 
   const [updatePassword, { isSuccess, error }] = useUpdatePasswordMutation();
 
-  const passwordChangeHandler = async (e) => {
+  const passwordChangeHandler = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     if (newPassword !== confirmPassword) {
@@ -32,8 +33,11 @@ const ChangePassword: FC<Props> = ({ setEditInfo }) => {
     }
     if (error) {
       if ("data" in error) {
-        const errorData = error;
-        toast.error(errorData.data.message);
+        const errorData = error as FetchBaseQueryError;
+        if (errorData.data && typeof errorData.data === "object" && "message" in errorData.data) {
+          const message = (errorData.data as { message: string }).message;
+          toast.error(message);
+        }
       }
     }
   }, [isSuccess, error]);

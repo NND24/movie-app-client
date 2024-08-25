@@ -32,13 +32,16 @@ const Header: FC<Props> = ({ isProfile }) => {
 
   const { user } = useSelector((state: RootState) => state.auth);
 
-  const { refetch } = useLogoutQuery(undefined, {
+  const { refetch, isSuccess } = useLogoutQuery(undefined, {
     skip: !logout,
-    onSuccess: () => {
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
       dispatch(logOut());
       setOpenModal(false);
-    },
-  });
+    }
+  }, [isSuccess, dispatch]);
 
   useEffect(() => {
     const handleScroll = () => {

@@ -2,11 +2,11 @@ import { FC, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { FcGoogle } from "react-icons/fc";
 import { styles } from "../../styles/style";
 import toast from "react-hot-toast";
 import { useLoginMutation } from "../../features/auth/authApi";
 import { IoClose } from "react-icons/io5";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 type Props = {
   setOpenLogin: (openLogin: boolean) => void;
@@ -38,8 +38,11 @@ const Login: FC<Props> = ({ setOpenLogin, setOpenSignUp }) => {
     }
     if (error) {
       if ("data" in error) {
-        const errorData = error;
-        toast.error(errorData.data.message);
+        const errorData = error as FetchBaseQueryError;
+        if (errorData.data && typeof errorData.data === "object" && "message" in errorData.data) {
+          const message = (errorData.data as { message: string }).message;
+          toast.error(message);
+        }
       } else {
         console.log("An error occurred:", error);
       }

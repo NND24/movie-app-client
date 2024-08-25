@@ -29,7 +29,7 @@ const DetailMovie = () => {
 
   const movie = data?.movie as Movie;
 
-  const separatedData = data?.episodes.reduce((acc: Record<string, ServerData[]>, server: Episode) => {
+  const separatedData = data.episodes.reduce((acc: Record<string, ServerData[]>, server: Episode) => {
     acc[server.server_name] = server.server_data;
     return acc;
   }, {} as Record<string, ServerData[]>);
@@ -42,14 +42,14 @@ const DetailMovie = () => {
   //   }),
   // }));
 
-  const addHistory = (ep) => {
+  const addHistory = (ep: string) => {
     if (user) {
       addToHistory({ movie_slug: slug, ep });
     }
   };
 
   const getItemBySlug = () => {
-    return user?.history?.find((item) => item.movie_slug === slug);
+    return user?.history?.find((item: { movie_slug: string | undefined }) => item.movie_slug === slug);
   };
 
   const watchedMovieItem = getItemBySlug();
@@ -171,7 +171,7 @@ const DetailMovie = () => {
 
       <div className='w-[90%] mx-auto h-[1px] bg-[#26252a] my-2'></div>
 
-      <Comment slug={slug} />
+      {slug && <Comment slug={slug} />}
 
       <div className='w-[90%] mx-auto h-[1px] bg-[#26252a] my-2'></div>
 
