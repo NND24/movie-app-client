@@ -7,7 +7,7 @@ interface RefreshResponse {
 }
 
 const baseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = fetchBaseQuery({
-  baseUrl: "http://localhost:8000/api/v1/",
+  baseUrl: "https://movie-app-api-yq1b.onrender.com/api/v1/",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;

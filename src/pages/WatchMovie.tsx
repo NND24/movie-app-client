@@ -7,13 +7,14 @@ import { Episode, Movie, ServerData } from "../utils/interfaces";
 import { removeHTMLTags } from "../utils/functions";
 import { FaEye, FaHome, FaStar } from "react-icons/fa";
 import { useAddToHistoryMutation } from "../features/user/userApi";
-import { useSelector } from "react-redux";
-import { RootState } from "../features/store";
 import Header from "../components/Header/Header";
 import Comment from "../components/Movie/Comment";
 import MoviePlayer from "../components/Movie/MoviePlayer";
+import { useSelector } from "react-redux";
+import { RootState } from "../features/store";
 
 const WatchMovie = () => {
+  const { user } = useSelector((state: RootState) => state.auth);
   const { slug, episode } = useParams<{ slug: string; episode: string }>();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -26,7 +27,6 @@ const WatchMovie = () => {
   const serverFromUrl = queryParams.get("server") || "1";
   const [selectedServer, setSelectedServer] = useState<string>(serverFromUrl);
 
-  const user = useSelector((state: RootState) => state.auth.user);
   const [addToHistory] = useAddToHistoryMutation();
 
   useEffect(() => {
@@ -41,12 +41,15 @@ const WatchMovie = () => {
 
   const movie = data?.movie as Movie;
 
-  const separatedData = data.episodes.reduce((acc: Record<string, ServerData[]>, server: Episode) => {
-    acc[server.server_name] = server.server_data;
-    return acc;
-  }, {} as Record<string, ServerData[]>);
+  const separatedData: Record<string, ServerData[]> = data.episodes.reduce(
+    (acc: Record<string, ServerData[]>, server: Episode) => {
+      acc[server.server_name] = server.server_data;
+      return acc;
+    },
+    {} as Record<string, ServerData[]>
+  );
 
-  const episodesForServer = separatedData[selectedServerName] || [];
+  const episodesForServer: ServerData[] = separatedData[selectedServerName] || [];
   const selectedEpisode = episodesForServer.find((ep: { name: string | undefined }) => ep.name === episode);
 
   const addHistory = (ep: string) => {
